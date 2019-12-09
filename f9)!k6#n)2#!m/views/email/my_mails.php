@@ -62,11 +62,13 @@
               <a href="JavaScript:void(0);" onclick="d('{{$email_obj->id}}')">Delete</a>
             </td>
           </tr>
-          @endforeach
+          <?php endforeach; ?>
 				</tbody>
 			</table>
-      {{$emails->appends(request()->input())->links()}}
 		</div>
+    <div class="col-md-12">
+      <?php include($app_key.'/layouts/pagination.php') ?>
+    </div>
 	</div>
 </div>
 

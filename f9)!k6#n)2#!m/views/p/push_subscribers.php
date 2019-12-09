@@ -37,11 +37,13 @@
             <td>{{$subscription->auth_provider}}</td>
             <td>{{$subscription->user_id}}</td>
           </tr>
-          @endforeach
+          <?php endforeach; ?>
 				</tbody>
 			</table>
-      {{$subscriptions->appends(request()->input())->links()}}
 		</div>
+    <div class="col-md-12">
+      <?php include($app_key.'/layouts/pagination.php') ?>
+    </div>
 	</div>
 </div>
 <script>

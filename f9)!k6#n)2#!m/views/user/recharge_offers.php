@@ -16,7 +16,7 @@
     <?php endif; ?>
   <div class="row">
     <div class="col-md-12">
-      <div class="well well-sm"> My Recharge Offers | @if(\Auth::user()->recharge_balance == (null||0)) <i>Please recharge your account with one of the below offers to visit the control panel</i> @else <i>Your account balance is ₹ {{\Auth::user()->recharge_balance}}</i> @endif </div>
+      <div class="well well-sm"> My Recharge Offers | @if(\Auth::user()->recharge_balance == (null||0)) <i>Please recharge your account with one of the below offers to visit the control panel</i> @else <i>Your account balance is ₹ {{\Auth::user()->recharge_balance}}</i> <?php endif; ?> </div>
     </div>
     <div class="col-md-4">
       <div class="btn-group" style="float:right;">

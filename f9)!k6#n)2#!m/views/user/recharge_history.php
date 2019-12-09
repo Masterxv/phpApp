@@ -57,10 +57,12 @@
               <td><a href="{{ route('c.refund.payment', ['id'=> $r->id]) }}">Refund</a></td>
               <td><a href="{{ route('c.refund.status', ['id'=> $r->id]) }}">Refund Status</a></td>
             </tr>
-            @endforeach
+            <?php endforeach; ?>
           </tbody>
         </table>
-        {{$rh->appends(request()->input())->links()}}
+      </div>
+      <div class="col-md-12">
+        <?php include($app_key.'/layouts/pagination.php') ?>
       </div>
     </div>
   </div>

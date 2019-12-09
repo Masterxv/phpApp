@@ -10,7 +10,7 @@
 @include('cb.blog.basic-git-usage')
 @endsection
 
-@endif
+<?php endif; ?>
  --}}
 
 @extends("cb.layouts.app")
@@ -36,5 +36,5 @@
     </div>
   </div>
 </div>
-@endif
+<?php endif; ?>
 @endsection

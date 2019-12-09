@@ -17,7 +17,7 @@
 		<div class="col-md-6">
 			<div class="btn-group" style="float:right;">
 				<a class="btn btn-default" onclick="showDialog()">Add Validation Rule</a>
-				<a class="btn btn-default" href="{{route('c.query.list.view')}}">Back</a></div>
+				<a class="btn btn-default" href="/query/query_list">Back</a></div>
 		</div>
 	</div><hr>
 	<div class="row">
@@ -39,11 +39,13 @@
 						<td>{{$frule->rule}}</td>
 						<td><a style="cursor: pointer;" onclick="deleteRule('{{$frule->id}}')">delete</a></td>
 					</tr>
-					@endforeach
+					<?php endforeach; ?>
 				</tbody>
 			</table>
-			{{$frules->appends(request()->input())->links()}}
 		</div>
+	    <div class="col-md-12">
+	      <?php include($app_key.'/layouts/pagination.php') ?>
+	    </div>
 	</div>
 </div>
 
@@ -52,7 +54,7 @@
 		$("#addValidationRule").modal();
 	}
 	function deleteRule(id){
-		$.post('{{ route('c.query.valid.delete') }}',{'_method':'delete','id':id,'_token':'<?php echo $rand; ?>'},function (data, status) {
+		$.post('/query/custom_valid_delete',{'_method':'delete','id':id,'_token':'<?php echo $rand; ?>'},function (data, status) {
 			if(status=='success'){
 				$('#r'+id).remove();
 				$('#alrt').html('<div class="alert alert-success"><strong>Success!</strong> Validation rule was successfully removed.</div>');
@@ -72,14 +74,14 @@
       <div class="modal-header">
         <h4 class="modal-title">Add Validation Rule For Field</h4>
       </div>
-      <form method="get" action="{{route('c.query.valid.view')}}" >
+      <form method="get" action="/query/custom_valid_view" >
       <div class="modal-body">
     	<div class="form-group row">
 			<div class="col-md-12">
 				<select id="field" class="form-control" name="field">
 					@foreach($fields as $field)
 					<option>{{$field}}</option>
-					@endforeach
+					<?php endforeach; ?>
 				</select>
 			</div>
 		</div>

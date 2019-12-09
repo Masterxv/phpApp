@@ -47,11 +47,13 @@
             <td><a style="cursor: pointer;" onclick="copyMsg('{{$push_message->id}}')">Copy</a></td>
             <td><a style="cursor: pointer;" onclick="delMsg('{{$push_message->id}}')">Delete</a></td>
           </tr>
-          @endforeach
+          <?php endforeach; ?>
 				</tbody>
 			</table>
-      {{$push_messages->appends(request()->input())->links()}}
 		</div>
+    <div class="col-md-12">
+      <?php include($app_key.'/layouts/pagination.php') ?>
+    </div>
 	</div>
 </div>
 <script>

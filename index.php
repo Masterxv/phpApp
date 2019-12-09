@@ -3,7 +3,6 @@
 include('env.php');
 include('route.php');
 
-
 //====================Site Verification Routes====================
 Route::add('/honeyweb-domain-verification',function(){
     echo "$2y$10$uyohYtWlS/h598L7/FRXl.I8L6tMlfEONA4GZOc2Gz4Skk21rFJZy";
@@ -144,8 +143,8 @@ Route::add('/app/activate',function()use($app_key){
 Route::add('/app/update',function()use($app_key){
     include($app_key.'/controller/app/update.php');
 },'post');
-Route::add('/app/delete/([0-9]*)',function($id)use($app_key){
-    include($app_key.'/controller/app/delete_id.php');
+Route::add('/app/delete',function()use($app_key){
+    include($app_key.'/controller/app/delete.php');
 },'delete');
 Route::add('/app/sql/{id?}',function()use($app_key){
     include($app_key.'/controller/app/sql/{id?}.php');

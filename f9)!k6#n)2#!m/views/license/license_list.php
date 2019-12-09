@@ -61,11 +61,13 @@
             </tr>
             </form>
             <form id="dbf{{$loop->index}}" method="post" action="{{ route('l.delete.license', ['id' => $license->id]) }}" style="display: none;"><input type="hidden" name="_token" value="<?php echo $rand; ?>"></form>
-          @endforeach
+          <?php endforeach; ?>
         </tbody>
       </table>
       </div>
-      {{$licenses->appends(request()->input())->links()}}
+    </div>
+    <div class="col-md-12">
+      <?php include($app_key.'/layouts/pagination.php') ?>
     </div>
   </div>
 </div>
@@ -112,7 +114,7 @@
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $errors->first('total_licenses') }}</strong>
                 </span>
-            @endif
+            <?php endif; ?>
           </div>
 
           <div class="form-group">
@@ -122,7 +124,7 @@
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $errors->first('expiry_date') }}</strong>
                 </span>
-            @endif
+            <?php endif; ?>
           </div>
           <div class="form-group"><button type="submit" class="btn btn-primary">Create</button></div>
         </form>

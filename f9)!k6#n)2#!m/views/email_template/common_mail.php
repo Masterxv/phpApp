@@ -50,7 +50,7 @@
                                     <tr>
                                         @foreach($v[0] as $k1 => $v1)
                                         <th>{{$k1}}</th>
-                                        @endforeach
+                                        <?php endforeach; ?>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -62,11 +62,11 @@
                                             <a href="{{$v1}}">{{$v1}}</a>
                                             @else
                                             {{$v1}}
-                                            @endif
+                                            <?php endif; ?>
                                         </td>
-                                        @endforeach
+                                        <?php endforeach; ?>
                                     </tr>
-                                    @endforeach
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -80,19 +80,19 @@
                                 <a href="{{$v}}">{{$v}}</a>
                                 @else
                                 {{$v}}
-                                @endif
+                                <?php endif; ?>
                             </p>
                         </div>
                     </div>
-                    @endif
-                @endif
+                    <?php endif; ?>
+                <?php endif; ?>
                 @if($k == 'embed' && $v != '')
                 <img src="{{ $message->embed($v) }}">
-                @endif
+                <?php endif; ?>
                 @if($k == 'plain_text' && $v != '')
                 <span style="white-space: pre-line">{{$v}}</span>
-                @endif
-            @endforeach
+                <?php endif; ?>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>

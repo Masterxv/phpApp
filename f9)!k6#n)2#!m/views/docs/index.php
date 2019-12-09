@@ -21,7 +21,7 @@
 	</ol>
 </div>
 @endsection
-@endif
+<?php endif; ?>
 
 @if($index == 'my_apps')
 @section("index")
@@ -59,7 +59,7 @@
 	</ol>
 </div>
 @endsection
-@endif
+<?php endif; ?>
 
 @if($index == 'licenses')
 @section("index")
@@ -78,7 +78,7 @@
 	</ol>
 </div>
 @endsection
-@endif
+<?php endif; ?>
 
 @if($index == 'tables')
 @section("index")
@@ -105,7 +105,7 @@
 	</ol>
 </div>
 @endsection
-@endif
+<?php endif; ?>
 
 @if($index == 'queries')
 @section("index")
@@ -158,7 +158,7 @@
 	</ol>
 </div>
 @endsection
-@endif
+<?php endif; ?>
 
 @if($index == 'files')
 @section("index")
@@ -177,7 +177,7 @@
 	</ol>
 </div>
 @endsection
-@endif
+<?php endif; ?>
 
 @if($index == 'emails')
 @section("index")
@@ -196,7 +196,7 @@
 	</ol>
 </div>
 @endsection
-@endif
+<?php endif; ?>
 
 @if($index == 'push_notifications')
 @section("index")
@@ -215,7 +215,7 @@
 	</ol>
 </div>
 @endsection
-@endif
+<?php endif; ?>
 
 @if($index == 'chat_messaging')
 @section("index")
@@ -234,7 +234,7 @@
 	</ol>
 </div>
 @endsection
-@endif
+<?php endif; ?>
 
 @if($index == 'logs')
 @section("index")
@@ -253,4 +253,4 @@
 	</ol>
 </div>
 @endsection
-@endif
+<?php endif; ?>

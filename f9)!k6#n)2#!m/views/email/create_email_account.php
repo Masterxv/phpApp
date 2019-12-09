@@ -30,7 +30,7 @@
 					<div class="col-md-6">
 						<input id="user" type="text" class="form-control" name="user" placeholder="User Name" value="{{old('user')}}" onchange="setEmail()">
 						@if($errors->has('email'))
-						<p style="color:red">{{$errors->first('email')}}</p> @endif
+						<p style="color:red">{{$errors->first('email')}}</p> <?php endif; ?>
 					</div>
 				</div><hr>
 				<div class="form-group row">
@@ -40,7 +40,7 @@
 					</div>
 					<div class="col-md-6">
 						<select class="form-control" id="domain" onchange="setEmail()">
-						@foreach($domains as $d) <option value="{{$d}}">{{$d->name}}</option> @endforeach
+						@foreach($domains as $d) <option value="{{$d}}">{{$d->name}}</option> <?php endforeach; ?>
 						</select>
 					</div>			
 				</div><hr>
@@ -53,12 +53,12 @@
 						<div class="well well-sm" id="afields">none</div>
 						<input id="aid" type="hidden" class="form-control" name="alias">
 						@if($errors->has('alias'))
-						  <p style="color:red">{{$errors->first('alias')}}</p>@endif
+						  <p style="color:red">{{$errors->first('alias')}}</p><?php endif; ?>
 						<div class="row">
 							<div class="col-md-12">
 								@foreach($alias as $a)
-								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="a('{{$a}}')" @if(in_array($a, explode(' ', old('alias')))) checked @endif>{{$a}}</label></div>
-								@endforeach
+								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="a('{{$a}}')" @if(in_array($a, explode(' ', old('alias')))) checked <?php endif; ?>>{{$a}}</label></div>
+								<?php endforeach; ?>
 							</div>
 						</div>
 					</div>
@@ -72,7 +72,7 @@
 						<input type="password" id="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" value="{{ old('password') }}" placeholder="Password">
 						@if($errors->has('password'))
 						  <p style="color:red">{{$errors->first('password')}}</p> 
-						@endif
+						<?php endif; ?>
 					</div>      
 	            </div>
 	            <div class="form-group row">

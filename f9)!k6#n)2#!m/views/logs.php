@@ -12,7 +12,7 @@
     <div id="alrt"></div>
     <div class="row">
         <div class="col-md-12">
-            Log | for the app id: {{\Auth::user()->active_app_id}}<div class="btn-group" style="float:right"></div>
+            Log | for the app id: <?php echo \Auth::user()->active_app_id; ?><div class="btn-group" style="float:right"></div>
         </div>
     </div>
 	<div class="row">
@@ -35,22 +35,24 @@
 				<tbody>
           @foreach($logs as $log)
           <tr>
-            <td>{{ ($loop->index + 1) + 10 * ($page-1)}}</td>
-            <td>{{$log->fid}}</td>
-            <td>{{$log->fap}}</td>
-            <td>{{$log->qid}}</td>
-            <td>{{$log->auth_provider}}</td>
-            <td>{{$log->query_nick_name}}</td>
-            <td>{{$log->table_name}}</td>
-            <td>{{$log->command}}</td>
-            <td>{{$log->ip}}</td>
-            <td>{{$log->created_at}}</td>
+            <td><?php echo  ($loop->index + 1) + 10 * ($page-1); ?></td>
+            <td><?php echo $log->fid; ?></td>
+            <td><?php echo $log->fap; ?></td>
+            <td><?php echo $log->qid; ?></td>
+            <td><?php echo $log->auth_provider; ?></td>
+            <td><?php echo $log->query_nick_name; ?></td>
+            <td><?php echo $log->table_name; ?></td>
+            <td><?php echo $log->command; ?></td>
+            <td><?php echo $log->ip; ?></td>
+            <td><?php echo $log->created_at; ?></td>
           </tr>
-          @endforeach
+          <?php endforeach; ?>
 				</tbody>
 			</table>
-      {{$logs->appends(request()->input())->links()}}
 		</div>
+    <div class="col-md-12">
+      <?php include($app_key.'/layouts/pagination.php') ?>
+    </div>
 	</div>
 </div>
 <?php require($app_key.'/views/layouts/scripts.html'); ?>

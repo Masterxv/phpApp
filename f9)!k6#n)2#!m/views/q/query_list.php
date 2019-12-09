@@ -16,9 +16,9 @@
     </div>
     <div class="col-md-6">
       <div class="btn-group" style="float:right">
-        <a class="btn btn-default" href="{{route('c.create.new.query')}}">Create New Query</a>
-        <a class="btn btn-default" href="{{route('c.query.valid.view')}}">Validation</a>
-        <a class="btn btn-default" href="{{route('c.query.valid.msg.view')}}">Customize Validation Messages</a>
+        <a class="btn btn-default" href="/query/new_query_view">Create New Query</a>
+        <a class="btn btn-default" href="/query/custom_valid_view">Validation</a>
+        <a class="btn btn-default" href="/query/custom_valid_msg_view">Customize Validation Messages</a>
       </div>
     </div>
   </div>
@@ -57,20 +57,22 @@
             <td>{{$query->joins}}</td>
             <td>{{$query->filters}}</td>
             <td>{{$query->specials}}</td>
-            <td><a href="{{route('c.query.details.view', ['id' => $query->id])}}">Update</a></td>
+            <td><a href="/query/query_details/<?php echo $query->id; ?>">Update</a></td>
             <td><a style="cursor: pointer;" onclick="d('{{$query->id}}')">Delete</a>
 	        </td>
           </tr>
-          @endforeach
+          <?php endforeach; ?>
 				</tbody>
 			</table>
-      {{$queries->appends(request()->input())->links()}}
 		</div>
+    <div class="col-md-12">
+      <?php include($app_key.'/layouts/pagination.php') ?>
+    </div>
 	</div>
 </div>
 <script>
   function d(id){
-    $.post("{{ route('c.delete.query') }}", {"_token":"<?php echo $rand; ?>", "id":id, "_method":"DELETE"}, function(data) {
+    $.post("/query/delete", {"_token":"<?php echo $rand; ?>", "id":id, "_method":"DELETE"}, function(data) {
       if(data['status'] == 'success'){
         $('#r'+id).remove();
         $('#alrt').html('<div class="alert alert-success"><strong>Success!</strong> Query was successfully removed.</div>');

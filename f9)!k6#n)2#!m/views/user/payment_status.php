@@ -25,8 +25,8 @@
 					<th>{{$arr[$k]}}</th>
 					<td>{{$v}}</td>
 				</tr>
-				@endif
-				@endforeach
+				<?php endif; ?>
+				<?php endforeach; ?>
 			</table>
 		</div>
 	</div>

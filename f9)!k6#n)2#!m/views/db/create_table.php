@@ -8,7 +8,7 @@
 </head>
 <body>
 <?php require($app_key.'/views/layouts/nav.php'); ?>
-<form id="form_create_table" method="post" action="{{ route("c.db.new.table.submit") }}">
+<form id="form_create_table" method="post" action="/table/new_table">
 <input type="hidden" name="_token" value="<?php echo $rand; ?>"/>
 <div class="container-fluid">
 	<?php if($error['name']): ?><div class="alert alert-warning"><strong>Warning!</strong><?php echo $error['name']; ?></div>
@@ -20,13 +20,13 @@
 		<div class="col-md-9">
 			<div class="input-group" style="float:right;position: relative;">
 				<input style="width:300px;" type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" value="{{ old('name') }}" placeholder="Table Name" />
-				@if($errors->has('name'))<p style="color:red;position: absolute;bottom:auto;left:0px;top:30px;right:auto;z-index: 3"> {{$errors->first('name')}} </p>@endif
+				@if($errors->has('name'))<p style="color:red;position: absolute;bottom:auto;left:0px;top:30px;right:auto;z-index: 3"> {{$errors->first('name')}} </p><?php endif; ?>
 				<select name="model" class="form-control" style="width:150px;">
 					<option value="model">Model</option>
 					<option value="authenticatable">Authenticatable</option>
 				</select>
 				<button type="submit" class="btn btn-default">Create Table</button>
-				<a class="btn btn-default" href="{{route('c.table.list.view')}}">Back</a>
+				<a class="btn btn-default" href="/table/table_list">Back</a>
 			</div>
 		</div>
 	</div>
@@ -61,7 +61,7 @@
 										<option value="bigIncrements">bigIncrements</option>
 									</select>
 									@if($errors->has('field_type.1'))
-									<p style="color:red">{{$errors->first('field_type.1')}}</p> @endif
+									<p style="color:red">{{$errors->first('field_type.1')}}</p> <?php endif; ?>
 								</div>
 							</td>
 							<td>---</td>
@@ -75,7 +75,7 @@
 								<div class="form-group">
 									<input type="text" name="field_name[{{$i}}]" class="form-control{{ $errors->has('field_name.'.$i) ? ' is-invalid' : '' }}" value="{{ old('field_name.'.$i) }}" placeholder="Field Name" />
 								@if($errors->has('field_name.'.$i))
-								<p style="color:red">{{$errors->first('field_name.'.$i)}}</p> @endif
+								<p style="color:red">{{$errors->first('field_name.'.$i)}}</p> <?php endif; ?>
 								</div>
 							</td>
 							<td>
@@ -142,21 +142,21 @@
     </optgroup>
 </select>
 @if($errors->has('field_type_.'.$i))
-									<p style="color:red">{{$errors->first('field_type_.'.$i)}}</p> @endif
+									<p style="color:red">{{$errors->first('field_type_.'.$i)}}</p> <?php endif; ?>
 								</div>
 							</td>
 							<td>
 								<div class="form-group">
-									<input type="text" id="field_param_{{$i}}" name="field_param[{{$i}}]" class="form-control{{ $errors->has('field_param.'.$i) ? ' is-invalid' : '' }}" value="{{ old('field_param.'.$i) }}" placeholder="@if($errors->has('field_param.'.$i)) {{$errors->first('field_param.'.$i)}} @else Length/Value @endif" />
+									<input type="text" id="field_param_{{$i}}" name="field_param[{{$i}}]" class="form-control{{ $errors->has('field_param.'.$i) ? ' is-invalid' : '' }}" value="{{ old('field_param.'.$i) }}" placeholder="@if($errors->has('field_param.'.$i)) {{$errors->first('field_param.'.$i)}} @else Length/Value <?php endif; ?>" />
 									@if($errors->has('field_param.'.$i))
-									<p style="color:red">{{$errors->first('field_param.'.$i)}}</p> @endif
+									<p style="color:red">{{$errors->first('field_param.'.$i)}}</p> <?php endif; ?>
 								</div>
 							</td>
 							<td>
 								<div class="form-group">
-									<input type="text" name="field_default[{{$i}}]" class="form-control{{ $errors->has('field_default.'.$i) ? ' is-invalid' : '' }}" value="{{ old('field_default.'.$i) }}" placeholder="@if($errors->has('field_default.'.$i)) {{$errors->first('field_default.'.$i)}} @else Default Value @endif" />
+									<input type="text" name="field_default[{{$i}}]" class="form-control{{ $errors->has('field_default.'.$i) ? ' is-invalid' : '' }}" value="{{ old('field_default.'.$i) }}" placeholder="@if($errors->has('field_default.'.$i)) {{$errors->first('field_default.'.$i)}} @else Default Value <?php endif; ?>" />
 									@if($errors->has('field_default.'.$i))
-									<p style="color:red">{{$errors->first('field_default.'.$i)}}</p> @endif
+									<p style="color:red">{{$errors->first('field_default.'.$i)}}</p> <?php endif; ?>
 								</div>
 							</td>
 							<td>
@@ -173,7 +173,7 @@
 								    </option>
 								</select>
 								@if($errors->has('field_key.'.$i))
-									<p style="color:red">{{$errors->first('field_key.'.$i)}}</p> @endif
+									<p style="color:red">{{$errors->first('field_key.'.$i)}}</p> <?php endif; ?>
 							</td>
 						</tr>
 						@endfor
@@ -190,7 +190,7 @@
 										<option value="timestampsTz">timestampsTz</option>
 									</select>
 									@if($errors->has('field_type.'.($fn+2)))
-									<p style="color:red">{{$errors->first('field_type.'.($fn+2))}}</p> @endif
+									<p style="color:red">{{$errors->first('field_type.'.($fn+2))}}</p> <?php endif; ?>
 								</div>
 							</td>
 							<td>---</td>
@@ -210,7 +210,7 @@
 	$("#field_type_{{$i}}").val("{{old('field_type.'.$i)}}");
 	$("#field_key_{{$i}}").val("{{old('field_key.'.$i)}}");
 	@endfor
-@endif
+<?php endif; ?>
 	var types = {'decimal':'8,2','unsignedDecimal':'8,2','float':'8,2','double':'','char':'1','string':'255','enum':'option1, option2, option3'};
 	function ls(i){
 		$("#field_param_"+String(i)).attr('disabled', false);
@@ -281,7 +281,7 @@
 		getData(id);
 	}
 </script>
-@endif
+<?php endif; ?>
 <?php require($app_key.'/views/layouts/scripts.html'); ?>
 </body>
 </html>

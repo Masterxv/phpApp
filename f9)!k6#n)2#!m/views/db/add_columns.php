@@ -8,7 +8,7 @@
 </head>
 <body>
 <?php require($app_key.'/views/layouts/nav.php'); ?>
-<form id="form_create_table" method="post" action="{{ route("c.db.add.columns.submit") }}">
+<form id="form_create_table" method="post" action="/table/add_columns">
 <input type="hidden" name="_token" value="<?php echo $rand; ?>"/>
 <input type="hidden" name="name" value="{{$table}}"/>
 <div class="container-fluid">
@@ -19,7 +19,7 @@
 		<div class="col-md-6">
 			<div class="btn-group" style="float:right;">
 				<button type="submit" class="btn btn-default">Update Table</button>
-				<a class="btn btn-default" href="{{route('c.table.list.view')}}">Back</a>
+				<a class="btn btn-default" href="/table/table_list">Back</a>
 			</div>
 		</div>
 	</div>
@@ -46,7 +46,7 @@
 								<div class="form-group">
 									<input type="text" name="field_name[{{$i}}]" class="form-control" placeholder="Field Name" value="{{ old('field_name.'.$i) }}" />
 									@if($errors->has('field_name.'.$i))
-								<p style="color:red">{{$errors->first('field_name.'.$i)}}</p> @endif
+								<p style="color:red">{{$errors->first('field_name.'.$i)}}</p> <?php endif; ?>
 								</div>
 							</td>
 							<td>
@@ -113,21 +113,21 @@
     </optgroup>
 </select>
 @if($errors->has('field_type_.'.$i))
-									<p style="color:red">{{$errors->first('field_type_.'.$i)}}</p> @endif
+									<p style="color:red">{{$errors->first('field_type_.'.$i)}}</p> <?php endif; ?>
 								</div>
 							</td>
 							<td>
 								<div class="form-group">
 									<input type="text" id="field_param_{{$i}}" name="field_param[{{$i}}]" class="form-control" placeholder="Length/Value" value="{{ old('field_param.'.$i) }}" />
 									@if($errors->has('field_param.'.$i))
-									<p style="color:red">{{$errors->first('field_param.'.$i)}}</p> @endif
+									<p style="color:red">{{$errors->first('field_param.'.$i)}}</p> <?php endif; ?>
 								</div>
 							</td>
 							<td>
 								<div class="form-group">
 									<input type="text" name="field_default[{{$i}}]" class="form-control" placeholder="Default Value" value="{{ old('field_default.'.$i) }}" />
 									@if($errors->has('field_default.'.$i))
-									<p style="color:red">{{$errors->first('field_default.'.$i)}}</p> @endif
+									<p style="color:red">{{$errors->first('field_default.'.$i)}}</p> <?php endif; ?>
 								</div>
 							</td>
 							<td>
@@ -138,17 +138,17 @@
 								    <option value="index">INDEX</option>
 								</select>
 								@if($errors->has('field_key.'.$i))
-									<p style="color:red">{{$errors->first('field_key.'.$i)}}</p> @endif
+									<p style="color:red">{{$errors->first('field_key.'.$i)}}</p> <?php endif; ?>
 							</td>
 							<td>
 								<select id="field_pos_{{$i}}" name="field_pos[{{$i}}]" class="form-control">
 								    <option>---</option>
 								    @foreach($fields as $key => $field)
 								    <option>{{$field}}</option>
-								    @endforeach
+								    <?php endforeach; ?>
 								</select>
 								@if($errors->has('field_pos.'.$i))
-									<p style="color:red">{{$errors->first('field_pos.'.$i)}}</p> @endif
+									<p style="color:red">{{$errors->first('field_pos.'.$i)}}</p> <?php endif; ?>
 							</td>
 						</tr>
 						@endfor
@@ -167,7 +167,7 @@
 	$("#field_key_{{$i}}").val("{{old('field_key.'.$i)}}");
 	$("#field_pos_{{$i}}").val("{{old('field_pos.'.$i)}}");
 	@endfor
-@endif
+<?php endif; ?>
 	var types = {'decimal':'8,2','unsignedDecimal':'8,2','float':'8,2','double':'','char':'1','string':'255','enum':'option1, option2, option3'};
 	function ls(i){
 		$("#field_param_"+String(i)).attr('disabled', false);

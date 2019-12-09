@@ -22,7 +22,7 @@ if($conn->query('select 1 from users LIMIT 1') === FALSE)
 	online_status VARCHAR(255) DEFAULT 'offline',
 	chat_resource_id INT(6) UNSIGNED DEFAULT 0,
 	chat_friends TEXT,
-	email_varification VARCHAR(64),
+	email_verification VARCHAR(64),
 	password_reset_code VARCHAR(64),
 	blocked boolean DEFAULT 0,
 	recharge_balance DECIMAL(8,2),

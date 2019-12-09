@@ -17,7 +17,7 @@
 		<div class="col-md-6">
 			<div class="btn-group" style="float:right;">
 				<button class="btn btn-default" onclick="saveUserNameFields()">Save User Name Fields</button>
-				<a class="btn btn-default" href="{{route('c.app.list.view')}}">Back</a>
+				<a class="btn btn-default" href="/app/app_list">Back</a>
 			</div>
 		</div>
 	</div>
@@ -43,12 +43,12 @@
 								<select class="form-control" id="s{{$a}}">
 									@foreach($fields[$a] as $field)
 									<option>{{$field}}</option>
-									@endforeach
+									<?php endforeach; ?>
 								</select>
 							</td>
 							<td><button class="btn btn-default" onclick="toggleUserNameField('{{$a}}')">Toggle</button></td>
 						</tr>
-						@endforeach
+						<?php endforeach; ?>
 					</tbody>
 				</table>
 			</div>
@@ -74,7 +74,7 @@
 				let arr = t?t.split(','):[];
 				unf[ap[i]] = arr;
 			};
-			$.post("{{ route('c.app.user.name.fields.save') }}", {'_token':'<?php echo $rand; ?>','id':{{$id}}, 'user_name_fields':JSON.stringify(unf) },function(data,status){
+			$.post("/app/save_user_name_fields", {'_token':'<?php echo $rand; ?>','id':'<?php echo $id; ?>', 'user_name_fields':JSON.stringify(unf) },function(data,status){
 				if(data['status'] == 'success'){
 			        $('#alrt').html('<div class="alert alert-success"><strong>Success!</strong> User name fields saved successfully.</div>');
 			    }else{

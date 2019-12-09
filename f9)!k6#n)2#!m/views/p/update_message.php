@@ -39,7 +39,7 @@
 					<div class="col-md-6">
 						<input id="title" type="text" class="form-control" name="title" placeholder="title" value="{{old('title')}}">
 						@if($errors->has('title'))
-						<p style="color:red">{{$errors->first('title')}}</p> @endif
+						<p style="color:red">{{$errors->first('title')}}</p> <?php endif; ?>
 					</div>
 				</div><hr>
 				<div class="form-group row">
@@ -50,7 +50,7 @@
 					<div class="col-md-6">
 						<textarea id="body" rows="3" class="form-control" name="body" placeholder="body"></textarea>
 						@if($errors->has('body'))
-						<p style="color:red">{{$errors->first('body')}}</p> @endif
+						<p style="color:red">{{$errors->first('body')}}</p> <?php endif; ?>
 					</div>
 				</div><hr>
 				<div class="form-group row">
@@ -61,7 +61,7 @@
 					<div class="col-md-6">
 						<textarea id="icon" rows="3" class="form-control" name="icon" placeholder="icon"></textarea>
 						@if($errors->has('icon'))
-						<p style="color:red">{{$errors->first('icon')}}</p> @endif
+						<p style="color:red">{{$errors->first('icon')}}</p> <?php endif; ?>
 					</div>
 				</div>
 				<div class="form-group row">
@@ -72,7 +72,7 @@
 					<div class="col-md-6">
 						<textarea id="image" rows="3" class="form-control" name="image" placeholder="image"></textarea>
 						@if($errors->has('image'))
-						<p style="color:red">{{$errors->first('image')}}</p> @endif
+						<p style="color:red">{{$errors->first('image')}}</p> <?php endif; ?>
 					</div>
 				</div>
 				<div class="form-group row">
@@ -83,7 +83,7 @@
 					<div class="col-md-6">
 						<textarea id="badge" rows="3" class="form-control" name="badge" placeholder="badge"></textarea>
 						@if($errors->has('badge'))
-						<p style="color:red">{{$errors->first('badge')}}</p> @endif
+						<p style="color:red">{{$errors->first('badge')}}</p> <?php endif; ?>
 					</div>
 				</div><hr>
 				<div class="form-group row">
@@ -94,7 +94,7 @@
 					<div class="col-md-6">
 						<textarea id="sound" rows="3" class="form-control" name="sound" placeholder="sound"></textarea>
 						@if($errors->has('sound'))
-						<p style="color:red">{{$errors->first('sound')}}</p> @endif
+						<p style="color:red">{{$errors->first('sound')}}</p> <?php endif; ?>
 					</div>
 				</div>
 				<div class="form-group row">
@@ -105,7 +105,7 @@
 					<div class="col-md-6">
 						<textarea id="vibrate" rows="3" class="form-control" name="vibrate" placeholder="vibrate"></textarea>
 						@if($errors->has('vibrate'))
-						<p style="color:red">{{$errors->first('vibrate')}}</p> @endif
+						<p style="color:red">{{$errors->first('vibrate')}}</p> <?php endif; ?>
 					</div>
 				</div><hr>
 				<div class="form-group row">
@@ -116,7 +116,7 @@
 					<div class="col-md-6">
 						<input id="dir" type="text" class="form-control" name="dir" placeholder="dir" value="{{old('dir')}}">
 						@if($errors->has('dir'))
-						<p style="color:red">{{$errors->first('dir')}}</p> @endif
+						<p style="color:red">{{$errors->first('dir')}}</p> <?php endif; ?>
 					</div>
 				</div>
 				<div class="form-group row">
@@ -127,7 +127,7 @@
 					<div class="col-md-6">
 						<input id="tag" type="text" class="form-control" name="tag" placeholder="tag" value="{{old('tag')}}">
 						@if($errors->has('tag'))
-						<p style="color:red">{{$errors->first('tag')}}</p> @endif
+						<p style="color:red">{{$errors->first('tag')}}</p> <?php endif; ?>
 					</div>
 				</div>
 				<div class="form-group row">
@@ -138,7 +138,7 @@
 					<div class="col-md-6">
 						<input id="data" type="text" class="form-control" name="data" placeholder="data" value="{{old('data')}}">
 						@if($errors->has('data'))
-						<p style="color:red">{{$errors->first('data')}}</p> @endif
+						<p style="color:red">{{$errors->first('data')}}</p> <?php endif; ?>
 					</div>
 				</div><hr>
 				<div class="form-group row">
@@ -149,7 +149,7 @@
 					<div class="col-md-6">
 						<input id="requireInteraction" type="number" class="form-control" name="requireInteraction" placeholder="requireInteraction" value="{{old('requireInteraction')}}">
 						@if($errors->has('requireInteraction'))
-						<p style="color:red">{{$errors->first('requireInteraction')}}</p> @endif
+						<p style="color:red">{{$errors->first('requireInteraction')}}</p> <?php endif; ?>
 					</div>
 				</div>
 				<div class="form-group row">
@@ -160,7 +160,7 @@
 					<div class="col-md-6">
 						<input id="renotify" type="number" class="form-control" name="renotify" placeholder="renotify" value="{{old('renotify')}}">
 						@if($errors->has('renotify'))
-						<p style="color:red">{{$errors->first('renotify')}}</p> @endif
+						<p style="color:red">{{$errors->first('renotify')}}</p> <?php endif; ?>
 					</div>
 				</div>
 				<div class="form-group row">
@@ -171,7 +171,7 @@
 					<div class="col-md-6">
 						<input id="silent" type="number" class="form-control" name="silent" placeholder="silent" value="{{old('silent')}}">
 						@if($errors->has('silent'))
-						<p style="color:red">{{$errors->first('silent')}}</p> @endif
+						<p style="color:red">{{$errors->first('silent')}}</p> <?php endif; ?>
 					</div>
 				</div><hr>
 				<div class="form-group row">
@@ -183,7 +183,7 @@
 						<div class="well well-sm" id="afields" style="word-break: break-all">none</div>
 						<input id="aid" type="hidden" name="actions" />
 						@if($errors->has('actions'))
-						<p style="color:red">{{$errors->first('actions')}}</p> @endif
+						<p style="color:red">{{$errors->first('actions')}}</p> <?php endif; ?>
 						<div class="form-group row">
 							<div class="col-md-1"></div>
 							<div class="col-md-10">
@@ -218,7 +218,7 @@
 					<div class="col-md-6">
 						<input id="timestamp" type="number" class="form-control" name="timestamp" placeholder="timestamp" value="{{old('timestamp')}}">
 						@if($errors->has('timestamp'))
-						<p style="color:red">{{$errors->first('timestamp')}}</p> @endif
+						<p style="color:red">{{$errors->first('timestamp')}}</p> <?php endif; ?>
 					</div>
 				</div><hr>
 				<div class="form-group row">
@@ -229,7 +229,7 @@
 					<div class="col-md-6">
 						<input id="lang" type="text" class="form-control" name="lang" placeholder="lang" value="{{old('lang')}}">
 						@if($errors->has('lang'))
-						<p style="color:red">{{$errors->first('lang')}}</p> @endif
+						<p style="color:red">{{$errors->first('lang')}}</p> <?php endif; ?>
 					</div>
 				</div>
 				<div class="form-group row">

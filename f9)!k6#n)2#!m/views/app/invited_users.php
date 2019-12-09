@@ -19,7 +19,7 @@
       <div class="col-md-6">
         <div class="btn-group" style="float:right"> 
           <button class="btn btn-default" data-toggle="modal" data-target="#inviteNewUser">Invite New User</button>
-          <a class="btn btn-default" href="{{route('c.app.list.view')}}">Back</a>
+          <a class="btn btn-default" href="/app/app_list">Back</a>
         </div>
       </div>
     </div>
@@ -42,7 +42,7 @@
               <td>{{$user->email}}</td>
               <td><a href="JavaScript:void(0);" onclick="deleteUser('{{$user->id}}')">Delete</a></td>
             </tr>
-            @endforeach
+            <?php endforeach; ?>
   				</tbody>
   			</table>
   		</div>
@@ -50,7 +50,7 @@
   </div>
   <script>
     function deleteUser(id){
-      $.post("{{route('c.invited.delete.user')}}",{"_method":"delete","_token":"<?php echo $rand; ?>","app_id":"{{$id}}","user_id":id}, function(data, status){
+      $.post("/app/delete_invited_user",{"_method":"delete","_token":"<?php echo $rand; ?>","app_id":"{{$id}}","user_id":id}, function(data, status){
         if(status == 'success'){
           $('#r'+id).remove();
           $('#alrt').html('<div class="alert alert-success"><strong>Success!</strong> User was successfully removed.</div>');
@@ -68,7 +68,7 @@
 
       <!-- Modal content-->
       <div class="modal-content">
-        <form method="post" action="{{ route('c.invited.new.user.submit') }}" >
+        <form method="post" action="/app/new_invited_user" >
         <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>

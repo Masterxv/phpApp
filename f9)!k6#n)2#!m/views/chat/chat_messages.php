@@ -58,11 +58,13 @@
             <td><a style="cursor: pointer;" onclick="updateMsgDialog('{{$message->id}}','{{$message->message}}','{{$message->style}}','{{$message->status}}')">Update</a></td>
             <td><a style="cursor: pointer;" onclick="delMsg('{{$message->id}}')">Delete</a></td>
           </tr>
-          @endforeach
+          <?php endforeach; ?>
 				</tbody>
 			</table>
-      {{$messages->appends(request()->input())->links()}}
 		</div>
+    <div class="col-md-12">
+      <?php include($app_key.'/layouts/pagination.php') ?>
+    </div>
 	</div>
 </div>
 <script>

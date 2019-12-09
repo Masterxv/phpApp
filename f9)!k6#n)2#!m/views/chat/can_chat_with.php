@@ -31,8 +31,8 @@
             <div class="col-md-12">
             <p>{{$a}} can chat with all users of:-</p>
             @foreach($ap as $b)
-              <div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="ap('{{$a}}','{{$b}}')" @empty($ccw[$a.':'.$b]) @else @if($ccw[$a.':'.$b]=='*') checked @endif @endempty>{{$b}}</label></div>
-            @endforeach
+              <div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="ap('{{$a}}','{{$b}}')" @empty($ccw[$a.':'.$b]) @else @if($ccw[$a.':'.$b]=='*') checked <?php endif; ?> @endempty>{{$b}}</label></div>
+            <?php endforeach; ?>
             </div>
           </div>
           <div class="well well-sm" id="s{{$a}}"></div>
@@ -40,13 +40,13 @@
             <div class="col-md-12">
             <p>{{$a}} can chat with only users listed in field:-</p>
             @foreach($ap as $b)
-              <div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="sp('{{$a}}','{{$b}}')" @empty($ccw[$a.':'.$b]) @else @if($ccw[$a.':'.$b]==1) checked @endif @endempty>chat_{{$b}}</label></div>
-            @endforeach
+              <div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="sp('{{$a}}','{{$b}}')" @empty($ccw[$a.':'.$b]) @else @if($ccw[$a.':'.$b]==1) checked <?php endif; ?> @endempty>chat_{{$b}}</label></div>
+            <?php endforeach; ?>
             </div>
           </div>
         </div>      
       </div><hr>
-      @endforeach
+      <?php endforeach; ?>
       <div class="form-group row">
         <div class="col-md-1"></div>
         <div class="col-md-4">
@@ -57,8 +57,8 @@
           <div class="row">
             <div class="col-md-12">
             @foreach($ap as $b)
-              <div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="ca('{{$b}}')" @empty($ccw['chat_admins']) @else @if(in_array($b, $ca)) checked @endif @endempty>{{$b}}</label></div>
-            @endforeach
+              <div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="ca('{{$b}}')" @empty($ccw['chat_admins']) @else @if(in_array($b, $ca)) checked <?php endif; ?> @endempty>{{$b}}</label></div>
+            <?php endforeach; ?>
             </div>
           </div>
         </div>      
@@ -71,7 +71,7 @@
         <div class="col-md-6">
           <div class="row">
             <div class="col-md-12">
-              <select id="group_chat" class="form-control">@foreach(array_merge(['-'],$ap) as $b)<option @empty($ccw['group_chat']) @else selected @endempty>{{$b}}</option>@endforeach</select>
+              <select id="group_chat" class="form-control">@foreach(array_merge(['-'],$ap) as $b)<option @empty($ccw['group_chat']) @else selected @endempty>{{$b}}</option><?php endforeach; ?></select>
             </div>
           </div>
         </div>      

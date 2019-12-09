@@ -13,7 +13,7 @@
 	<div class="row">
 		<div class="col-md-12 text-center">
 			Customize Validation Messages <div class="input-group" style="float:right;">
-				<a class="btn btn-default" href="{{route('c.query.list.view')}}">Back</a></div>
+				<a class="btn btn-default" href="/query/query_list">Back</a></div>
 		</div>
 	</div><hr>
 	<div class="row">
@@ -37,11 +37,13 @@
 						<td>{{$rules[$rule->rule]??''}}</td>
 						<td><a style="cursor: pointer;" onclick="showDialog('{{$rule->error_message}}','{{$rule->rule}}')">Add Custom Error Message</a></td>
 					</tr>
-					@endforeach
+					<?php endforeach; ?>
 				</tbody>
 			</table>
-			{{$crules->appends(request()->input())->links()}}
 		</div>
+	    <div class="col-md-12">
+	      <?php include($app_key.'/layouts/pagination.php') ?>
+	    </div>
 	</div>
 	<div class="alert alert-info"><strong>Info!</strong> Custom error messages supercedes default error messages</div>
 </div>
@@ -56,7 +58,7 @@
 		$("#addCustomErrorMessage").modal();
 	}
 	function addCustomErrorMessage(){
-		$.post("{{ route('c.query.valid.msg.submit') }}",{'_token':'<?php echo $rand; ?>','rule':$("#rule").val(), 'error_message':$("#error_message").val()}, function(data, status){
+		$.post("/query/custom_valid_msg_submit",{'_token':'<?php echo $rand; ?>','rule':$("#rule").val(), 'error_message':$("#error_message").val()}, function(data, status){
 			$("#addCustomErrorMessage").modal('hide');
 			if(status=='success'){
 				if(data['status']=='success'){

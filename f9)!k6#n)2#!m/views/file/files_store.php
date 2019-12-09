@@ -64,12 +64,11 @@
                           <input type="hidden" name="success" />
                       </form>
               <label class="link"><a href="JavaScript:void(0);" onclick="$('#delfile{{($key + 1)}}').submit()">Delete</a></label></td>
-            @endif
+            <?php endif; ?>
           </tr>
-          @endforeach
+          <?php endforeach; ?>
 				</tbody>
 			</table>
-      {{$files->appends(request()->input())->links()}}
       @if(false)
       <form id="replaceFile" method="post" action="{{route('c.files.replace')}}" enctype="multipart/form-data" style="display: none;">
           <input type="hidden" name="_token" value="<?php echo $rand; ?>">
@@ -77,8 +76,11 @@
           <input type="hidden" name="success" />
           <input type="file" name="file" id="file" onchange="$('#replaceFile').submit()">
       </form>
-      @endif
+      <?php endif; ?>
 		</div>
+    <div class="col-md-12">
+      <?php include($app_key.'/layouts/pagination.php') ?>
+    </div>
 	</div>
 </div>
 <script>
@@ -90,7 +92,7 @@
     // }
     $('#id').val(id);
   }
-  @endif
+  <?php endif; ?>
   function deleteFile(id, file_name){
     var bool = confirm("Are you sure! you want to remove file " + file_name);
     if(!bool){

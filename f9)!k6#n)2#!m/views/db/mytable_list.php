@@ -54,7 +54,7 @@
               <td><a href="JavaScript:void(0);" onclick="deleteField('{{$table['name']}}')">Delete Field</a></td>
               <td><a href="JavaScript:void(0);" onclick="addIndex('{{$table['name']}}')">Add Index</a></td>
               <td><a href="JavaScript:void(0);" onclick="removeIndex('{{$table['name']}}')">Remove Index</a></td>
-              <td><a href="{{route('c.db.crud.table')}}?table={{$table['name']}}">CRUD</a></td>
+              <td><a href="/table/crud_view?table={{$table['name']}}">CRUD</a></td>
               <td><a href="JavaScript:void(0);" onclick="renameTable('{{$table['name']}}', {{$key}})" >Rename Table</a></td>
               <td><a href="JavaScript:void(0);" onclick="truncate('{{$table['name']}}', {{$key}})" >Truncate Table</a></td>
               <td><a href="JavaScript:void(0);" onclick="deleteTable('{{$table['name']}}', {{$key}})" >Delete Table</a></td>
@@ -95,27 +95,30 @@
                 <label for="ujf{{($key + 1)}}" class="link"><a>JSON</a></label>
               </td>
             </tr>
-            @endforeach
+            <?php endforeach; ?>
   				</tbody>
   			</table>
       </div>
-      @if($np>1)
+      <div class="col-md-12">
+        <?php include($app_key.'/layouts/pagination.php') ?>
+      </div>
+      <!-- @if($np>1)
       <div class="pagination">
-        @if($page==1)<a class="disabled">&laquo;</a>@endif
-        @if($page!=1)<a href="{{$urls[$page-2]}}" rel="prev">&laquo;</a>@endif
+        @if($page==1)<a class="disabled">&laquo;</a><?php endif; ?>
+        @if($page!=1)<a href="{{$urls[$page-2]}}" rel="prev">&laquo;</a><?php endif; ?>
 
         @foreach($urls as $url)
         @if($loop->index + 1 == $page)
         <a class="active">{{ $page }}</a>
         @else
         <a href="{{ $url }}">{{$loop->index+1}}</a>
-        @endif
-        @endforeach
+        <?php endif; ?>
+        <?php endforeach; ?>
 
-        @if($page==$np)<a class="disabled">&raquo;</a>@endif
-        @if($page!=$np)<a href="{{$urls[$page]}}" rel="next">&raquo;</a>@endif
+        @if($page==$np)<a class="disabled">&raquo;</a><?php endif; ?>
+        @if($page!=$np)<a href="{{$urls[$page]}}" rel="next">&raquo;</a><?php endif; ?>
       </div>
-      @endif
+      <?php endif; ?> -->
 		</div>
 	</div>
 </div>
@@ -127,7 +130,7 @@
     $("#renameTable").modal();
   }
   function renameTableRequest(){
-    $.post("{{route('c.db.rename.table')}}", $("#renameTableForm").serialize(), function(data){
+    $.post("/table/rename", $("#renameTableForm").serialize(), function(data){
        if(data.status == "success"){
           $('#renameTable').modal('toggle');
           $("#r"+String(key+1) + " td:nth(1)").html(data.new_name);
@@ -142,7 +145,7 @@
   function truncate(table, key){
     var check = confirm("Are you sure you want to truncate this table");
     if(check){
-      $.post("{{route('c.truncate.table')}}", {"table":table,"_token":"<?php echo $rand; ?>"}, function(data){
+      $.post("/table/truncate", {"table":table,"_token":"<?php echo $rand; ?>"}, function(data){
         if(data.status == "success"){
           var ht = '<div class="alert alert-success text-center"><strong>Success!</strong> Table '+table+' truncated successfully!</div>';
             $('#alrt').html(ht);
@@ -156,7 +159,7 @@
   function deleteTable(table, key){
     var check = confirm("Are you sure you want to delete this table");
     if(check){
-      $.post("{{route('c.delete.table')}}", {"table":table,"_token":"<?php echo $rand; ?>"}, function(data){
+      $.post("/table/delete", {"table":table,"_token":"<?php echo $rand; ?>"}, function(data){
         if(data.status == "success"){
           $("#r"+String(key+1)).remove();
           var ht = '<div class="alert alert-success text-center"><strong>Success!</strong> Table '+table+' deleted successfully!</div>';
@@ -177,11 +180,11 @@
   }
   function renameField(table){
     $(".selectedTable").val(table);
-    $.get("{{route('c.db.get.columns')}}", {"table":table}, function(data){$(".field_names").html(data);});
+    $.get("/table/get_columns", {"table":table}, function(data){$(".field_names").html(data);});
     $("#renameField").modal();
   }
   function renameFieldRequest(){
-    $.post("{{route('c.db.rename.column.submit')}}", $("#renameFieldForm").serialize(), function(data){
+    $.post("/table/rename_column", $("#renameFieldForm").serialize(), function(data){
        if(data.status == "success"){
           $('#renameField').modal('toggle');
           var ht = '<div class="alert alert-success text-center"><strong>Success!</strong> Column name changed successfully!</div>';
@@ -194,11 +197,11 @@
   }
   function deleteField(table){
     $(".selectedTable").val(table);
-    $.get("{{route('c.db.get.columns')}}", {"table":table}, function(data){$(".field_names").html(data);});
+    $.get("/table/get_columns", {"table":table}, function(data){$(".field_names").html(data);});
     $("#deleteField").modal();
   }
   function deleteFieldRequest(){
-    $.post("{{route('c.db.delete.column.submit')}}", $("#deleteFieldForm").serialize(), function(data){
+    $.post("/table/delete_column", $("#deleteFieldForm").serialize(), function(data){
        if(data.status == "success"){
           $('#deleteField').modal('toggle');
           var ht = '<div class="alert alert-success text-center"><strong>Success!</strong> Column deleted successfully!</div>';
@@ -211,11 +214,11 @@
   }
   function addIndex(table){
     $(".selectedTable").val(table);
-    $.get("{{route('c.db.get.columns')}}", {"table":table}, function(data){$(".field_names").html(data);});
+    $.get("/table/get_columns", {"table":table}, function(data){$(".field_names").html(data);});
     $("#addIndex").modal();
   }
   function addIndexRequest(){
-    $.post("{{route('c.db.add.index.submit')}}", $("#addIndexForm").serialize(), function(data){
+    $.post("/table/add_index", $("#addIndexForm").serialize(), function(data){
        if(data.status == "success"){
           $('#addIndex').modal('toggle');
           var ht = '<div class="alert alert-success text-center"><strong>Success!</strong> Index added successfully!</div>';
@@ -228,12 +231,12 @@
   }
   function removeIndex(table){
     $(".add-index").html("Remove Index");
-    $("#addIndexForm").attr('action', '{{route('c.db.remove.index.submit')}}');
+    $("#addIndexForm").attr('action', '/table/remove_index');
     $("#ais").attr('onclick', 'removeIndexRequest()');
     addIndex(table);
   }
   function removeIndexRequest(){
-    $.post("{{route('c.db.remove.index.submit')}}", $("#addIndexForm").serialize(), function(data){
+    $.post("/table/remove_index", $("#addIndexForm").serialize(), function(data){
        if(data.status == "success"){
           $('#addIndex').modal('toggle');
           var ht = '<div class="alert alert-success text-center"><strong>Success!</strong> Index deleted successfully!</div>';
@@ -256,7 +259,7 @@
 
     <!-- Modal content-->
     <div class="modal-content">
-      <form id="renameTableForm" method="post" action="{{route('c.db.rename.table')}}">
+      <form id="renameTableForm" method="post" action="/table/rename">
         <input type="hidden" name="table" class="selectedTable" />
         <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
         <div class="modal-header">
@@ -281,7 +284,7 @@
 
     <!-- Modal content-->
     <div class="modal-content">
-      <form id="renameTableForm" method="post" action="{{route('c.db.rename.table')}}">
+      <form id="renameTableForm" method="post" action="/table/rename">
         <input type="hidden" name="table" class="selectedTable" />
         <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
         <div class="modal-header">
@@ -306,7 +309,7 @@
 
     <!-- Modal content-->
     <div class="modal-content">
-      <form method="get" action="{{route('c.db.new.table')}}" >
+      <form method="get" action="/table/new_table_view" >
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Number of fields</h4>
@@ -329,7 +332,7 @@
 
     <!-- Modal content-->
     <div class="modal-content">
-      <form method="get" action="{{route('c.db.add.columns')}}" >
+      <form method="get" action="/table/add_columns_view" >
         <input type="hidden" name="table" class="selectedTable" />
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>

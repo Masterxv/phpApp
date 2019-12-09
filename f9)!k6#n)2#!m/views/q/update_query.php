@@ -12,13 +12,13 @@
 	<div class="row">
 		<div class="col-md-12 text-center">
 			Update Query	<div class="input-group" style="float:right;">
-				<a class="btn btn-default" href="{{route('c.query.list.view')}}">Back</a></div>
+				<a class="btn btn-default" href="/query/query_list">Back</a></div>
 		</div>
 	</div><hr>
 	<div class="row">
 		<div class="col-md-3"></div>
 		<div class="col-md-6">
-			<form method="post" action="{{route('c.update.query', ['id' => $query->id])}}" >
+			<form method="post" action="/query/update/<?php echo $query->id; ?>" >
 				{{ method_field('PUT') }}
 		        <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
 		        <div class="form-group row">
@@ -29,7 +29,7 @@
 					<div class="col-md-6">
 						<input id="name" type="text" class="form-control" name="name" placeholder="Query Nick Name" value="{{old('name')}}">
 						@if($errors->has('name'))
-						<p style="color:red">{{$errors->first('name')}}</p> @endif
+						<p style="color:red">{{$errors->first('name')}}</p> <?php endif; ?>
 					</div>
 				</div><hr>
 				<div class="form-group row">
@@ -41,12 +41,12 @@
 						<input id="auth_providers" type="hidden" class="form-control" name="auth_providers">
 						<div class="well well-sm" id="auth_providers_selected"></div>
 						@if($errors->has('auth_providers'))
-						<p style="color:red">{{$errors->first('auth_providers')}}</p> @endif
+						<p style="color:red">{{$errors->first('auth_providers')}}</p> <?php endif; ?>
 						<div class="row">
 							<div class="col-md-12">
 							@foreach($auth_providers as $auth_provider)
-								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="ap('{{$auth_provider}}')" @if(in_array($auth_provider, explode(', ', $query->auth_providers))) checked @endif >{{$auth_provider}}</label></div>
-							@endforeach
+								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="ap('{{$auth_provider}}')" @if(in_array($auth_provider, explode(', ', $query->auth_providers))) checked <?php endif; ?> >{{$auth_provider}}</label></div>
+							<?php endforeach; ?>
 							</div>
 						</div>
 					</div>			
@@ -62,8 +62,8 @@
 						<div class="row">
 							<div class="col-md-12">
 							@foreach($tables as $table)
-								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="t1('{{$table}}')" @if(in_array($table, explode(', ', $query->tables))) checked @endif>{{$table}}</label></div>
-							@endforeach
+								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="t1('{{$table}}')" @if(in_array($table, explode(', ', $query->tables))) checked <?php endif; ?>>{{$table}}</label></div>
+							<?php endforeach; ?>
 							</div>
 						</div>
 						<a class="btn btn-info btn-sm" onclick="getFiels()">Get Table Fields</a>
@@ -80,8 +80,8 @@
 						<div class="row">
 							<div class="col-md-12">
 								@foreach($commands as $k => $v)
-								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="c('{{$v}}')" @if(in_array($v, explode(', ', $query->commands))) checked @endif>{{$k}}</label></div>
-								@endforeach
+								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="c('{{$v}}')" @if(in_array($v, explode(', ', $query->commands))) checked <?php endif; ?>>{{$k}}</label></div>
+								<?php endforeach; ?>
 							</div>
 						</div>
 					</div>
@@ -141,7 +141,7 @@
 								<select id="jt" class="form-control" onchange="joinTableIndexFields()">
 									@foreach($tables as $table)
 									<option>{{$table}}</option>
-									@endforeach
+									<?php endforeach; ?>
 								</select>
 							</div>
 							<div class="col-md-4">
@@ -241,8 +241,8 @@
 						<div class="row">
 							<div class="col-md-12">
 								@foreach($specials as $sp)
-								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="s('{{$sp}}')" @if(in_array($sp, explode(', ', $query->specials))) checked @endif>{{$sp}}</label></div>
-								@endforeach
+								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="s('{{$sp}}')" @if(in_array($sp, explode(', ', $query->specials))) checked <?php endif; ?>>{{$sp}}</label></div>
+								<?php endforeach; ?>
 							</div>
 						</div>
 					</div>
@@ -402,7 +402,7 @@
 		$("#sid").val(diff.join(", "));
 	}
 	function getFiels(){
-		$.get("{{route('c.q.get.all.columns')}}", {"tables":ts}, function(data){
+		$.get("/query/get_all_columns", {"tables":ts}, function(data){
 			fields = data;
 			var t = '<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="v('+"'%field%'"+')" %chkd%>'+'%field%'+'</label></div>';
 			var tp = '<option>%field%</option>';
@@ -433,7 +433,7 @@
 	}
 	getFiels();
 	function joinTableIndexFields(){
-	    $.get("{{route('c.db.get.columns')}}", {"table":$("#jt").val()}, function(data){$("#jf").html(data);});
+	    $.get("/table/get_columns", {"table":$("#jt").val()}, function(data){$("#jf").html(data);});
 	}
 </script>
 <?php require($app_key.'/views/layouts/scripts.html'); ?>

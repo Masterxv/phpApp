@@ -51,10 +51,12 @@
               <td>{{$r->push_sent}}</td>
               <td>{{$r->chat_messages}}</td>
             </tr>
-            @endforeach
+            <?php endforeach; ?>
           </tbody>
         </table>
-        {{$ur->appends(request()->input())->links()}}
+      </div>
+      <div class="col-md-12">
+        <?php include($app_key.'/layouts/pagination.php') ?>
       </div>
     </div>
   </div>

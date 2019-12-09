@@ -13,13 +13,13 @@
 		@isset($domain)
 		@if($domain->verified == 'done')
 		<div class="alert alert-success text-center"><strong>{{$domain->name}}</strong> Verified already!</div>
-		@endif
+		<?php endif; ?>
 		@endisset
 	</div>
 	<div class="row">
 		<div class="col-md-12 text-center">
 			<caption class="">
-			@isset($domain) @if($domain->verified != 'done') Verify ownership of the domain <strong>{{$domain->name}}</strong> @endif @else Add New Domain @endisset
+			@isset($domain) @if($domain->verified != 'done') Verify ownership of the domain <strong>{{$domain->name}}</strong> <?php endif; ?> @else Add New Domain @endisset
 			<div class="input-group" style="float:right;">
 				<a class="btn btn-default" href="{{route('c.domain.list.view')}}">Back</a></div></caption>
 		</div>
@@ -74,7 +74,7 @@
 			</script>
 		</div>
 	</div>
-	@endif
+	<?php endif; ?>
 	@endisset
 </div>
 <?php require($app_key.'/views/layouts/scripts.html'); ?>

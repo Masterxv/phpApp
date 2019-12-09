@@ -52,10 +52,12 @@
             <td><a style="cursor: pointer;" onclick="updateMsgDialog('{{$request->id}}','','','{{$request->status}}')">Update</a></td>
             <td><a style="cursor: pointer;" onclick="delMsg('{{$request->id}}')">Delete</a></td>
           </tr>
-          @endforeach
+          <?php endforeach; ?>
         </tbody>
       </table>
-      {{$requests->appends(request()->input())->links()}}
+    </div>
+    <div class="col-md-12">
+      <?php include($app_key.'/layouts/pagination.php') ?>
     </div>
   </div>
 </div>

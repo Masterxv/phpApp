@@ -16,8 +16,8 @@
 		</div>
 		<div class="col-md-6">
 			<div class="btn-group" style="float:right;">
-				<a class="btn btn-default" href="{{route('c.db.add.record')}}?table={{$table}}">Add New Record</a>
-				<a class="btn btn-default" href="{{route('c.table.list.view')}}">Back</a>
+				<a class="btn btn-default" href="/table/add_record?table={{$table}}">Add New Record</a>
+				<a class="btn btn-default" href="/table/table_list">Back</a>
 			</div>
 		</div>
 	</div>
@@ -29,7 +29,7 @@
 						<tr>
 							@foreach($td as $k => $v)
 							<th>{{$v->Field}}</th>
-							@endforeach
+							<?php endforeach; ?>
 						</tr>
 					</thead>
 					<tbody>
@@ -37,21 +37,23 @@
 						<tr id="r{{$record->id}}">
 							@foreach($td as $k => $v)
 							<td style="word-break: break-all;">{{$record[$v->Field]}}</td>
-							@endforeach
-							<td><a href="{{route('c.db.edit.record')}}?table={{$table}}&id={{$record->id??''}}" >Edit</a></td>
+							<?php endforeach; ?>
+							<td><a href="/table/edit_record_view?table={{$table}}&id={{$record->id??''}}" >Edit</a></td>
 							<td><a style="cursor: pointer;" onclick="d('{{$record->id}}', '{{$table}}')">Delete</a></td>
 						</tr>
-						@endforeach
+						<?php endforeach; ?>
 					</tbody>
 				</table>
-				{{$records->appends(request()->input())->links()}}
 			</div>
+	        <div class="col-md-12">
+	          <?php include($app_key.'/layouts/pagination.php') ?>
+	        </div>
 		</div>
 	</div>
 </div>
 <script>
   function d(id, table){
-    $.post("{{ route('c.db.delete.record') }}", {"_token":"<?php echo $rand; ?>", "id":id, "table":table, "_method":"DELETE"}, function(data) {
+    $.post("/table/delete_record", {"_token":"<?php echo $rand; ?>", "id":id, "table":table, "_method":"DELETE"}, function(data) {
       if(data['status'] == 'success'){
         $('#r'+id).remove();
         $('#alrt').html('<div class="alert alert-success"><strong>Success!</strong> Record was successfully removed.</div>');

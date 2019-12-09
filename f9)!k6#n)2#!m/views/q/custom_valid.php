@@ -21,7 +21,7 @@
 		<div class="col-md-6">
 			<div class="btn-group" style="float:right;">
 				<a class="btn btn-default" onclick="addRule()">Add Validation Rule</a>
-				<a class="btn btn-default" href="{{route('c.query.list.view')}}">Back</a></div>
+				<a class="btn btn-default" href="/query/query_list">Back</a></div>
 		</div>
 	</div><hr>
 	<div class="row">
@@ -44,11 +44,13 @@
 						<td><a style="cursor: pointer;" onclick="editRule('{{$frule->field}}','{{$frule->rule}}','{{$frule->id}}')">edit</a></td>
 						<td><a style="cursor: pointer;" onclick="deleteRule('{{$frule->id}}')">delete</a></td>
 					</tr>
-					@endforeach
+					<?php endforeach; ?>
 				</tbody>
 			</table>
-			{{$frules->appends(request()->input())->links()}}
 		</div>
+	    <div class="col-md-12">
+	      <?php include($app_key.'/layouts/pagination.php') ?>
+	    </div>
 	</div>
 </div>
 
@@ -177,7 +179,7 @@
 		$("#rpfields").html(arr2.join(','));
 	}
 	function deleteRule(id){
-		$.post('{{ route('c.query.valid.delete') }}',{'_method':'delete','id':id,'_token':'<?php echo $rand; ?>'},function (data, status) {
+		$.post('/query/custom_valid_delete',{'_method':'delete','id':id,'_token':'<?php echo $rand; ?>'},function (data, status) {
 			if(status=='success'){
 				$('#r'+id).remove();
 				$('#alrt').html('<div class="alert alert-success"><strong>Success!</strong> Validation rule was successfully removed.</div>');
@@ -248,7 +250,7 @@
 		}
 	}
 	function refreshTableFields(){
-		$.get("{{route('c.db.get.columns')}}", {"table":$("#param_table").val()}, function(data){
+		$.get("/table/get_columns", {"table":$("#param_table").val()}, function(data){
 			$("#param_field3").html('<option value="" disabled selected>Select Field Name</option>'+data);
 			$("#param_field3").show();
 			if($("#srule").val() == 'unique'){
@@ -268,7 +270,7 @@
       <div class="modal-header">
         <h4 class="modal-title" id="rule_title">Add Validation Rule</h4>
       </div>
-      <form method="post" action="{{route('c.query.valid.submit')}}" >
+      <form method="post" action="/query/custom_valid_submit" >
 	  <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
 	  <input type="hidden" id="rule_id" name="rule_id" />
       <div class="modal-body">
@@ -281,7 +283,7 @@
 				<select id="field" class="form-control" name="field">
 					@foreach($fields as $field)
 					<option>{{$field}}</option>
-					@endforeach
+					<?php endforeach; ?>
 				</select>
 			</div>
 		</div>
@@ -299,7 +301,7 @@
 							<select class="form-control" id="srule" onchange="ruleChange()">
 								@foreach($rules as $rule)
 								<option>{{$rule}}</option>
-								@endforeach
+								<?php endforeach; ?>
 							</select><a class="btn btn-info input-group-addon" onclick="toggleRule()">Toggle</a>
 						</div>
 						<p style="color:red" id="rperror">Rule parameters are not set.</p>
@@ -333,7 +335,7 @@
 					<optgroup label="Date Fields">
 						@foreach($date_fields as $field)
 						<option>{{$field}}</option>
-						@endforeach
+						<?php endforeach; ?>
 					</optgroup>
 				</select>
 				<input type="date" id="date_value" class="form-control">
@@ -349,7 +351,7 @@
 					<option value="" disabled selected>Select Table Name</option>
 					@foreach($tables as $table)
 					<option>{{$table}}</option>
-					@endforeach
+					<?php endforeach; ?>
 				</select><br>
 				<select id="param_field3" class="form-control"></select><br>
 				<input type='number' id="except" class="form-control" placeholder="Except Id">
@@ -365,7 +367,7 @@
 					<option value="" disabled selected>Select Table Name</option>
 					@foreach($tables as $table)
 					<option>{{$table}}</option>
-					@endforeach
+					<?php endforeach; ?>
 				</select><br>
 				<select id="param_field3" class="form-control"></select>
 			</div>
@@ -380,7 +382,7 @@
 					<option value="" disabled selected>Select Field Name</option>
 					@foreach($fields as $field)
 					<option>{{$field}}</option>
-					@endforeach
+					<?php endforeach; ?>
 				</select>
 			</div>
 		</div>
@@ -393,7 +395,7 @@
 				<select id="param_field" class="form-control">
 					@foreach($fields as $field)
 					<option>{{$field}}</option>
-					@endforeach
+					<?php endforeach; ?>
 				</select>
 				<input type="text" class="form-control" id="param2"/>
 			</div>
@@ -409,7 +411,7 @@
 					<select id="param_field2" class="form-control">
 						@foreach($fields as $field)
 						<option>{{$field}}</option>
-						@endforeach
+						<?php endforeach; ?>
 					</select><a class="btn btn-info input-group-addon" id="rpt" onclick="toggleFields()">Toggle</a>
 				</div>
 			</div>
@@ -475,7 +477,7 @@
 					<optgroup label="Date Fields">
 						@foreach($date_fields as $field)
 						<option>{{$field}}</option>
-						@endforeach
+						<?php endforeach; ?>
 					</optgroup>
 				</select>
 				<input type="date" id="date_value" class="form-control">
@@ -483,21 +485,21 @@
 					<option value="" disabled selected>Select Table Name</option>
 					@foreach($tables as $table)
 					<option>{{$table}}</option>
-					@endforeach
+					<?php endforeach; ?>
 				</select>
 				<select id="param_field3" class="form-control"></select>
 				<select id="param_field" class="form-control">
 					<option value="" disabled selected>Select Field Name</option>
 					@foreach($fields as $field)
 					<option>{{$field}}</option>
-					@endforeach
+					<?php endforeach; ?>
 				</select>
 				<div class="well well-sm" id="rpfields" style="word-break: break-all;">none</div>
 				<div class="input-group" id="rpf">
 					<select id="param_field2" class="form-control">
 						@foreach($fields as $field)
 						<option>{{$field}}</option>
-						@endforeach
+						<?php endforeach; ?>
 					</select><a class="btn btn-info input-group-addon" id="rpt" onclick="toggleFields()">Toggle</a>
 				</div>
 				<input type="text" class="form-control" id="param"/>

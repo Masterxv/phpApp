@@ -17,8 +17,8 @@
       </div>
       <div class="col-md-4">
         <div class="btn-group" style="float:right">
-          <a class="btn btn-default" href="{{ route('c.app.list.view') }}">My Apps</a>
-          <a class="btn btn-default" href="{{ route('c.public.app.list.view') }}">Public Apps</a>
+          <a class="btn btn-default" href="/app/app_list">My Apps</a>
+          <a class="btn btn-default" href="/app/public_app_list">Public Apps</a>
           <button class="btn btn-default" data-toggle="modal" data-target="#createNewApp">Create New App</button>
         </div>
       </div>
@@ -45,19 +45,21 @@
               <td>{{$app->secret}}</td>
               <td>{{$app->token_lifetime}}</td>
               <td><a href="JavaScript:void(0);" onclick="activate({{$app->id}}, {{$loop->index}})">Activate</a></td>
-              <td><a href="{{ route('c.app.origins.view', ['id' => $app->id]) }}">Origins</a></td>
+              <td><a href="/app/app_origins/<?php echo $app->id ?>">Origins</a></td>
             </tr>
-            @endforeach
+            <?php endforeach; ?>
   				</tbody>
   			</table>
-        {{$apps->appends(request()->input())->links()}}
   		</div>
+      <div class="col-md-12">
+        <?php include($app_key.'/layouts/pagination.php') ?>
+      </div>
   	</div>
   </div>
   <script>
     var app_id = 0; var app_name = ""; var app_secret = "";
     function activate(id, sr){
-      $.post("{{route('c.app.activate')}}", {"_token":"<?php echo $rand; ?>", "active_app_id":id}, function(data){
+      $.post("/app/activate", {"_token":"<?php echo $rand; ?>", "active_app_id":id}, function(data){
         if(data['status'] == "success"){
           app_id = $("tr:nth-child("+String(sr + 1)+") td:nth-child(2)").html();
           app_name = $("tr:nth-child("+String(sr + 1)+") td:nth-child(3)").html();
@@ -78,7 +80,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Create New App</h4>
         </div>
-        <form method="post" action="{{ route('c.create.new.app') }}" >
+        <form method="post" action="/app/new_app" >
         <div class="modal-body">
             <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
             <div class="form-group">

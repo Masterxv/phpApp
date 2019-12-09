@@ -13,13 +13,13 @@
 		<div class="col-md-12 text-center">
 			Edit record for table "{{$table}}"
 			<div class="input-group" style="float:right;">
-				<a class="btn btn-default" href="{{route('c.db.crud.table')}}?table={{$table}}">Back</a></div>
+				<a class="btn btn-default" href="/table/crud_view?table={{$table}}">Back</a></div>
 		</div>
 	</div><hr>
 	<div class="row">
 		<div class="col-md-3"></div>
 		<div class="col-md-6">
-			<form method="post" action="{{route('c.db.edit.record.submit')}}" >
+			<form method="post" action="/table/edit_record" >
 		        <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
 		        <input type="hidden" name="table" value="{{$table}}" />
 		        <input type="hidden" name="id" value="{{$record->id}}" />
@@ -35,7 +35,7 @@
 						</div>			
 					</div>
 					@continue
-					@endif
+					<?php endif; ?>
 					@if(strpos($v->Type,'enum')!==false)
 					<div class="form-group row">
 						<div class="col-md-1"></div>
@@ -46,10 +46,10 @@
 							<select class="form-control" name="{{$v->Field}}">
 								@foreach(explode(',', str_replace(['enum(',')',"'",' '],['','','',''],$v->Type)) as $value)
 								<option>{{$value}}</option>
-								@endforeach
+								<?php endforeach; ?>
 							</select>
 							@if($errors->has($v->Field))
-									<p style="color:red">{{$errors->first($v->Field)}}</p> @endif
+									<p style="color:red">{{$errors->first($v->Field)}}</p> <?php endif; ?>
 						</div>			
 					</div>
 					@else
@@ -61,11 +61,11 @@
 						<div class="col-md-6">
 							<input type="{{$inpTyp[$v->Type]}}" class="form-control" name="{{$v->Field}}" value="{{$record[$v->Field]}}">
 							@if($errors->has($v->Field))
-									<p style="color:red">{{$errors->first($v->Field)}}</p> @endif
+									<p style="color:red">{{$errors->first($v->Field)}}</p> <?php endif; ?>
 						</div>			
 					</div>
-					@endif
-				@endforeach
+					<?php endif; ?>
+				<?php endforeach; ?>
 		        <div class="form-group row">
 					<div class="col-md-1"></div>
 					<div class="col-md-4"></div>

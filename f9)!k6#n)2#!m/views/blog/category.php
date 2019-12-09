@@ -17,7 +17,7 @@
 	</ol>
 </div>
 @endsection
-@endif
+<?php endif; ?>
 
 @if($category == 'github')
 @section("category")
@@ -31,7 +31,7 @@
 	</ol>
 </div>
 @endsection
-@endif
+<?php endif; ?>
 
 @if($category == 'licenses')
 @section("category")
@@ -50,7 +50,7 @@
 	</ol>
 </div>
 @endsection
-@endif
+<?php endif; ?>
 
 @if($category == 'tables')
 @section("category")
@@ -77,7 +77,7 @@
 	</ol>
 </div>
 @endsection
-@endif
+<?php endif; ?>
 
 @if($category == 'queries')
 @section("category")
@@ -130,7 +130,7 @@
 	</ol>
 </div>
 @endsection
-@endif
+<?php endif; ?>
 
 @if($category == 'files')
 @section("category")
@@ -149,7 +149,7 @@
 	</ol>
 </div>
 @endsection
-@endif
+<?php endif; ?>
 
 @if($category == 'emails')
 @section("category")
@@ -168,7 +168,7 @@
 	</ol>
 </div>
 @endsection
-@endif
+<?php endif; ?>
 
 @if($category == 'push_notifications')
 @section("category")
@@ -187,7 +187,7 @@
 	</ol>
 </div>
 @endsection
-@endif
+<?php endif; ?>
 
 @if($category == 'chat_messaging')
 @section("category")
@@ -206,7 +206,7 @@
 	</ol>
 </div>
 @endsection
-@endif
+<?php endif; ?>
 
 @if($category == 'logs')
 @section("category")
@@ -225,4 +225,4 @@
 	</ol>
 </div>
 @endsection
-@endif
+<?php endif; ?>

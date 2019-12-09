@@ -13,7 +13,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'my_apps' && $article =='availability')
 
@@ -28,7 +28,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'my_apps' && $article =='activate_app_id')
 
@@ -43,7 +43,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'my_apps' && $article =='invited_apps')
 
@@ -58,7 +58,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'my_apps' && $article =='public_apps')
 
@@ -73,7 +73,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'my_apps' && $article =='create_new_app')
 
@@ -88,7 +88,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'my_apps' && $article =='activate_app')
 
@@ -103,7 +103,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'my_apps' && $article =='update_app')
 
@@ -118,7 +118,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'my_apps' && $article =='user_fields')
 
@@ -133,7 +133,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'my_apps' && $article =='origins')
 
@@ -148,7 +148,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'my_apps' && $article =='invited_users')
 
@@ -163,7 +163,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'my_apps' && $article =='export_db')
 
@@ -178,7 +178,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'my_apps' && $article =='description')
 
@@ -193,7 +193,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'my_apps' && $article =='copy')
 
@@ -208,7 +208,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'my_apps' && $article =='delete')
 
@@ -223,7 +223,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 
 
@@ -258,7 +258,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'licenses' && $article =='edit_license')
 
@@ -273,7 +273,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'licenses' && $article =='license_detail')
 
@@ -288,7 +288,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'licenses' && $article =='activate_license')
 
@@ -303,7 +303,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'licenses' && $article =='deactivate_license')
 
@@ -318,7 +318,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'licenses' && $article =='test_bench')
 
@@ -333,7 +333,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 
 
@@ -396,7 +396,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'tables' && $article =='add_fields')
 
@@ -439,7 +439,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'tables' && $article =='rename_field')
 
@@ -466,7 +466,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'tables' && $article =='delete_field')
 
@@ -484,7 +484,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'tables' && $article =='add_index')
 
@@ -499,7 +499,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'tables' && $article =='remove_index')
 
@@ -514,7 +514,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'tables' && $article =='crud')
 
@@ -536,7 +536,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'tables' && $article =='rename_table')
 
@@ -551,7 +551,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'tables' && $article =='truncate_table')
 
@@ -566,7 +566,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'tables' && $article =='delete_tab')
 
@@ -581,7 +581,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'tables' && $article =='export_table')
 
@@ -596,7 +596,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'tables' && $article =='import_create')
 
@@ -611,7 +611,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'tables' && $article =='import_update')
 
@@ -626,7 +626,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'tables' && $article =='api_calls_for_tables')
 
@@ -667,7 +667,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 
 
@@ -864,7 +864,7 @@
 </div>
 @endsection
 
-@endif
+<?php endif; ?>
 
 @if($index == 'queries' && $article =='jquery')
 
@@ -925,4 +925,4 @@ function readAll(){
 </div>
 @endsection
 
-@endif
+<?php endif; ?>

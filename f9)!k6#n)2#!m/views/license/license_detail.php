@@ -45,12 +45,14 @@
               <td><a href="JavaScript:void(0);" onclick="sr({{$loop->index}})" data-toggle="modal" data-target="#manualActivation">Activate</a></td>
               @else
               <td><a href="JavaScript:void(0);" onclick="sr({{$loop->index}})" >De-Activate</a></td>
-              @endif
+              <?php endif; ?>
             </tr>
-          @endforeach
+          <?php endforeach; ?>
         </tbody>
       </table>
-      {{$licenseDetails->appends(request()->input())->links()}}
+      </div>
+      <div class="col-md-12">
+        <?php include($app_key.'/layouts/pagination.php') ?>
       </div>
     </div>
   </div>

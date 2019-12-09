@@ -46,11 +46,13 @@
             @endif
             <td><a href="JavaScript:void(0);" onclick="d('{{$alias->id}}')">Delete</a></td>
           </tr>
-          @endforeach
+          <?php endforeach; ?>
 				</tbody>
 			</table>
-      {{$aliases->appends(request()->input())->links()}}
 		</div>
+    <div class="col-md-12">
+      <?php include($app_key.'/layouts/pagination.php') ?>
+    </div>
 	</div>
 </div>
 

@@ -20,8 +20,8 @@
       </div>
       <div class="col-md-3">
         <div class="btn-group" style="float:right;">
-          <a class="btn btn-default" href="{{ route('c.invited.app.list.view') }}">Invited Apps</a>
-          <a class="btn btn-default" href="{{ route('c.public.app.list.view') }}">Public Apps</a>
+          <a class="btn btn-default" href="/app/invited_app_list">Invited Apps</a>
+          <a class="btn btn-default" href="/app/public_app_list">Public Apps</a>
           <button class="btn btn-default" data-toggle="modal" data-target="#createNewApp">Create New App</button>
         </div>
       </div>
@@ -52,26 +52,28 @@
                 <td>{{$app->availability}}</td>
                 <td><a href="JavaScript:void(0);" onclick="activate({{$app->id}}, {{$loop->index}})">Activate</a></td>
                 <td><a href="JavaScript:void(0);" onclick="updateApp({{$app->id}}, {{$loop->index}})">Update</a></td>
-                <td><a href="{{route('c.app.user.name.fields.view', ['id'=>$app->id]) }}">User Fields</a></td>
-                <td><a href="{{route('c.app.origins.view', ['id' => $app->id]) }}">Origins</a></td>
-                <td><a href="{{route('c.invited.users.view', ['id'=>$app->id]) }}">Invited Users</a></td>
-                <td><a href="{{route('c.app.sql.export', ['id' => $app->id]) }}">ExportDB</a></td>
-                <td><a href="{{route('c.app.desc.view', ['id' => $app->id]) }}">Description</a></td>
+                <td><a href="/app/app_user_name_fields/<?php echo $app->id; ?>">User Fields</a></td>
+                <td><a href="/app/app_origins/<?php echo $app->id; ?>">Origins</a></td>
+                <td><a href="/app/invited_users/<?php echo $app->id; ?>">Invited Users</a></td>
+                <td><a href="/app/sql/<?php echo $app->id; ?>">ExportDB</a></td>
+                <td><a href="/app/app_description/<?php echo $app->id; ?>">Description</a></td>
                 <td><a href="JavaScript:void(0);" onclick="copyApp({{$app->id}})">Copy</a></td>
                 <td><a href="JavaScript:void(0);" onclick="deleteApp({{$app->id}})">Delete</a></td>
               </tr>
-              @endforeach
+              <?php endforeach; ?>
     				</tbody>
     			</table>
         </div>
-        {{$apps->appends(request()->input())->links('cb.layouts.pagination')}}
+        <div class="col-md-12">
+          <?php include($app_key.'/layouts/pagination.php') ?>
+        </div>
   		</div>
   	</div>
   </div>
   <script>
     var app_id = 0; var app_name = ""; var app_secret = "";var holdon = false;
     function activate(id, sr){
-      $.post("{{route('c.app.activate')}}", {"_token":"<?php echo $rand; ?>", "active_app_id":id}, function(data){
+      $.post("/app/activate", {"_token":"<?php echo $rand; ?>", "active_app_id":id}, function(data){
         if(data['status'] == "success"){
           app_id = $("tr:nth-child("+String(sr + 1)+") td:nth-child(2)").html();
           app_name = $("tr:nth-child("+String(sr + 1)+") td:nth-child(3)").html();
@@ -89,7 +91,7 @@
     function copyApp(id) {
       if(holdon){return;}
       holdon = true;
-      $.post("{{ route('c.app.copy') }}",{'_token':'<?php echo $rand; ?>','id':id},function(data){
+      $.post("/app/copy_app",{'_token':'<?php echo $rand; ?>','id':id},function(data){
         if(data['status'] == 'success'){
           $('#alrt').html('<div class="alert alert-success"><strong>Success!</strong> App was successfully copied.</div>');
         }else{
@@ -103,7 +105,7 @@
       if(!confirm("Deleting app will delete all its assosiated tables and queries. Please confirm!")){
         return;
       }
-      $.post("{{ route('c.app.delete') }}",{'_token':'<?php echo $rand; ?>','id':id,'_method':'delete'},function(data){
+      $.post("/app/delete",{'_token':'<?php echo $rand; ?>','id':id,'_method':'delete'},function(data){
         if(data['status'] == 'success'){
           $('#r'+id).remove();
           $('#alrt').html('<div class="alert alert-success"><strong>Success!</strong> App was successfully deleted.</div>');
@@ -125,7 +127,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Create New App</h4>
         </div>
-        <form method="post" action="{{ route('c.create.new.app') }}" >
+        <form method="post" action="/app/new_app" >
         <div class="modal-body">
             <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
             <div class="form-group">
@@ -148,7 +150,7 @@
 
       <!-- Modal content-->
       <div class="modal-content">
-        <form method="post" action="{{route('c.update.app')}}">
+        <form method="post" action="/app/update">
           <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
           <input type="hidden" name="id" class="app_id" />
           <div class="modal-header">

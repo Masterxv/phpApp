@@ -19,7 +19,7 @@
       <div class="col-md-6">
         <div class="btn-group" style="float:right"> 
           <button class="btn btn-default" data-toggle="modal" data-target="#addNewOrigin">Add New Origin</button>
-          <a class="btn btn-default" href="{{route('c.app.list.view')}}">Back</a>
+          <a class="btn btn-default" href="/app/app_list">Back</a>
         </div>
       </div>
     </div>
@@ -49,7 +49,7 @@
   </div>
   <script>
     function deleteOrigin(name, i){
-      $.post("{{route('c.app.delete.origin', ['id'=>$id])}}",{"_token":"<?php echo $rand; ?>","name":name,"_method":"delete"}, function(data){
+      $.post("/app/delete_origin/<?php echo $id; ?>",{"_token":"<?php echo $rand; ?>","name":name,"_method":"delete"}, function(data){
         if(data['status'] == 'success'){
           $('#r'+i).remove();
           $('#alrt').html('<div class="alert alert-success"><strong>Success!</strong> Origin was successfully removed.</div>');
@@ -69,7 +69,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Add New Origin</h4>
         </div>
-        <form method="post" action="{{ route('c.app.new.origin.submit', ['id'=>$id]) }}" >
+        <form method="post" action="/app/new_origin/<?php echo $id; ?>" >
         <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
         <div class="modal-body">
             <div class="form-group">

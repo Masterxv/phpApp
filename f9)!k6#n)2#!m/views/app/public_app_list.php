@@ -20,8 +20,8 @@
       </div>
       <div class="col-md-4">
         <div class="btn-group" style="float:right">
-          <a class="btn btn-default" href="{{ route('c.app.list.view') }}">My Apps</a>
-          <a class="btn btn-default" href="{{ route('c.invited.app.list.view') }}">Invited Apps</a>
+          <a class="btn btn-default" href="/app/app_list">My Apps</a>
+          <a class="btn btn-default" href="/app/invited_app_list">Invited Apps</a>
           <button class="btn btn-default" data-toggle="modal" data-target="#createNewApp">Create New App</button>
         </div>
       </div>
@@ -47,20 +47,22 @@
               <td>{{$app->name}}</td>
               <td>{{$app->secret}}</td>
               <td>{{$app->token_lifetime}}</td>
-              <td><a href="{{route('c.app.desc.view', ['id' => $app->id]) }}">Description</a></td>
+              <td><a href="/app/app_description/<?php echo $app->id; ?>">Description</a></td>
               <td><a href="JavaScript:void(0);" onclick="copyApp({{$app->id}})">Copy</a></td>
             </tr>
-            @endforeach
+            <?php endforeach; ?>
   				</tbody>
   			</table>
-        {{$apps->appends(request()->input())->links()}}
   		</div>
+      <div class="col-md-12">
+        <?php include($app_key.'/layouts/pagination.php') ?>
+      </div>
   	</div>
   </div>
   <script>
     var app_id = 0; var app_name = ""; var app_secret = "";var holdon = false;
     function activate(id, sr){
-      $.post("{{route('c.app.activate')}}", {"_token":"<?php echo $rand; ?>", "active_app_id":id}, function(data){
+      $.post("/app/activate", {"_token":"<?php echo $rand; ?>", "active_app_id":id}, function(data){
         if(data['status'] == "success"){
           app_id = $("tr:nth-child("+String(sr + 1)+") td:nth-child(2)").html();
           app_name = $("tr:nth-child("+String(sr + 1)+") td:nth-child(3)").html();
@@ -72,7 +74,7 @@
     function copyApp(id) {
       if(holdon){return;}
       holdon = true;
-      $.post("{{ route('c.app.copy') }}",{'_token':'<?php echo $rand; ?>','id':id},function(data){
+      $.post("/app/copy_app",{'_token':'<?php echo $rand; ?>','id':id},function(data){
         if(data['status'] == 'success'){
           $('#alrt').html('<div class="alert alert-success"><strong>Success!</strong> App was successfully copied.</div>');
         }else{
@@ -94,7 +96,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Create New App</h4>
         </div>
-        <form method="post" action="{{ route('c.create.new.app') }}" >
+        <form method="post" action="/app/new_app" >
         <div class="modal-body">
             <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
             <div class="form-group">
