@@ -1,6 +1,13 @@
-@extends("cb.layouts.app")
-
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <div class="container-fluid">
 	<div id="alrt"></div>
 	<div class="row">
@@ -44,7 +51,7 @@
 </div>
 <script>
   function d(id, table){
-    $.post("{{ route('c.db.delete.record') }}", {"_token":"{{csrf_token()}}", "id":id, "table":table, "_method":"DELETE"}, function(data) {
+    $.post("{{ route('c.db.delete.record') }}", {"_token":"<?php echo $rand; ?>", "id":id, "table":table, "_method":"DELETE"}, function(data) {
       if(data['status'] == 'success'){
         $('#r'+id).remove();
         $('#alrt').html('<div class="alert alert-success"><strong>Success!</strong> Record was successfully removed.</div>');
@@ -54,4 +61,6 @@
     })
   }
 </script>
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

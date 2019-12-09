@@ -1,9 +1,17 @@
-@extends("cb.layouts.app")
-
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <div class="container-fluid">
   <div id="alrt"></div>
-  @if($errors->has('email'))<div class="alert alert-warning"><strong>Warning!</strong> {{$errors->first('email')}}</div>@endif
+  <?php if($error['email']): ?><div class="alert alert-warning"><strong>Warning!</strong><?php echo $error['email']; ?></div>
+    <?php endif; ?>
   <div class="row">
     <div class="col-md-12 text-center">
       @empty($id) New Mail @else Update Mail @endempty <div class="btn-group" style="float:right;">
@@ -83,7 +91,7 @@
       // let postBody = JSON.parse($("#mail_obj").val());
       $(".send_mail").prop("disabled",true);
 
-      $.post("{{ route('c.mail.add.new') }}", {'email':$("#mail_obj").val(),'_token':'{{csrf_token()}}'}, function(data, status){
+      $.post("{{ route('c.mail.add.new') }}", {'email':$("#mail_obj").val(),'_token':'<?php echo $rand; ?>'}, function(data, status){
         if(status='success'){
           $('#alrt').html('<div class="alert alert-'+data['status']+'"><strong>'+data['status']+'!</strong> '+data['message']+'</div>');
           $(".send_mail").prop("disabled",false);
@@ -102,7 +110,7 @@
       let postBody = JSON.parse($("#mail_obj").val());
       $(".send_mail").prop("disabled",true);
 
-      $.post("{{ route('c.mail.update') }}", {'_method':'put','id':'{{$id}}','email':$("#mail_obj").val(),'_token':'{{csrf_token()}}'}, function(data, status){
+      $.post("{{ route('c.mail.update') }}", {'_method':'put','id':'{{$id}}','email':$("#mail_obj").val(),'_token':'<?php echo $rand; ?>'}, function(data, status){
         if(status='success'){
           $('#alrt').html('<div class="alert alert-'+data['status']+'"><strong>'+data['status']+'!</strong> '+data['message']+'</div>');
           $(".send_mail").prop("disabled",false);
@@ -117,4 +125,6 @@
   }
   @endempty
 </script>
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

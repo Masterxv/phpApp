@@ -1,6 +1,13 @@
-@extends("cb.layouts.app")
-
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <div class="container-fluid">
   	<div id="alrt"></div>
 	<div class="row">
@@ -49,7 +56,7 @@
 		$("#addCustomErrorMessage").modal();
 	}
 	function addCustomErrorMessage(){
-		$.post("{{ route('c.query.valid.msg.submit') }}",{'_token':'{{csrf_token()}}','rule':$("#rule").val(), 'error_message':$("#error_message").val()}, function(data, status){
+		$.post("{{ route('c.query.valid.msg.submit') }}",{'_token':'<?php echo $rand; ?>','rule':$("#rule").val(), 'error_message':$("#error_message").val()}, function(data, status){
 			$("#addCustomErrorMessage").modal('hide');
 			if(status=='success'){
 				if(data['status']=='success'){
@@ -92,4 +99,6 @@
 
   </div>
 </div>
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

@@ -1,6 +1,13 @@
-@extends("cb.layouts.app")
-
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12 text-center">
@@ -12,7 +19,7 @@
 		<div class="col-md-3"></div>
 		<div class="col-md-6">
 			<form method="post" action="{{route('c.email.new.user.submit')}}" >
-		        <input type="hidden" name="_token" value="{{csrf_token()}}" />
+		        <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
 		        <input type="hidden" name="email" id="email" />
 		        <input type="hidden" name="domain_id" id="did" />
 		        <div class="form-group row">
@@ -123,7 +130,7 @@
 	// 	pb['alias'] = $("#aid").val();
 	// 	pb['password'] = $("#password").val();
 	// 	pb['password_confirmation'] = $("#password-confirm").val();
-	// 	pb['_token'] = "{{csrf_token()}}";
+	// 	pb['_token'] = "<?php echo $rand; ?>";
 	// 	$.post('{{route('c.email.new.user.submit')}}', pb, function(data){
 	// 		if(data.status == 'success'){
 	// 			$("#back")[0].click();
@@ -133,4 +140,6 @@
 	// 	});
 	// }
 </script>
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

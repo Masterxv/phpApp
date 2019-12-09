@@ -1,8 +1,15 @@
-@extends("cb.layouts.app")
-
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <form id="form_create_table" method="post" action="{{ route("c.db.add.columns.submit") }}">
-<input type="hidden" name="_token" value="{{csrf_token()}}"/>
+<input type="hidden" name="_token" value="<?php echo $rand; ?>"/>
 <input type="hidden" name="name" value="{{$table}}"/>
 <div class="container-fluid">
 	<div class="row">
@@ -176,4 +183,6 @@
 		ls(i);
 	};
 </script>
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

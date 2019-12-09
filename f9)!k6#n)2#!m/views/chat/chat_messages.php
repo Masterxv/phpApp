@@ -1,6 +1,13 @@
-@extends("cb.layouts.app")
-
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <div class="container-fluid">
   <div id="alrt"></div>
   <div class="row">
@@ -67,7 +74,7 @@
   	$("#updateChat").modal();
   }
   function updateMsg(){
-  	$.post('{{ route('c.chat.message.update') }}',{"_token":"{{csrf_token()}}","id":$("#chat_id").val(),"_method":"put","message":$("#message").val(),"style":$("#style").val(),"status":$("#status").val() },function(data, status){
+  	$.post('{{ route('c.chat.message.update') }}',{"_token":"<?php echo $rand; ?>","id":$("#chat_id").val(),"_method":"put","message":$("#message").val(),"style":$("#style").val(),"status":$("#status").val() },function(data, status){
   		if(status == 'success'){
   			location.replace(window.location.href);
   		}
@@ -78,7 +85,7 @@
     if(!bool){
       return;
     }
-    $.post('{{route('c.chat.message.delete')}}', {"id":id,"_token":"{{csrf_token()}}","_method":"delete"}, function(data, status){
+    $.post('{{route('c.chat.message.delete')}}', {"id":id,"_token":"<?php echo $rand; ?>","_method":"delete"}, function(data, status){
       if(status == 'success'){
         $('#r'+id).remove();
         $('#alrt').html('<div class="alert alert-success"><strong>Success!</strong> Chat Message was successfully removed.</div>');
@@ -99,7 +106,7 @@
         <h4 class="modal-title">Update Chat Message</h4>
       </div>
       <div class="modal-body">
-      	<input type="hidden" name="_token" value="{{csrf_token()}}" />
+      	<input type="hidden" name="_token" value="<?php echo $rand; ?>" />
 				<input type="hidden" name="_method" value="PUT" />
 				<input type="hidden" name="id" id="chat_id" />
         <div class="form-group">
@@ -124,4 +131,6 @@
 
   </div>
 </div>
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

@@ -1,10 +1,19 @@
-@extends("cb.layouts.app")
-
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <div class="container-fluid">
   	<div id="alrt"></div>
-  	@if($errors->has('field'))<div class="alert alert-warning"><strong>Warning!</strong> {{$errors->first('field')}}</div>@endif
-  	@if($errors->has('rule'))<div class="alert alert-warning"><strong>Warning!</strong> {{$errors->first('rule')}}</div>@endif
+  	<?php if($error['field']): ?><div class="alert alert-warning"><strong>Warning!</strong><?php echo $error['field']; ?></div>
+    <?php endif; ?>
+  	<?php if($error['rule']): ?><div class="alert alert-warning"><strong>Warning!</strong><?php echo $error['rule']; ?></div>
+    <?php endif; ?>
 	<div class="row">
 		<div class="col-md-6">
 			Validation | for the app id = {{\Auth::user()->active_app_id}}
@@ -168,7 +177,7 @@
 		$("#rpfields").html(arr2.join(','));
 	}
 	function deleteRule(id){
-		$.post('{{ route('c.query.valid.delete') }}',{'_method':'delete','id':id,'_token':'{{csrf_token()}}'},function (data, status) {
+		$.post('{{ route('c.query.valid.delete') }}',{'_method':'delete','id':id,'_token':'<?php echo $rand; ?>'},function (data, status) {
 			if(status=='success'){
 				$('#r'+id).remove();
 				$('#alrt').html('<div class="alert alert-success"><strong>Success!</strong> Validation rule was successfully removed.</div>');
@@ -260,7 +269,7 @@
         <h4 class="modal-title" id="rule_title">Add Validation Rule</h4>
       </div>
       <form method="post" action="{{route('c.query.valid.submit')}}" >
-	  <input type="hidden" name="_token" value="{{csrf_token()}}" />
+	  <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
 	  <input type="hidden" id="rule_id" name="rule_id" />
       <div class="modal-body">
     	<div class="form-group row">
@@ -519,4 +528,6 @@
 ruleChange();
 $("#edit_cmd").hide();
 </script>
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

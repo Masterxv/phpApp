@@ -1,6 +1,13 @@
-@extends("cb.layouts.app")
-
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <div class="container-fluid">
   <div id="alrt"></div>
   <div class="row">
@@ -10,7 +17,7 @@
     <div class="col-md-6">
       <div class="btn-group" style="float:right">
           <form id="uploadFiles" method="post" action="{{route('c.files.upload.files')}}" enctype="multipart/form-data" style="display: none;">
-              <input type="hidden" name="_token" value="{{csrf_token()}}">
+              <input type="hidden" name="_token" value="<?php echo $rand; ?>">
               <input type="hidden" name="success" />
               <input type="file" name="files[]" id="filesUpload" multiple onchange="$('#uploadFiles').submit()">
           </form><label for="filesUpload"><a class="btn btn-default">Upload Files</a></label></div>
@@ -45,14 +52,14 @@
             @if(false)
             <td><label for="file" class="link"><a href="JavaScript:void(0);" onclick="replaceFile('{{$file->id}}','{{$file->name}}')">Replace</a></label></td>
             <td><form id="replaceFile{{($key + 1)}}" method="post" action="{{route('c.files.replace')}}" enctype="multipart/form-data" style="display: none;">
-                          <input type="hidden" name="_token" value="{{csrf_token()}}">
+                          <input type="hidden" name="_token" value="<?php echo $rand; ?>">
                           <input type="hidden" name="id" value="{{$file->id}}">
                           <input type="hidden" name="success" />
                           <input type="file" name="file" id="file{{($key + 1)}}" onchange="$('#replaceFile{{($key + 1)}}').submit()">
                       </form>
               <label for="file{{($key + 1)}}" class="link"><a href="JavaScript:void(0);">Replace</a></label></td>
             <td><form id="delfile{{($key + 1)}}" method="post" action="{{route('c.files.delete')}}" style="display: none;">
-                          <input type="hidden" name="_token" value="{{csrf_token()}}">
+                          <input type="hidden" name="_token" value="<?php echo $rand; ?>">
                           <input type="hidden" name="id" value="{{$file->id}}">
                           <input type="hidden" name="success" />
                       </form>
@@ -65,7 +72,7 @@
       {{$files->appends(request()->input())->links()}}
       @if(false)
       <form id="replaceFile" method="post" action="{{route('c.files.replace')}}" enctype="multipart/form-data" style="display: none;">
-          <input type="hidden" name="_token" value="{{csrf_token()}}">
+          <input type="hidden" name="_token" value="<?php echo $rand; ?>">
           <input type="hidden" name="id" id="id">
           <input type="hidden" name="success" />
           <input type="file" name="file" id="file" onchange="$('#replaceFile').submit()">
@@ -89,7 +96,7 @@
     if(!bool){
       return;
     }
-    $.post("{{route('c.files.delete')}}", {'_token':'{{csrf_token()}}', 'id':id}, function(data){
+    $.post("{{route('c.files.delete')}}", {'_token':'<?php echo $rand; ?>', 'id':id}, function(data){
       console.log(data);
       if(data['status'] == 'success'){
         $('#r'+id).remove();
@@ -101,4 +108,6 @@
   }
 </script>
 
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

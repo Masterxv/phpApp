@@ -1,6 +1,13 @@
-@extends("cb.layouts.app")
-
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12 text-center">
@@ -12,7 +19,7 @@
 		<div class="col-md-3"></div>
 		<div class="col-md-6">
 			<form method="post" action="{{route('c.push.new.msg.submit')}}" >
-		        <input type="hidden" name="_token" value="{{csrf_token()}}" />
+		        <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
 		        <input type="hidden" name="app_id" value="{{\Auth::user()->active_app_id}}" />
 				<div class="form-group row">
 					<div class="col-md-1"></div>
@@ -246,4 +253,6 @@
 		$("#aid").val(ac.join("|"));
 	}
 </script>
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

@@ -1,9 +1,17 @@
-@extends("cb.layouts.app")
-
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <div class="container-fluid">
   <div id="alrt"></div>
-  @if($errors->has('domain_name'))<div class="alert alert-warning"><strong>Warning!</strong> {{$errors->first('domain_name')}}</div>@endif
+  <?php if($error['domain_name']): ?><div class="alert alert-warning"><strong>Warning!</strong><?php echo $error['domain_name']; ?></div>
+    <?php endif; ?>
   <div class="row">
     <div class="col-md-5">
       My Domains List | for the user id: {{\Auth::user()->id}}
@@ -59,7 +67,7 @@
 
 <script>
   function d(id) {
-    $.post("{{ route('c.domain.delete') }}", {'_token':"{{csrf_token()}}", "id":id, '_method':"DELETE"}, function (data) {
+    $.post("{{ route('c.domain.delete') }}", {'_token':"<?php echo $rand; ?>", "id":id, '_method':"DELETE"}, function (data) {
       if(data['status'] == 'success'){
         $('#r'+id).remove();
         $('#alrt').html('<div class="alert alert-success"><strong>Success!</strong> Domain name address was successfully deleted.</div>');
@@ -78,7 +86,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <form method="post" action="{{route('c.domain.add.new')}}">
-      <input type="hidden" name="_token" value="{{csrf_token()}}" />
+      <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Enter domain name</h4>
@@ -96,4 +104,6 @@
 
   </div>
 </div>
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

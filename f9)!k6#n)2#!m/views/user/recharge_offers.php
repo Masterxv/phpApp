@@ -1,10 +1,19 @@
-@extends("cb.layouts.app")
-
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <div class="container-fluid">
   <div id="alrt"></div>
-  @if($errors->has('name'))<div class="alert alert-warning"><strong>Warning!</strong> {{$errors->first('name')}}</div>@endif
-  @if($errors->has('id'))<div class="alert alert-warning"><strong>Warning!</strong> {{$errors->first('id')}}</div>@endif
+  <?php if($error['name']): ?><div class="alert alert-warning"><strong>Warning!</strong><?php echo $error['name']; ?></div>
+    <?php endif; ?>
+  <?php if($error['id']): ?><div class="alert alert-warning"><strong>Warning!</strong><?php echo $error['id']; ?></div>
+    <?php endif; ?>
   <div class="row">
     <div class="col-md-12">
       <div class="well well-sm"> My Recharge Offers | @if(\Auth::user()->recharge_balance == (null||0)) <i>Please recharge your account with one of the below offers to visit the control panel</i> @else <i>Your account balance is ₹ {{\Auth::user()->recharge_balance}}</i> @endif </div>
@@ -16,7 +25,7 @@
     </div>
   </div>
   <form method="post" action="{{ route('c.user.recharge') }}" >
-  <input type="hidden" name="_token" value="{{csrf_token()}}">
+  <input type="hidden" name="_token" value="<?php echo $rand; ?>">
   <div class="row">
     <div class="col-md-4">
       <div class="well well-sm">
@@ -78,4 +87,6 @@
 <script>
   
 </script>
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

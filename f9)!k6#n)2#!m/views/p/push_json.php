@@ -1,6 +1,13 @@
-@extends("cb.layouts.app")
-
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <div class="container-fluid">
   <div id="alrt"></div>
   <div class="row">
@@ -83,7 +90,7 @@
       let postBody = JSON.parse($("#push_obj").val());
       $(".send_mail").prop("disabled",true);
 
-      $.post("{{ route('c.push.new.msg.submit') }}", {'push':$("#push_obj").val(),'_token':'{{csrf_token()}}'}, function(data, status){
+      $.post("{{ route('c.push.new.msg.submit') }}", {'push':$("#push_obj").val(),'_token':'<?php echo $rand; ?>'}, function(data, status){
         if(status='success'){
           $('#alrt').html('<div class="alert alert-'+data['status']+'"><strong>'+data['status']+'!</strong> '+data['message']+'</div>');
           $(".send_mail").prop("disabled",false);
@@ -102,7 +109,7 @@
       let postBody = JSON.parse($("#push_obj").val());
       $(".send_mail").prop("disabled",true);
 
-      $.post("{{ route('c.push.update.msg.submit') }}", {'_method':'put','id':'{{$id}}','push':$("#push_obj").val(),'_token':'{{csrf_token()}}'}, function(data, status){
+      $.post("{{ route('c.push.update.msg.submit') }}", {'_method':'put','id':'{{$id}}','push':$("#push_obj").val(),'_token':'<?php echo $rand; ?>'}, function(data, status){
         if(status='success'){
           $('#alrt').html('<div class="alert alert-'+data['status']+'"><strong>'+data['status']+'!</strong> '+data['message']+'</div>');
           $(".send_mail").prop("disabled",false);
@@ -117,4 +124,6 @@
   }
   @endempty
 </script>
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

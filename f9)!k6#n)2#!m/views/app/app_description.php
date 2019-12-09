@@ -6,7 +6,8 @@
 @section("content")
 <div class="container-fluid">
   <div id="alrt"></div>
-  @if($errors->has('name'))<div class="alert alert-warning"><strong>Warning!</strong> {{$errors->first('name')}}</div>@endif
+  <?php if($error['name']): ?><div class="alert alert-warning"><strong>Warning!</strong><?php echo $error['name']; ?></div>
+    <?php endif; ?>
   <div class="row">
     <div class="col-md-6">
       <div class="well well-sm">App Description | for app id: {{$id}} </div>

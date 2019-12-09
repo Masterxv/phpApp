@@ -1,6 +1,13 @@
-@extends("cb.layouts.docs")
-
-@section("docs")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <h3>Tables</h3>
 <hr>
 <h4 id="create_new_table">Create New Table<a href="docs/tables/#create_new_table_s"> ↻</a></h4>
@@ -185,4 +192,6 @@
 		<p>Response on success: <strong>{"_token":"session_token", "status":"success"}</strong></p><br>
 	</div>
 </div>
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

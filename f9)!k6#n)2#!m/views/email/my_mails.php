@@ -1,6 +1,13 @@
-@extends("cb.layouts.app")
-
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <div class="container-fluid">
   <div id="alrt"></div>
   <div class="row">
@@ -65,7 +72,7 @@
 
 <script>
   function d(id){
-    $.post("{{route('c.mail.delete')}}", {"id":id, "_token":"{{csrf_token()}}", "_method":"DELETE"}, function(data){
+    $.post("{{route('c.mail.delete')}}", {"id":id, "_token":"<?php echo $rand; ?>", "_method":"DELETE"}, function(data){
       if(data['status'] == 'success'){
         $("#r"+String(id)).remove();
         var ht = '<div class="alert alert-success text-center"><strong>Success!</strong> Email has been deleted successfully!</div>';
@@ -77,7 +84,7 @@
   }
 
   function copyMail(id) {
-    $.post("{{route('c.mail.copy')}}", {"id":id, "_token":"{{csrf_token()}}"}, function(data){
+    $.post("{{route('c.mail.copy')}}", {"id":id, "_token":"<?php echo $rand; ?>"}, function(data){
       location.reload();
     });
   }
@@ -89,7 +96,7 @@
     }
     boolSendMail = true;
     $('#alrt').html('<div class="alert alert-info"><strong>Info!</strong> please wait...</div>');
-    $.post("{{route('c.mail.send')}}", {"id":id, "_token":"{{csrf_token()}}"}, function(data){
+    $.post("{{route('c.mail.send')}}", {"id":id, "_token":"<?php echo $rand; ?>"}, function(data){
       if(data['status'] == 'success'){
         var ht = '<div class="alert alert-success"><strong>Success!</strong> Email has been sent successfully!</div>';
         $('#alrt').html(ht);
@@ -101,4 +108,6 @@
   }
 </script>
 
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

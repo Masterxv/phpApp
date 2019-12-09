@@ -1,6 +1,13 @@
-@extends("cb.layouts.docs")
-
-@section("docs")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <h3>Authentication</h3>
 <hr>
 <h4 id="sessions1">Create New License<a href="docs/sessions/#sessions1s"> ↻</a></h4>
@@ -20,4 +27,6 @@
 <hr>
 <h4 id="sessions6">Test Bench<a href="docs/sessions/#sessions6s"> ↻</a></h4>
 <p>Test Bench button on the top right corner of the listing screen will take you to new test bench screen. There simulation of how software sends json to backend for activation and deactivation is demonstrated. Also there is simulation of the how client websites which sells software are required to send to request to this backend to get license keys for purchased user is shown.</p>
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

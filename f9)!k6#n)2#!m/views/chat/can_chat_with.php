@@ -1,6 +1,13 @@
-@extends("cb.layouts.app")
-
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <div class="container-fluid">
   <div id="alrt"></div>
   <div class="row">
@@ -169,7 +176,7 @@
     can_chat_with['group_chat'] = $("#group_chat").val();
     can_chat_with['guest'] = $("#guest_chat").prop('checked')?1:0;
     console.log(can_chat_with);
-    $.post('{{ route('c.chat.ccw.submit') }}', {'_token':'{{csrf_token()}}','_method':'put','can_chat_with':can_chat_with},function(data, status){
+    $.post('{{ route('c.chat.ccw.submit') }}', {'_token':'<?php echo $rand; ?>','_method':'put','can_chat_with':can_chat_with},function(data, status){
       if(status == 'success'){
         $('#alrt').html('<div class="alert alert-success"><strong>Success!</strong> Can chat with setting was successfully saved.</div>');
       }else{
@@ -178,4 +185,6 @@
     });
   }
 </script>
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

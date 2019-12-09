@@ -1,6 +1,13 @@
-@extends("cb.layouts.app")
-
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <div class="container-fluid">
   	<div id="alrt"></div>
 	<div class="row">
@@ -45,7 +52,7 @@
 		$("#addValidationRule").modal();
 	}
 	function deleteRule(id){
-		$.post('{{ route('c.query.valid.delete') }}',{'_method':'delete','id':id,'_token':'{{csrf_token()}}'},function (data, status) {
+		$.post('{{ route('c.query.valid.delete') }}',{'_method':'delete','id':id,'_token':'<?php echo $rand; ?>'},function (data, status) {
 			if(status=='success'){
 				$('#r'+id).remove();
 				$('#alrt').html('<div class="alert alert-success"><strong>Success!</strong> Validation rule was successfully removed.</div>');
@@ -86,4 +93,6 @@
   </div>
 </div>
 
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

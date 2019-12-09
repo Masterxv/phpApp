@@ -1,6 +1,13 @@
-@extends("cb.layouts.app")
-
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+  <?php require($app_key.'/views/layouts/nav.php'); ?>
 	<div id="alrt"></div>
 	<div class="container-fluid">
 	<div class="row">
@@ -67,7 +74,7 @@
 				let arr = t?t.split(','):[];
 				unf[ap[i]] = arr;
 			};
-			$.post("{{ route('c.app.user.name.fields.save') }}", {'_token':'{{csrf_token()}}','id':{{$id}}, 'user_name_fields':JSON.stringify(unf) },function(data,status){
+			$.post("{{ route('c.app.user.name.fields.save') }}", {'_token':'<?php echo $rand; ?>','id':{{$id}}, 'user_name_fields':JSON.stringify(unf) },function(data,status){
 				if(data['status'] == 'success'){
 			        $('#alrt').html('<div class="alert alert-success"><strong>Success!</strong> User name fields saved successfully.</div>');
 			    }else{
@@ -76,4 +83,6 @@
 			});
 		}
 	</script>
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

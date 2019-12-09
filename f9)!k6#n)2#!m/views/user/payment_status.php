@@ -2,9 +2,16 @@
 	$arr = ['ORDERID' => 'Order Id','MID'=>'Merchant Id','TXNAMOUNT'=>'Amount','CURRENCY'=>'Currency','STATUS'=>'Status','RESPMSG' => 'Message','BANKTXNID'=>'Bank Transaction Id','TXNID'=>'Transaction Id','TXNTYPE'=>'Transaction Type','GATEWAYNAME'=>'Gateway Name','BANKNAME'=>'Bank Name','PAYMENTMODE'=>'Payment Mode','REFUNDAMT'=>'Refund Amount','TXNDATE'=>'Transaction Date','ErrorCode'=>'Error Code','ErrorMsg'=>'Error Message'];
 	$execpt = ['CHECKSUMHASH','RESPCODE'];
 @endphp
-@extends("cb.layouts.app")
-
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-4"></div>
@@ -24,4 +31,6 @@
 		</div>
 	</div>
 </div>
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

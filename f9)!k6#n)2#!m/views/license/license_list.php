@@ -1,6 +1,13 @@
-@extends("cb.layouts.app")
-
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-6">
@@ -31,7 +38,7 @@
         <tbody>
           @foreach($licenses as $license)
           <form id="frm{{$loop->index}}" method="post" action="{{ route('l.update.license', ['id' => $license->id]) }}">
-            <input type="hidden" name="_token" value="{{csrf_token()}}" />
+            <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
             <tr>
               <td>{{ ($loop->index + 1) + 10 * ($page-1)}}</td>
               <td>{{$license->id}}</td>
@@ -53,7 +60,7 @@
               </td>
             </tr>
             </form>
-            <form id="dbf{{$loop->index}}" method="post" action="{{ route('l.delete.license', ['id' => $license->id]) }}" style="display: none;"><input type="hidden" name="_token" value="{{csrf_token()}}"></form>
+            <form id="dbf{{$loop->index}}" method="post" action="{{ route('l.delete.license', ['id' => $license->id]) }}" style="display: none;"><input type="hidden" name="_token" value="<?php echo $rand; ?>"></form>
           @endforeach
         </tbody>
       </table>
@@ -96,7 +103,7 @@
       </div>
       <div class="modal-body">
         <form method="post" action="{{ route('l.create.new.license') }}">
-          <input type="hidden" name="_token" value="{{csrf_token()}}" />
+          <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
 
           <div class="form-group">
             <label for="total_licenses">Total number of licenses</label>
@@ -128,4 +135,6 @@
   </div>
 </div>
 
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

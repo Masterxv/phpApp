@@ -1,10 +1,18 @@
-@extends("cb.layouts.app")
-
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <form id="form_create_table" method="post" action="{{ route("c.db.new.table.submit") }}">
-<input type="hidden" name="_token" value="{{csrf_token()}}"/>
+<input type="hidden" name="_token" value="<?php echo $rand; ?>"/>
 <div class="container-fluid">
-	@if($errors->has('name'))<div class="alert alert-warning"><strong>Warning!</strong> {{$errors->first('name')}}</div>@endif
+	<?php if($error['name']): ?><div class="alert alert-warning"><strong>Warning!</strong><?php echo $error['name']; ?></div>
+    <?php endif; ?>
 	<div class="row">
 		<div class="col-md-3">
 			Create New Table
@@ -274,4 +282,6 @@
 	}
 </script>
 @endif
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>

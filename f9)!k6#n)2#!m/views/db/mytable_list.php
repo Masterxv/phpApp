@@ -1,12 +1,23 @@
-@extends("cb.layouts.app")
-
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+<?php require($app_key.'/views/layouts/nav.php'); ?>
 <div class="container-fluid">
   <div id="alrt"></div>
-  @if($errors->has('table'))<div class="alert alert-warning"><strong>Warning!</strong> {{$errors->first('table')}}</div>@endif
-  @if($errors->has('createCSV'))<div class="alert alert-warning"><strong>Warning!</strong> {{$errors->first('createCSV')}}</div>@endif
-  @if($errors->has('updateCSV'))<div class="alert alert-warning"><strong>Warning!</strong> {{$errors->first('updateCSV')}}</div>@endif
-  @if($errors->has('_token'))<div class="alert alert-success"><strong>Success!</strong> {{$errors->first('_token')}}</div>@endif
+  <?php if($error['table']): ?><div class="alert alert-warning"><strong>Warning!</strong><?php echo $error['table']; ?></div>
+    <?php endif; ?>
+  <?php if($error['createCSV']): ?><div class="alert alert-warning"><strong>Warning!</strong><?php echo $error['createCSV']; ?></div>
+    <?php endif; ?>
+  <?php if($error['updateCSV']): ?><div class="alert alert-warning"><strong>Warning!</strong><?php echo $error['updateCSV']; ?></div>
+    <?php endif; ?>
+  <?php if($error['_token']): ?><div class="alert alert-success"><strong>Success!</strong><?php echo $error['_token']; ?></div>
+    <?php endif; ?>
   <div class="row">
     <div class="col-md-6">
       <div class="well well-sm"> Table List | for the app id: {{\Auth::user()->active_app_id}}, Space Used: {{$size}} MB</div>
@@ -52,7 +63,7 @@
 
               <td>
                 <form id="createCSV{{($key + 1)}}" method="post" action="{{route('c.csv.import.create')}}" enctype="multipart/form-data" autocomplete="off" style="display: none;">
-                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                            <input type="hidden" name="_token" value="<?php echo $rand; ?>">
                             <input type="hidden" name="table" value="{{$table['name']}}">
                             <input type="file" name="createCSV" id="ccf{{($key + 1)}}" onchange="$('#createCSV{{($key + 1)}}').submit()">
                         </form>
@@ -60,7 +71,7 @@
               </td>
               <td>
                 <form id="createJSON{{($key + 1)}}" method="post" action="{{route('c.json.import.create')}}" enctype="multipart/form-data" autocomplete="off" style="display: none;">
-                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                            <input type="hidden" name="_token" value="<?php echo $rand; ?>">
                             <input type="hidden" name="table" value="{{$table['name']}}">
                             <input type="file" name="createJSON" id="cjf{{($key + 1)}}" onchange="$('#createJSON{{($key + 1)}}').submit()">
                         </form>
@@ -69,7 +80,7 @@
 
               <td>
                 <form id="updateCSV{{($key + 1)}}" method="post" action="{{route('c.csv.import.update')}}" enctype="multipart/form-data" autocomplete="off" style="display: none;">
-                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                            <input type="hidden" name="_token" value="<?php echo $rand; ?>">
                             <input type="hidden" name="table" value="{{$table['name']}}">
                             <input type="file" name="updateCSV" id="ucf{{($key + 1)}}" onchange="$('#updateCSV{{($key + 1)}}').submit()">
                         </form>
@@ -77,7 +88,7 @@
               </td>
               <td>
                 <form id="updateJSON{{($key + 1)}}" method="post" action="{{route('c.json.import.update')}}" enctype="multipart/form-data" autocomplete="off" style="display: none;">
-                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                            <input type="hidden" name="_token" value="<?php echo $rand; ?>">
                             <input type="hidden" name="table" value="{{$table['name']}}">
                             <input type="file" name="updateJSON" id="ujf{{($key + 1)}}" onchange="$('#updateJSON{{($key + 1)}}').submit()">
                         </form>
@@ -131,7 +142,7 @@
   function truncate(table, key){
     var check = confirm("Are you sure you want to truncate this table");
     if(check){
-      $.post("{{route('c.truncate.table')}}", {"table":table,"_token":"{{csrf_token()}}"}, function(data){
+      $.post("{{route('c.truncate.table')}}", {"table":table,"_token":"<?php echo $rand; ?>"}, function(data){
         if(data.status == "success"){
           var ht = '<div class="alert alert-success text-center"><strong>Success!</strong> Table '+table+' truncated successfully!</div>';
             $('#alrt').html(ht);
@@ -145,7 +156,7 @@
   function deleteTable(table, key){
     var check = confirm("Are you sure you want to delete this table");
     if(check){
-      $.post("{{route('c.delete.table')}}", {"table":table,"_token":"{{csrf_token()}}"}, function(data){
+      $.post("{{route('c.delete.table')}}", {"table":table,"_token":"<?php echo $rand; ?>"}, function(data){
         if(data.status == "success"){
           $("#r"+String(key+1)).remove();
           var ht = '<div class="alert alert-success text-center"><strong>Success!</strong> Table '+table+' deleted successfully!</div>';
@@ -247,7 +258,7 @@
     <div class="modal-content">
       <form id="renameTableForm" method="post" action="{{route('c.db.rename.table')}}">
         <input type="hidden" name="table" class="selectedTable" />
-        <input type="hidden" name="_token" value="{{csrf_token()}}" />
+        <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Import </h4>
@@ -272,7 +283,7 @@
     <div class="modal-content">
       <form id="renameTableForm" method="post" action="{{route('c.db.rename.table')}}">
         <input type="hidden" name="table" class="selectedTable" />
-        <input type="hidden" name="_token" value="{{csrf_token()}}" />
+        <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">New Table Name</h4>
@@ -343,7 +354,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <form id="renameFieldForm" >
-        <input type="hidden" name="_token" value="{{csrf_token()}}" />
+        <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
         <input type="hidden" name="table" class="selectedTable" />
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -372,7 +383,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <form id="deleteFieldForm" >
-        <input type="hidden" name="_token" value="{{csrf_token()}}" />
+        <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
         <input type="hidden" name="table" class="selectedTable" />
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -398,7 +409,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <form id="addIndexForm" >
-        <input type="hidden" name="_token" value="{{csrf_token()}}" />
+        <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
         <input type="hidden" name="table" class="selectedTable" />
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -422,4 +433,6 @@
 
   </div>
 </div>
-@endsection
+<?php require($app_key.'/views/layouts/scripts.html'); ?>
+</body>
+</html>
