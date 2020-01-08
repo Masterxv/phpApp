@@ -12,7 +12,7 @@ Route::add('/honeyweb-domain-verification',function(){
 
 //====================Guest Routes====================
 Route::add('/',function()use($app_key){
-    include($app_key.'/views/welcome.php');
+    include($app_key.'/view/welcome.php');
 });
 //====================End of Guest Routes=============
 
@@ -127,7 +127,7 @@ Route::add('/app/new_origin/([0-9]*)',function($id)use($app_key){
 },'post');
 Route::add('/app/delete_origin/([0-9]*)',function($id)use($app_key){
     include($app_key.'/controller/app/delete_origin_id.php');
-},'delete');
+},'post');
 Route::add('/app/invited_users/([0-9]*)',function($id)use($app_key){
     include($app_key.'/controller/app/invited_users_id.php');
 },'get');
@@ -179,6 +179,15 @@ Route::add('/license/update/([0-9]*)',function($id)use($app_key){
 Route::add('/license/delete/([0-9]*)',function($id)use($app_key){
     include($app_key.'/controller/license/delete_id.php');
 },'post');
+Route::add('/license/activate',function()use($app_key){
+    include($app_key.'/controller/license/activate.php');
+},'post','api');
+Route::add('/license/deactivate',function()use($app_key){
+    include($app_key.'/controller/license/de_activate.php');
+},'post','api');
+Route::add('/license/get_license_key',function()use($app_key){
+    include($app_key.'/controller/license/get_license_key.php');
+},'post','api');
 //====================End of License Routes=============
 
 
@@ -494,13 +503,18 @@ Route::add('/chat/message_status',function()use($app_key){
 
 
 
-Route::pathNotFound(function($path){
-    include('env.php');
-    include($app_key.'/404.php');
+//==============================End OF Routes===================================
+Route::pathNotFound(function($path)use($app_key){
+    include($app_key.'/include/404.php');
 });
 
-Route::methodNotAllowed(function($path, $method){
-    echo 'Method not allowed - 405 error';
+Route::methodNotAllowed(function($path, $method)use($app_key){
+    include($app_key.'/include/405.php');
+});
+
+Route::runMiddleware(function($route){
+    include('env.php');
+    include($app_key.'/middleware/middlewares.php');
 });
 
 Route::run('/');

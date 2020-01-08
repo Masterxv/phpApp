@@ -5,6 +5,7 @@ class Route{
   private static $routes = Array();
   private static $pathNotFound = null;
   private static $methodNotAllowed = null;
+  private static $runMiddleware = null;
 
   public static function add($expression, $function, $method = 'get', $auth = 'guest', $role = 'root'){
     array_push(self::$routes,Array(
@@ -22,6 +23,10 @@ class Route{
 
   public static function methodNotAllowed($function){
     self::$methodNotAllowed = $function;
+  }
+
+  public static function runMiddleware($function){
+    self::$runMiddleware = $function;
   }
 
   public static function run($basepath = '/'){
@@ -60,29 +65,17 @@ class Route{
 
       // echo $route['expression'].'<br/>';
 
-      // Check path match	
+      // Check path match 
       if(preg_match('#'.$route['expression'].'#',$path,$matches)){
-
-        if($route['auth']=='admin'){
-          if(!$_SESSION['admin_login']){
-            // echo $path;exit;
-            break;
-          }
-          if($route['role']=='root'){
-
-          }
-        }
-
-        // if($route['auth']=='user'){
-        //   if($_SESSION['user_login']!='student'){
-        //     break;
-        //   }
-        // }
 
         $path_match_found = true;
 
         // Check method match
         if(strtolower($method) == strtolower($route['method'])){
+
+          if(self::$runMiddleware){
+            call_user_func_array(self::$runMiddleware, Array($route));
+          }
 
           array_shift($matches);// Always remove first element. This contains the whole string
 
