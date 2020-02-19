@@ -1,4 +1,9 @@
+<?php include($app_key.'/include/csrf_token.php'); ?>
+
 <?php
-$fields = $this->getAfterFields($request->table);
-        return view($this->theme.'.db.add_columns')->with(['fn' => $request->fn??0, 'table' => $request->table??'', 'fields' => $fields]);
-        ?>
+include($app_key.'/include/SqlQueries.php');
+$fn = $_GET['fn']??0;
+$table = $_GET['table'];
+$fields = getAfterFields($_GET['table']);
+include($app_key.'/view/db/add_columns.php');
+?>

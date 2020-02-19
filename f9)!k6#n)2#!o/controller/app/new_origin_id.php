@@ -10,7 +10,7 @@ if(str_replace('localhost','',$_POST['name']) != $_POST['name'] || $_POST['name'
     App::validate(['name' => 'required|max:255' ], $err);
 }
 $app = App::find($id);
-$or = json_decode(htmlspecialchars_decode($app['origins']), true)??[];
+$or = json_decode($app['origins'], true)??[];
 array_push($or, $_POST['name']);
 App::update($app['id'],null,['origins' => json_encode($or)]);
 header("Location: $app_url/app/app_origins/".$id);

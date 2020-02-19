@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <?php require($app_key.'/view/layouts/styles.php'); ?>
   <style>
   .error {color: #FF0000;}
   </style>
 </head>
 <body>
-<?php require($app_key.'/views/layouts/nav.php'); ?>
+<?php require($app_key.'/view/layouts/nav.php'); ?>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12 text-center">
@@ -18,8 +18,7 @@
 	<div class="row">
 		<div class="col-md-3"></div>
 		<div class="col-md-6">
-			<form method="post" action="/query/update/<?php echo $query->id; ?>" >
-				{{ method_field('PUT') }}
+			<form method="post" action="/query/update/<?php echo $query['id']; ?>" >
 		        <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
 		        <div class="form-group row">
 					<div class="col-md-1"></div>
@@ -27,9 +26,9 @@
 						<label for="name">Name:</label>
 					</div>
 					<div class="col-md-6">
-						<input id="name" type="text" class="form-control" name="name" placeholder="Query Nick Name" value="{{old('name')}}">
-						@if($errors->has('name'))
-						<p style="color:red">{{$errors->first('name')}}</p> <?php endif; ?>
+						<input id="name" type="text" class="form-control" name="name" placeholder="Query Nick Name" value="<?php echo $old['name']; ?>">
+						<?php if($error['name']): ?>
+						<p style="color:red"><?php echo $error['name']; ?></p> <?php endif; ?>
 					</div>
 				</div><hr>
 				<div class="form-group row">
@@ -40,12 +39,12 @@
 					<div class="col-md-6">
 						<input id="auth_providers" type="hidden" class="form-control" name="auth_providers">
 						<div class="well well-sm" id="auth_providers_selected"></div>
-						@if($errors->has('auth_providers'))
-						<p style="color:red">{{$errors->first('auth_providers')}}</p> <?php endif; ?>
+						<?php if($error['auth_providers']): ?>
+						<p style="color:red"><?php echo $error['auth_providers']; ?></p> <?php endif; ?>
 						<div class="row">
 							<div class="col-md-12">
 							<?php foreach($auth_providers as $auth_provider): ?>
-								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="ap('{{$auth_provider}}')" @if(in_array($auth_provider, explode(', ', $query->auth_providers))) checked <?php endif; ?> >{{$auth_provider}}</label></div>
+								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="ap('<?php echo $auth_provider; ?>')" <?php if(in_array($auth_provider, explode(', ', $query['auth_providers']))): ?> checked <?php endif; ?> ><?php echo $auth_provider; ?></label></div>
 							<?php endforeach; ?>
 							</div>
 						</div>
@@ -62,7 +61,7 @@
 						<div class="row">
 							<div class="col-md-12">
 							<?php foreach($tables as $table): ?>
-								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="t1('{{$table}}')" @if(in_array($table, explode(', ', $query->tables))) checked <?php endif; ?>>{{$table}}</label></div>
+								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="t1('<?php echo $table; ?>')" <?php if(in_array($table, explode(', ', $query['tables']))): ?> checked <?php endif; ?>><?php echo $table; ?></label></div>
 							<?php endforeach; ?>
 							</div>
 						</div>
@@ -80,7 +79,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<?php foreach($commands as $k => $v): ?>
-								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="c('{{$v}}')" @if(in_array($v, explode(', ', $query->commands))) checked <?php endif; ?>>{{$k}}</label></div>
+								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="c('<?php echo $v; ?>')" <?php if(in_array($v, explode(', ', $query['commands']))): ?> checked <?php endif; ?>><?php echo $k; ?></label></div>
 								<?php endforeach; ?>
 							</div>
 						</div>
@@ -140,7 +139,7 @@
 							<div class="col-md-8">
 								<select id="jt" class="form-control" onchange="joinTableIndexFields()">
 									<?php foreach($tables as $table): ?>
-									<option>{{$table}}</option>
+									<option><?php echo $table; ?></option>
 									<?php endforeach; ?>
 								</select>
 							</div>
@@ -241,7 +240,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<?php foreach($specials as $sp): ?>
-								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="s('{{$sp}}')" @if(in_array($sp, explode(', ', $query->specials))) checked <?php endif; ?>>{{$sp}}</label></div>
+								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="s('<?php echo $sp; ?>')" <?php if(in_array($sp, explode(', ', $query['specials']))): ?> checked <?php endif; ?>><?php echo $sp; ?></label></div>
 								<?php endforeach; ?>
 							</div>
 						</div>
@@ -259,41 +258,41 @@
 	</div>
 </div>
 <script>
-	$("#name").val('{{$query->name}}');
-	$("#auth_providers_selected").html('{{old('auth_providers')??$query->auth_providers}}');
-	$("#tables_selected").html('{{old('tables')??$query->tables}}');
-	$("#commands_selected").html('{{old('commands')??$query->commands}}');
-	$("#vfields").html('{{old('fillables')??$query->fillables??"none"}}');
-	$("#hfields").html('{{old('hiddens')??$query->hiddens??"none"}}');
-	$("#mfields").html('{{old('mandatory')??$query->mandatory??"none"}}');
-	$("#jfields").html('{{old('joins')??$query->joins??"none"}}');
-	$("#ffields").html('{{old('filters')??$query->filters??"none"}}');
-	$("#sqfields").html('{{old('specials')??$query->specials??"none"}}');
-	$("#auth_providers").val('{{old('auth_providers')??$query->auth_providers}}');
-	$("#tables").val('{{old('tables')??$query->tables}}');
-	$("#commands").val('{{old('commands')??$query->commands}}');
-	$("#vid").val('{{old('fillables')??$query->fillables}}');
-	$("#hid").val('{{old('hiddens')??$query->hiddens}}');
-	$("#mid").val('{{old('mandatory')??$query->mandatory}}');
-	$("#jid").val('{{old('joins')??$query->joins}}');
-	$("#fid").val('{{old('filters')??$query->filters}}');
-	$("#sid").val('{{old('specials')??$query->specials}}');
+	$("#name").val('<?php echo $query['name']; ?>');
+	$("#auth_providers_selected").html('<?php echo $old['auth_providers']??$query['auth_providers']; ?>');
+	$("#tables_selected").html('<?php echo $old['tables']??$query['tables']; ?>');
+	$("#commands_selected").html('<?php echo $old['commands']??$query['commands']; ?>');
+	$("#vfields").html('<?php echo $old['fillables']??$query['fillables']??"none"; ?>');
+	$("#hfields").html('<?php echo $old['hiddens']??$query['hiddens']??"none"; ?>');
+	$("#mfields").html('<?php echo $old['mandatory']??$query['mandatory']??"none"; ?>');
+	$("#jfields").html('<?php echo $old['joins']??$query['joins']??"none"; ?>');
+	$("#ffields").html('<?php echo $old['filters']??$query['filters']??"none"; ?>');
+	$("#sqfields").html('<?php echo $old['specials']??$query['specials']??"none"; ?>');
+	$("#auth_providers").val('<?php echo $old['auth_providers']??$query['auth_providers']; ?>');
+	$("#tables").val('<?php echo $old['tables']??$query['tables']; ?>');
+	$("#commands").val('<?php echo $old['commands']??$query['commands']; ?>');
+	$("#vid").val('<?php echo $old['fillables']??$query['fillables']; ?>');
+	$("#hid").val('<?php echo $old['hiddens']??$query['hiddens']; ?>');
+	$("#mid").val('<?php echo $old['mandatory']??$query['mandatory']; ?>');
+	$("#jid").val('<?php echo $old['joins']??$query['joins']; ?>');
+	$("#fid").val('<?php echo $old['filters']??$query['filters']; ?>');
+	$("#sid").val('<?php echo $old['specials']??$query['specials']; ?>');
 </script>
 <script>
-	var auth_providers = {!! json_encode($auth_providers) !!};
-	var tables = {!! json_encode($tables) !!};
+	var auth_providers = JSON.parse('<?php echo json_encode($auth_providers); ?>');
+	var tables = JSON.parse('<?php echo json_encode($tables); ?>');
 	var fields = []; 
-	var commands = {!! json_encode(array_values($commands)) !!};
-	var specials = {!! json_encode(array_values($specials)) !!};
-	var aps={!! json_encode(old('auth_providers')??$query->auth_providers?explode(', ', old('auth_providers')??$query->auth_providers):[]) !!}; 
-	var ts={!! json_encode(old('tables')??$query->tables?explode(', ', old('tables')??$query->tables):[]) !!}; 
-	var cs={!! json_encode(old('commands')??$query->commands?explode(', ', old('commands')??$query->commands):[]) !!}; 
-	var vf={!! json_encode(old('fillables')??$query->fillables?explode(', ', old('fillables')??$query->fillables):[]) !!}; 
-	var hf={!! json_encode(old('hiddens')??$query->hiddens?explode(', ', old('hiddens')??$query->hiddens):[]) !!}; 
-	var mf={!! json_encode(old('mandatory')??$query->mandatory?explode(', ', old('mandatory')??$query->mandatory):[]) !!}; 
-	var jf={!! json_encode(old('joins')??$query->joins?explode('|', old('joins')??$query->joins):[]) !!};  
-	var ff={!! json_encode(old('filters')??$query->filters?explode('|', old('filters')??$query->filters):[]) !!}; 
-	var sp={!! json_encode(old('specials')??$query->specials?explode(', ', old('specials')??$query->specials):[]) !!}; 
+	var commands = JSON.parse('<?php echo json_encode(array_values($commands)); ?>');
+	var specials = JSON.parse('<?php echo json_encode(array_values($specials)); ?>');
+	var aps=JSON.parse('<?php echo json_encode($old['auth_providers']??$query['auth_providers']?explode(', ', $old['auth_providers']??$query['auth_providers']):[]); ?>'); 
+	var ts=JSON.parse('<?php echo json_encode($old['tables']??$query['tables']?explode(', ', $old['tables']??$query['tables']):[]); ?>'); 
+	var cs=JSON.parse('<?php echo json_encode($old['commands']??$query['commands']?explode(', ', $old['commands']??$query['commands']):[]); ?>'); 
+	var vf=JSON.parse('<?php echo json_encode($old['fillables']??$query['fillables']?explode(', ', $old['fillables']??$query['fillables']):[]); ?>'); 
+	var hf=JSON.parse('<?php echo json_encode($old['hiddens']??$query['hiddens']?explode(', ', $old['hiddens']??$query['hiddens']):[]); ?>'); 
+	var mf=JSON.parse('<?php echo json_encode($old['mandatory']??$query['mandatory']?explode(', ', $old['mandatory']??$query['mandatory']):[]); ?>'); 
+	var jf=JSON.parse('<?php echo json_encode($old['joins']??$query['joins']?explode('|', $old['joins']??$query['joins']):[]); ?>');  
+	var ff=JSON.parse('<?php echo json_encode($old['filters']??$query['filters']?explode('|', $old['filters']??$query['filters']):[]); ?>'); 
+	var sp=JSON.parse('<?php echo json_encode($old['specials']??$query['specials']?explode(', ', $old['specials']??$query['specials']):[]); ?>'); 
 </script>
 <script>
 	Array.prototype.diff = function(a) {
@@ -436,6 +435,6 @@
 	    $.get("/table/get_columns", {"table":$("#jt").val()}, function(data){$("#jf").html(data);});
 	}
 </script>
-<?php require($app_key.'/views/layouts/scripts.html'); ?>
+<?php require($app_key.'/view/layouts/scripts.php'); ?>
 </body>
 </html>

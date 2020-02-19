@@ -1,3 +1,4 @@
 <?php
-return $this->getFieldsSelectOptions($request->table);
+include($app_key.'/include/SqlQueries.php');
+echo getFieldsSelectOptions($_GET['table']);
 ?>

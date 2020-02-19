@@ -14,7 +14,7 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
-        <?php if(!$_SESSION[$app_key."_user_id"]): ?>
+        <?php if(!$_SESSION[$app_key]["id"]): ?>
           <li><a href="/blog"><i class="fa fa-edit"></i> Blog</a></li>
           <li><a href="/docs"><i class="fa fa-book"></i> Docs</a></li>
           <li><a href="/register_view"><i class="fa fa-user"></i> Sign Up</a></li>
@@ -33,11 +33,11 @@
           <li><a href="/app/log_view"><i class="fa fa-edit"></i> Log</a></li>
           
           <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user"></i> <?php echo $_SESSION[$app_key.'_user_name']; ?>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user"></i> <?php echo $_SESSION[$app_key]['name']; ?>
             <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <?php if($_SESSION[$app_key."_user_avatar"]): ?>
-              <li><a href=""><image class="avatar" src="<?php echo $_SESSION[$app_key."_user_avatar"]; ?>" /></a></li>
+              <?php if($_SESSION[$app_key]["avatar"]): ?>
+              <li><a href=""><image class="avatar" src="<?php echo $_SESSION[$app_key]["avatar"]; ?>" /></a></li>
               <?php else: ?>
               <li><a href=""><image  src="https://via.placeholder.com/120" /></a></li>
               <?php endif; ?>

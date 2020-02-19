@@ -1,3 +1,6 @@
+<?php include($app_key.'/include/csrf_token.php'); ?>
+
 <?php
-return view($this->theme.'.db.create_table')->with(['fn' => $request->fn]);
+$fn = $_GET['fn'];
+include($app_key.'/view/db/create_table.php');
 ?>

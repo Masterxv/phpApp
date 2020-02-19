@@ -1,7 +1,7 @@
 <?php
 if($route['auth']!='api'){
   if($_SERVER["REQUEST_METHOD"] == "POST"){
-    if($_POST['_token'] != $_SESSION['rand']){
+    if($_POST['_token'] != $_SESSION[$_SERVER['HTTP_REFERER'].'_rand']){
       include($app_key.'/include/403.php');
       exit;
     }

@@ -16,13 +16,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <?php require($app_key.'/view/layouts/styles.php'); ?>
   <style>
   .error {color: #FF0000;}
   </style>
 </head>
 <body>
-<?php require($app_key.'/views/layouts/nav.php'); ?>
+<?php require($app_key.'/view/layouts/nav.php'); ?>
 <?php if($category == 'github' && $article =='basic-git-usage'): ?>
 <div class="container-fluid">
   <div class="row">
@@ -39,11 +39,11 @@
   <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-9">
-      <?php include($app_key.'/views/blog/basic-git-usage.php') ?>
+      <?php include($app_key.'/view/blog/basic-git-usage.php') ?>
     </div>
   </div>
 </div>
 <?php endif; ?>
-<?php require($app_key.'/views/layouts/scripts.html'); ?>
+<?php require($app_key.'/view/layouts/scripts.php'); ?>
 </body>
 </html>

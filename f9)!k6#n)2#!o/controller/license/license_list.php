@@ -1,15 +1,9 @@
-<?php 
-if ($_SERVER["REQUEST_METHOD"] == "GET"){
-    session_start(); 
-    $rand=rand();
-    $_SESSION['rand']=$rand;
-}
-?>
+<?php include($app_key.'/include/csrf_token.php'); ?>
 
 <?php
 include($app_key.'/model/License.php');
 
-$filter = ['created_by' => $_SESSION[$app_key."_user_active_app_id"]];
+$filter = ['created_by' => $_SESSION[$app_key]["active_app_id"]];
 
 $pageno = $_GET['pageno']??1;
 $no_of_records_per_page = 10;

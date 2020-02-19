@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <?php require($app_key.'/view/layouts/styles.php'); ?>
   <style>
   .error {color: #FF0000;}
   </style>
 </head>
 <body>
-<?php require($app_key.'/views/layouts/nav.php'); ?>
+<?php require($app_key.'/view/layouts/nav.php'); ?>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12 text-center">
@@ -26,9 +26,10 @@
 						<label for="name">Name:</label>
 					</div>
 					<div class="col-md-6">
-						<input id="name" type="text" class="form-control" name="name" placeholder="Query Nick Name" value="{{old('name')}}">
-						@if($errors->has('name'))
-						<p style="color:red">{{$errors->first('name')}}</p> <?php endif; ?>
+						<input id="name" type="text" class="form-control" name="name" placeholder="Query Nick Name" value="<?php echo $old['name']; ?>">
+						<?php if($error['name']): ?>
+						<p style="color:red"><?php echo $error['name']; ?></p> 
+						<?php endif; ?>
 					</div>
 				</div><hr>
 				<div class="form-group row">
@@ -39,12 +40,13 @@
 					<div class="col-md-6">
 						<input id="auth_providers" type="hidden" class="form-control" name="auth_providers">
 						<div class="well well-sm" id="auth_providers_selected"></div>
-						@if($errors->has('auth_providers'))
-						<p style="color:red">{{$errors->first('auth_providers')}}</p> <?php endif; ?>
+						<?php if($error['auth_providers']): ?>
+						<p style="color:red"><?php echo $error['auth_providers']; ?></p> 
+						<?php endif; ?>
 						<div class="row">
 							<div class="col-md-12">
 							<?php foreach($auth_providers as $auth_provider): ?>
-								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="ap('{{$auth_provider}}')" @if(in_array($auth_provider, explode(', ', old('auth_providers')))) checked <?php endif; ?>>{{$auth_provider}}</label></div>
+								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="ap('<?php echo $auth_provider; ?>')" <?php if(in_array($auth_provider, explode(', ', $old['auth_providers']))): ?> checked <?php endif; ?>><?php echo $auth_provider; ?></label></div>
 							<?php endforeach; ?>
 							</div>
 						</div>
@@ -58,12 +60,13 @@
 					<div class="col-md-6">
 						<input id="tables" type="hidden" class="form-control" name="tables">
 						<div class="well well-sm" id="tables_selected"></div>
-						@if($errors->has('tables'))
-						<p style="color:red">{{$errors->first('tables')}}</p> <?php endif; ?>
+						<?php if($error['tables']): ?>
+						<p style="color:red"><?php echo $error['tables']; ?></p> 
+						<?php endif; ?>
 						<div class="row">
 							<div class="col-md-12">
 							<?php foreach($tables as $table): ?>
-								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="t('{{$table}}')" @if(in_array($table, explode(', ', old('tables')))) checked <?php endif; ?>>{{$table}}</label></div>
+								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="t('<?php echo $table; ?>')" <?php if(in_array($table, explode(', ', $old['tables']))): ?> checked <?php endif; ?>><?php echo $table; ?></label></div>
 							<?php endforeach; ?>
 							</div>
 						</div>
@@ -78,12 +81,13 @@
 					<div class="col-md-6">
 						<div class="well well-sm" id="commands_selected"></div>
 						<input id="commands" type="hidden" class="form-control" name="commands">
-						@if($errors->has('commands'))
-						<p style="color:red">{{$errors->first('commands')}}</p> <?php endif; ?>
+						<?php if($error['commands']): ?>
+						<p style="color:red"><?php echo $error['commands']; ?></p> 
+						<?php endif; ?>
 						<div class="row">
 							<div class="col-md-12">
 								<?php foreach($commands as $k => $v): ?>
-								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="c('{{$v}}')" @if(in_array($v, explode(', ', old('commands')))) checked <?php endif; ?>>{{$k}}</label></div>
+								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="c('<?php echo $v; ?>')" <?php if(in_array($v, explode(', ', $old['commands']))): ?> checked <?php endif; ?>><?php echo $k; ?></label></div>
 								<?php endforeach; ?>
 							</div>
 						</div>
@@ -143,7 +147,7 @@
 							<div class="col-md-8">
 								<select id="jt" class="form-control" onchange="joinTableIndexFields()">
 									<?php foreach($tables as $table): ?>
-									<option>{{$table}}</option>
+									<option><?php echo $table; ?></option>
 									<?php endforeach; ?>
 								</select>
 							</div>
@@ -244,7 +248,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<?php foreach($specials as $sp): ?>
-								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="s('{{$sp}}')" @if(in_array($sp, explode(', ', old('specials')))) checked <?php endif; ?>>{{$sp}}</label></div>
+								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="s('<?php echo $sp; ?>')" <?php if(in_array($sp, explode(', ', $old['specials']))): ?> checked <?php endif; ?>><?php echo $sp; ?></label></div>
 								<?php endforeach; ?>
 							</div>
 						</div>
@@ -262,39 +266,39 @@
 	</div>
 </div>
 <script>
-	$("#auth_providers_selected").html('{{old('auth_providers')??'none'}}');
-	$("#tables_selected").html('{{old('tables')??'none'}}');
-	$("#commands_selected").html('{{old('commands')??'none'}}');
-	$("#vfields").html('{{old('fillables')??'all'}}');
-	$("#hfields").html('{{old('hiddens')??'none'}}');
-	$("#mfields").html('{{old('mandatory')??'none'}}');
-	$("#jfields").html('{{old('joins')??'none'}}');
-	$("#ffields").html('{{old('filters')??'none'}}');
-	$("#sqfields").html('{{old('specials')??'none'}}');
-	$("#auth_providers").val('{{old('auth_providers')??'none'}}');
-	$("#tables").val('{{old('tables')??'none'}}');	
-	$("#commands").val('{{old('commands')??'none'}}');
-	$("#vid").val('{{old('fillables')??null}}');
-	$("#hid").val('{{old('hiddens')??null}}');
-	$("#mid").val('{{old('mandatory')??null}}');
-	$("#jid").val('{{old('joins')??null}}');
-	$("#fid").val('{{old('filters')??null}}');
-	$("#sid").val('{{old('specials')??null}}');
+	$("#auth_providers_selected").html('<?php echo $old['auth_providers']??'none'; ?>');
+	$("#tables_selected").html('<?php echo $old['tables']??'none'; ?>');
+	$("#commands_selected").html('<?php echo $old['commands']??'none'; ?>');
+	$("#vfields").html('<?php echo $old['fillables']??'all'; ?>');
+	$("#hfields").html('<?php echo $old['hiddens']??'none'; ?>');
+	$("#mfields").html('<?php echo $old['mandatory']??'none'; ?>');
+	$("#jfields").html('<?php echo $old['joins']??'none'; ?>');
+	$("#ffields").html('<?php echo $old['filters']??'none'; ?>');
+	$("#sqfields").html('<?php echo $old['specials']??'none'; ?>');
+	$("#auth_providers").val('<?php echo $old['auth_providers']??'none'; ?>');
+	$("#tables").val('<?php echo $old['tables']??'none'; ?>');	
+	$("#commands").val('<?php echo $old['commands']??'none'; ?>');
+	$("#vid").val('<?php echo $old['fillables']??null; ?>');
+	$("#hid").val('<?php echo $old['hiddens']??null; ?>');
+	$("#mid").val('<?php echo $old['mandatory']??null; ?>');
+	$("#jid").val('<?php echo $old['joins']??null; ?>');
+	$("#fid").val('<?php echo $old['filters']??null; ?>');
+	$("#sid").val('<?php echo $old['specials']??null; ?>');
 </script>
 <script>
-	var auth_providers = {!! json_encode($auth_providers) !!};
-	var tables = {!! json_encode($tables) !!};
-	var fields = []; var commands = {!! json_encode(array_values($commands)) !!};
-	var specials = {!! json_encode(array_values($specials)) !!};
-	var aps={!! json_encode(old('auth_providers')?explode(', ', old('auth_providers')):[]) !!};
-	var ts={!! json_encode(old('tables')?explode(', ', old('tables')):[]) !!};
-	var cs={!! json_encode(old('commands')?explode(', ', old('commands')):[]) !!};
-	var vf={!! json_encode(old('fillables')?explode(', ', old('fillables')):[]) !!};
-	var hf={!! json_encode(old('hiddens')?explode(', ', old('hiddens')):[]) !!};
-	var mf={!! json_encode(old('mandatory')?explode(', ', old('mandatory')):[]) !!};
-	var jf={!! json_encode(old('joins')?explode('|', old('joins')):[]) !!};
-	var ff={!! json_encode(old('filters')?explode('|', old('filters')):[]) !!};
-	var sp={!! json_encode(old('specials')?explode(', ', old('specials')):[]) !!};
+	var auth_providers = JSON.parse('<?php echo json_encode($auth_providers); ?>');
+	var tables = JSON.parse('<?php echo json_encode($tables); ?>');
+	var fields = []; var commands = JSON.parse('<?php echo json_encode(array_values($commands)); ?>');
+	var specials = JSON.parse('<?php echo json_encode(array_values($specials)); ?>');
+	var aps=JSON.parse('<?php echo json_encode($old['auth_providers']?explode(', ', $old['auth_providers']):[]); ?>');
+	var ts=JSON.parse('<?php echo json_encode($old['tables']?explode(', ', $old['tables']):[]); ?>');
+	var cs=JSON.parse('<?php echo json_encode($old['commands']?explode(', ', $old['commands']):[]); ?>');
+	var vf=JSON.parse('<?php echo json_encode($old['fillables']?explode(', ', $old['fillables']):[]); ?>');
+	var hf=JSON.parse('<?php echo json_encode($old['hiddens']?explode(', ', $old['hiddens']):[]); ?>');
+	var mf=JSON.parse('<?php echo json_encode($old['mandatory']?explode(', ', $old['mandatory']):[]); ?>');
+	var jf=JSON.parse('<?php echo json_encode($old['joins']?explode('|', $old['joins']):[]); ?>');
+	var ff=JSON.parse('<?php echo json_encode($old['filters']?explode('|', $old['filters']):[]); ?>');
+	var sp=JSON.parse('<?php echo json_encode($old['specials']?explode(', ', $old['specials']):[]); ?>');
 	Array.prototype.diff = function(a) {
 	    return this.filter(function(i) {return a.indexOf(i) < 0;});
 	};
@@ -435,6 +439,6 @@
 	    $.get("/table/get_columns", {"table":$("#jt").val()}, function(data){$("#jf").html(data);});
 	}
 </script>
-<?php require($app_key.'/views/layouts/scripts.html'); ?>
+<?php require($app_key.'/view/layouts/scripts.php'); ?>
 </body>
 </html>

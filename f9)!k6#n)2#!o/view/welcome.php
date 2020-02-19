@@ -1,10 +1,17 @@
 <?php 
+if ($_SERVER["REQUEST_METHOD"] == "GET"){
+    session_start(); 
+    $rand=rand();
+    $_SESSION['rand']=$rand;
+}
+?>
+<?php 
 include('env.php');
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-  <?php require($app_key.'/view/layouts/styles.html'); ?>
+  <?php require($app_key.'/view/layouts/styles.php'); ?>
   <style>
   .error {color: #FF0000;}
   </style>
@@ -137,6 +144,6 @@ include('env.php');
   //   });
   // }
 </script>
-<?php require($app_key.'/view/layouts/scripts.html'); ?>
+<?php require($app_key.'/view/layouts/scripts.php'); ?>
 </body>
 </html>

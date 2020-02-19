@@ -1,26 +1,31 @@
-@extends("cb.layouts.app")
-
-@section("custom_style")
-<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
-@endsection
-@section("content")
+<!DOCTYPE html>
+<html>
+<head>
+  <?php require($app_key.'/view/layouts/styles.php'); ?>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
+  <style>
+  .error {color: #FF0000;}
+  </style>
+</head>
+<body>
+  <?php require($app_key.'/view/layouts/nav.php'); ?>
 <div class="container-fluid">
   <div id="alrt"></div>
   <?php if($error['name']): ?><div class="alert alert-warning"><strong>Warning!</strong><?php echo $error['name']; ?></div>
     <?php endif; ?>
   <div class="row">
     <div class="col-md-6">
-      <div class="well well-sm">App Description | for app id: {{$id}} </div>
+      <div class="well well-sm">App Description | for app id: <?php echo $id; ?> </div>
     </div>
     <div class="col-md-6">
       <div class="btn-group" style="float:right"> 
-        <a class="btn btn-default" href="{{url()->previous()}}">Back</a>
+        <a class="btn btn-default" href="app/app_list">Back</a>
       </div>
     </div>
   </div>
 	<div class="row">
 		<div class="col-md-6">
-			<textarea class="form-control" onkeyup="markToHtml()" style="min-height: 400px">{{$desc}}</textarea>
+			<textarea class="form-control" onkeyup="markToHtml()" style="min-height: 400px"><?php echo $desc; ?></textarea>
 		</div>
     <div class="col-md-6">
       <div class="well well-sm" id="html_mark" style="min-height: 400px"></div>
@@ -47,7 +52,7 @@
     // });
 
   function saveDescription(){
-    $.post("{{ route('c.app.desc.submit') }}", {'description':$("textarea").val(),'_token':'{{csrf_token()}}','id':{{$id}}}, function(data, status){
+    $.post("app/save_app_description", {'description':$("textarea").val(),'_token':'<?php echo $rand; ?>','id':'<?php echo $id; ?>'}, function(data, status){
         if(status='success'){
           $('#alrt').html('<div class="alert alert-'+data['status']+'"><strong>'+data['status']+'!</strong> '+data['message']+'</div>');
           document.getElementById("alrt").scrollIntoView();
@@ -65,12 +70,13 @@
   }
   
   if($("textarea").val()==''){
-    let t = "# {{$name}}\n\n\n\n**Lorem Ipsum** is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+    let t = "# <?php echo $name; ?>\n\n\n\n**Lorem Ipsum** is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
     t = t + '';
     $("textarea").val(t);
   }
   markToHtml();
 </script>
 
-
-@endsection
+<?php require($app_key.'/view/layouts/scripts.php'); ?>
+</body>
+</html>

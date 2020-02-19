@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <?php require($app_key.'/view/layouts/styles.php'); ?>
   <style>
   .error {color: #FF0000;}
   </style>
 </head>
 <body>
-<?php require($app_key.'/views/layouts/nav.php'); ?>
+<?php require($app_key.'/view/layouts/nav.php'); ?>
 <div class="jumbotron">
 <h1 >Apps</h1>
 <hr>
@@ -26,6 +26,6 @@
 <h2 id="apps5">Permissions<a href="/docs/#apps5s"> ↻</a></h2>
 <p>Click permissions link on app list item to set the permissions for accessing the tables data from the backend. This link will direct to set permissions screen where each table in the app is to be assigned permissions for every authenticatable by checking the checkbox against each combination. This has to be done for Create, Read, Update and Delete separately. You can check for guest to assign permission for every authenticatable.</p>
 </div>
-<?php require($app_key.'/views/layouts/scripts.html'); ?>
+<?php require($app_key.'/view/layouts/scripts.php'); ?>
 </body>
 </html>

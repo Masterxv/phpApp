@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <?php require($app_key.'/view/layouts/styles.php'); ?>
   <style>
   .error {color: #FF0000;}
   </style>
 </head>
 <body>
-<?php require($app_key.'/views/layouts/nav.php'); ?>
+<?php require($app_key.'/view/layouts/nav.php'); ?>
 <div class="container-fluid">
   <div id="alrt"></div>
   <?php if($error['table']): ?><div class="alert alert-warning"><strong>Warning!</strong><?php echo $error['table']; ?></div>
@@ -20,7 +20,7 @@
     <?php endif; ?>
   <div class="row">
     <div class="col-md-6">
-      <div class="well well-sm"> Table List | for the app id: <?php echo \Auth::user()->active_app_id; ?>, Space Used: <?php echo $size; ?> MB</div>
+      <div class="well well-sm"> Table List | for the app id: <?php echo $_SESSION[$app_key]['active_app_id']; ?>, Space Used: <?php echo $size; ?> MB</div>
     </div>
     <div class="col-md-6">
       <div class="btn-group" style="float:right">
@@ -46,7 +46,7 @@
   				<tbody>
             <?php foreach ($tables as $key => $table): ?>
             <tr id="r<?php echo ($key + 1); ?>">
-              <td><?php echo  ($loop->index + 1) + 10 * ($page-1); ?></td>
+              <td><?php echo  ($key + 1) + 10 * ($pageno-1); ?></td>
               <td><?php echo  $table['name'] ; ?></td>
               <td><?php echo  $table['size'] ; ?></td>
               <td><a href="JavaScript:void(0);" onclick="addFields('<?php echo $table['name']; ?>')">Add Fields</a></td>
@@ -102,23 +102,6 @@
       <div class="col-md-12">
         <?php include($app_key.'/layouts/pagination.php') ?>
       </div>
-      <!-- @if($np>1)
-      <div class="pagination">
-        @if($page==1)<a class="disabled">&laquo;</a><?php endif; ?>
-        @if($page!=1)<a href="<?php echo $urls[$page-2]; ?>" rel="prev">&laquo;</a><?php endif; ?>
-
-        <?php foreach ($urls as $url): ?>
-        @if($loop->index + 1 == $page)
-        <a class="active"><?php echo  $page ; ?></a>
-        @else
-        <a href="<?php echo  $url ; ?>"><?php echo $loop->index+1; ?></a>
-        <?php endif; ?>
-        <?php endforeach; ?>
-
-        @if($page==$np)<a class="disabled">&raquo;</a><?php endif; ?>
-        @if($page!=$np)<a href="<?php echo $urls[$page]; ?>" rel="next">&raquo;</a><?php endif; ?>
-      </div>
-      <?php endif; ?> -->
 		</div>
 	</div>
 </div>
@@ -423,7 +406,6 @@
           <select id="field_names" name="field_name" class="form-control field_names" autofocus></select>
           <label for="index_name" class="ri">Select the index</label>
           <select name="index_name" class="form-control ri">
-            <option value="primary">PRIMARY</option>
             <option value="unique">UNIQUE</option>
             <option value="index">INDEX</option>
           </select>
@@ -436,6 +418,6 @@
 
   </div>
 </div>
-<?php require($app_key.'/views/layouts/scripts.html'); ?>
+<?php require($app_key.'/view/layouts/scripts.php'); ?>
 </body>
 </html>

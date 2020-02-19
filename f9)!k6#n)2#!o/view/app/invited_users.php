@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php require($app_key.'/view/layouts/styles.html'); ?>
+  <?php require($app_key.'/view/layouts/styles.php'); ?>
   <style>
   .error {color: #FF0000;}
   </style>
@@ -35,12 +35,12 @@
   					</tr>
   				</thead>
   				<tbody>
-            <?php foreach ($invited_users as $user): ?>
-            <tr id="r<?php echo $user->id; ?>">
-              <td><?php echo  ($loop->index + 1) ; ?></td>
-              <td><?php echo $user->name; ?></td>
-              <td><?php echo $user->email; ?></td>
-              <td><a href="JavaScript:void(0);" onclick="deleteUser('<?php echo $user->id; ?>')">Delete</a></td>
+            <?php foreach ($invited_users as $k => $user): ?>
+            <tr id="r<?php echo $user['id']; ?>">
+              <td><?php echo  ($k + 1) ; ?></td>
+              <td><?php echo $user['name']; ?></td>
+              <td><?php echo $user['email']; ?></td>
+              <td><a href="JavaScript:void(0);" onclick="deleteUser('<?php echo $user['id']; ?>')">Delete</a></td>
             </tr>
             <?php endforeach; ?>
   				</tbody>
@@ -90,6 +90,6 @@
     </div>
   </div>
 
-<?php require($app_key.'/view/layouts/scripts.html'); ?>
+<?php require($app_key.'/view/layouts/scripts.php'); ?>
 </body>
 </html>

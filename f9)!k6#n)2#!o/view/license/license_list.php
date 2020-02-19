@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php require($app_key.'/view/layouts/styles.html'); ?>
+  <?php require($app_key.'/view/layouts/styles.php'); ?>
   <style>
   .error {color: #FF0000;}
   </style>
@@ -11,7 +11,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-6">
-      Licenses List | for the app id: <?php echo $_SESSION[$app_key.'_user_active_app_id']; ?>
+      Licenses List | for the app id: <?php echo $_SESSION[$app_key]['active_app_id']; ?>
     </div>
     <div class="col-md-6">
       <div class="btn-group" style="float:right">
@@ -137,6 +137,6 @@
   </div>
 </div>
 
-<?php require($app_key.'/view/layouts/scripts.html'); ?>
+<?php require($app_key.'/view/layouts/scripts.php'); ?>
 </body>
 </html>

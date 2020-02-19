@@ -1,5 +1,5 @@
 <?php
-$_SESSION['rand']="";
+$_SESSION[$_SERVER['HTTP_REFERER'].'_rand']="";
 include($app_key.'/model/User.php');
 User::validate([
     'password'=>'required',
@@ -14,9 +14,7 @@ if(!$result){
 }elseif(!password_verify($_POST['password'], $result['password'])){
     $error['message'] = "Password did not match";
 }else{
-    foreach ($result as $key => $value) {
-        $_SESSION[$app_key."_user_".$key] = $value;
-    }
+    $_SESSION[$app_key] = $result;
     header("Location: $app_url/app/app_list");
     die();
 }

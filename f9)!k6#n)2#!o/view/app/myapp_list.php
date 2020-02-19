@@ -1,7 +1,8 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-  <?php require($app_key.'/view/layouts/styles.html'); ?>
+  <?php require($app_key.'/view/layouts/styles.php'); ?>
   <style>
   .error {color: #FF0000;}
   </style>
@@ -54,6 +55,7 @@
                 <td><a href="JavaScript:void(0);" onclick="updateApp(<?php echo $app['id']; ?>, <?php echo $k; ?>)">Update</a></td>
                 <td><a href="/app/app_user_name_fields/<?php echo $app['id']; ?>">User Fields</a></td>
                 <td><a href="/app/app_origins/<?php echo $app['id']; ?>">Origins</a></td>
+                <td><a href="/app/app_origins/<?php echo $app['id']; ?>">Roles</a></td>
                 <td><a href="/app/invited_users/<?php echo $app['id']; ?>">Invited Users</a></td>
                 <td><a href="/app/sql/<?php echo $app['id']; ?>">ExportDB</a></td>
                 <td><a href="/app/app_description/<?php echo $app['id']; ?>">Description</a></td>
@@ -102,7 +104,7 @@
       if(!confirm("Deleting app will delete all its assosiated tables and queries. Please confirm!")){
         return;
       }
-      $.post("/app/delete",{'_token':'<?php echo $rand; ?>','id':id,'_method':'delete'},function(data){
+      $.post("/app/delete",{'_token':'<?php echo $rand; ?>','id':id},function(data){
         if(data['status'] == 'success'){
           $('#r'+id).remove();
           $('#alrt').html('<div class="alert alert-success"><strong>Success!</strong> App was successfully deleted.</div>');
@@ -200,6 +202,6 @@
 
     </div>
   </div>
-<?php require($app_key.'/views/layouts/scripts.html'); ?>
+<?php require($app_key.'/views/layouts/scripts.php'); ?>
 </body>
 </html>

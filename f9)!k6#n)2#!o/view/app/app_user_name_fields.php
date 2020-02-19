@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php require($app_key.'/view/layouts/styles.html'); ?>
-  <style>
-  .error {color: #FF0000;}
-  </style>
+  <?php require($app_key.'/view/layouts/styles.php'); ?>
 </head>
 <body>
   <?php require($app_key.'/view/layouts/nav.php'); ?>
@@ -67,7 +64,7 @@
 			$("#r"+ap + ' > td:nth-child(3)').html(arr.join(','));
 		}
 		function saveUserNameFields(){
-			const ap = {!! json_encode($ap) !!};
+			const ap = JSON.parse('<?php echo json_encode($ap); ?>');
 			let unf = {};
 			for (var i = 0; i < ap.length; i++) {
 				let t = $("#r"+ap[i] + ' > td:nth-child(3)').html();
@@ -83,6 +80,6 @@
 			});
 		}
 	</script>
-<?php require($app_key.'/view/layouts/scripts.html'); ?>
+<?php require($app_key.'/view/layouts/scripts.php'); ?>
 </body>
 </html>

@@ -5,6 +5,10 @@
  */
 class Model 
 {
+	public static $servername;
+	public static $dbname;
+	public static $username;
+	public static $password;
 	public static $table = 'contacts';
 	public static $fields = [];
 	public static $visibles = [];
@@ -19,10 +23,12 @@ class Model
 
 	public static function create($role = null, $arr = null){
 		include('env.php');
+		self::$servername=$servername;self::$dbname=$dbname;self::$username=$username;self::$password=$password;
 		$arr = $arr??$_POST;
 		foreach ($arr as $field => $value) {
 		  if(in_array($field, static::roleArray($role)) && $field!='id'){
 		    if (empty($arr[$field]) && !($arr[$field]===0)){
+		    	$old[$field] = null;
 		    }else{
 		      $old[$field] = self::test_input($arr[$field]);
 		    }
@@ -30,7 +36,7 @@ class Model
 		}
 
 		try {
-	        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+	        $conn = new PDO("mysql:host=".static::$servername.";dbname=".static::$dbname, static::$username, static::$password);
 	        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	        $sql = "INSERT INTO ".static::$table . " (" . implode(', ', array_keys($old)) . ") VALUES (:" . implode(",:", array_keys($old)) . ")";
@@ -47,24 +53,26 @@ class Model
 
 	public static function update($id = null, $role = null, $arr = null){
 		include('env.php');
+		self::$servername=$servername;self::$dbname=$dbname;self::$username=$username;self::$password=$password;
 		$id = $id??$_POST["id"];
 		$arr = $arr??$_POST;
 		try {
-	        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+	        $conn = new PDO("mysql:host=".static::$servername.";dbname=".static::$dbname, static::$username, static::$password);
 	        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	        
 	        $sql = "UPDATE ".static::$table." SET ";
-			foreach ($arr as $field => $value) {
-			  if(in_array($field, static::roleArray($role)) && $field!='id'){
-			    if (empty($arr[$field]) && !($arr[$field]===0)){
-			    }else{
-			      $old[$field] = self::test_input($arr[$field]);
-			      $sql = $sql."$field=:$field, ";
-			    }
-			  }
-			}
-			$sql = rtrim($sql, ", ");
-			$sql = $sql." WHERE id=".$id;
+					foreach ($arr as $field => $value) {
+					  if(in_array($field, static::roleArray($role)) && $field!='id'){
+					    if(empty($arr[$field]) && !($arr[$field]===0)){
+					      $old[$field] = null;
+					    }else{
+					      $old[$field] = self::test_input($arr[$field]);
+					    }
+					    $sql = $sql."$field=:$field, ";
+					  }
+					}
+					$sql = rtrim($sql, ", ");
+					$sql = $sql." WHERE id=".$id;
 
 	        $stmt = $conn->prepare($sql);
 	        $stmt->execute($old);
@@ -77,9 +85,10 @@ class Model
 
 	public static function all($role = null){
 		include('env.php');
+		self::$servername=$servername;self::$dbname=$dbname;self::$username=$username;self::$password=$password;
 		$arr = static::roleArray($role);
 		try {
-		    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+		    $conn = new PDO("mysql:host=".static::$servername.";dbname=".static::$dbname, static::$username, static::$password);
 		    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		    
 			$stmt = $conn->prepare("SELECT ".implode(', ',$arr)." FROM ".static::$table);
@@ -95,6 +104,7 @@ class Model
 
 	public static function find($id = null, $role = null, $sarr = null){
 		include('env.php');
+		self::$servername=$servername;self::$dbname=$dbname;self::$username=$username;self::$password=$password;
 		$id = $id??$_POST["id"];
 		$arr = static::roleArray($role);
 		if(is_array($sarr)){
@@ -104,7 +114,7 @@ class Model
 		}
 
 		try {
-			$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+			$conn = new PDO("mysql:host=".static::$servername.";dbname=".static::$dbname, static::$username, static::$password);
 	    	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		    
 			$stmt = $conn->prepare("SELECT ".implode(', ', $arr)." FROM ".static::$table." where id=$id  LIMIT 1");
@@ -124,9 +134,10 @@ class Model
 
 	public static function destroy($id = null){
 		include('env.php');
+		self::$servername=$servername;self::$dbname=$dbname;self::$username=$username;self::$password=$password;
 		$id = $id??$_POST["id"];
 		try {
-			$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+			$conn = new PDO("mysql:host=".static::$servername.";dbname=".static::$dbname, static::$username, static::$password);
 	    	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		    
 			$stmt = $conn->prepare("DELETE FROM ".static::$table." WHERE id=$id");
@@ -140,8 +151,9 @@ class Model
 
 	public static function count(){
 		include('env.php');
+		self::$servername=$servername;self::$dbname=$dbname;self::$username=$username;self::$password=$password;
 		try {
-		    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+		    $conn = new PDO("mysql:host=".static::$servername.";dbname=".static::$dbname, static::$username, static::$password);
 		    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM ".static::$table);
@@ -157,8 +169,9 @@ class Model
 
 	public static function sum($field){
 		include('env.php');
+		self::$servername=$servername;self::$dbname=$dbname;self::$username=$username;self::$password=$password;
 		try {
-		    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+		    $conn = new PDO("mysql:host=".static::$servername.";dbname=".static::$dbname, static::$username, static::$password);
 		    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		    $stmt = $conn->prepare("SELECT SUM(".$field.") as sum FROM ".static::$table);
@@ -204,7 +217,6 @@ class Model
 			}else{
 				if(is_numeric($key)){
 					if (empty($value[1]) && !($value[1]===0) || empty($value[2]) && !($value[2]===0)){
-						// print_r($value);exit;
 				    }else{
 				    	if($value[1]=='between'){
 				    		$w_sql = $w_sql .$not.'('. $value[0].' '.$value[1].' :val'.self::$i .' AND :val'.(self::$i+1).')'.$ao;
@@ -218,7 +230,7 @@ class Model
 				    		}
 				    		$w_sql = rtrim($w_sql,',') . '))'. $ao;
 				    	}else{
-				    		$w_sql = $w_sql . $not . $value[0].$value[1].':val'.self::$i .$ao;
+				    		$w_sql = $w_sql . $not . $value[0].' '.$value[1].' :val'.self::$i .$ao;
 					    	self::$exec['val'.self::$i++] = $value[2];
 				    	}
 				    }
@@ -238,10 +250,11 @@ class Model
 
 	public static function where($offset=null,$no_of_records_per_page=null,$role=null,$cmd=null,$arr=null){
 		include('env.php');
+		self::$servername=$servername;self::$dbname=$dbname;self::$username=$username;self::$password=$password;
 		$arr = $arr??[];
 		$limit_sql = ($offset===null||$no_of_records_per_page===null)?'':" LIMIT ".$offset.",".$no_of_records_per_page;
 		
-		$cmds = [];
+		$cmds = [];$sterm = true;
 	    foreach (explode('|',$cmd) as $c) {
 	    	$cc = explode(':',$c);
 	    	if(count($cc)==2){
@@ -249,6 +262,9 @@ class Model
 	    	}else{
 	    		$cmds[$c]=1;
 	    	}
+	    }
+	    if($cmds['first']){
+	    	$sterm = false;
 	    }
 
 		$visibles = static::roleArray($role);
@@ -281,9 +297,9 @@ class Model
 	        $s_sql = implode(" LIKE '%$s%' or ", $searchables)." LIKE '%$s%'";
 	    }
 
-	    if($s_sql && $w_sql){
+	    if($s_sql && $w_sql && $sterm){
 	    	$sql = ' WHERE ('.$s_sql . ') AND ('. $w_sql.')';
-	    }elseif($s_sql){
+	    }elseif($s_sql && $sterm){
 	    	$sql = ' WHERE '.$s_sql;
 	    }elseif($w_sql){
 	    	$sql = ' WHERE '.$w_sql;
@@ -299,7 +315,7 @@ class Model
 	    // echo $sql;exit;
 
 		try {
-		    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+		    $conn = new PDO("mysql:host=".static::$servername.";dbname=".static::$dbname, static::$username, static::$password);
 		    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		    $stmt = $conn->prepare($sql);
@@ -323,6 +339,8 @@ class Model
 	}
 
 	public static function upload_file($target_dir = null){
+		include('env.php');
+		self::$servername=$servername;self::$dbname=$dbname;self::$username=$username;self::$password=$password;
 		$target_dir = $target_dir??$files_folder;
 
 	    $file_name = basename($_FILES[$_POST['file_name']]["name"]);
@@ -371,10 +389,11 @@ class Model
 
 	public static function upload($id = null, $target_dir = null){
 		include('env.php');
+		self::$servername=$servername;self::$dbname=$dbname;self::$username=$username;self::$password=$password;
 		$id = $id??$_POST['id'];
 		$target_dir = $target_dir??$files_folder;
 		try {
-		    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+		    $conn = new PDO("mysql:host=".static::$servername.";dbname=".static::$dbname, static::$username, static::$password);
 		    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		    $target_file = self::upload_file($target_dir);
@@ -409,6 +428,8 @@ class Model
 	}
 
 	public static function upload_files($id = null, $target_dir = null){
+		include('env.php');
+		self::$servername=$servername;self::$dbname=$dbname;self::$username=$username;self::$password=$password;
 		$target_dir = $target_dir??$files_folder;
 
 	    $file_name =[];
@@ -452,7 +473,7 @@ class Model
 		        $uploadErr =  "Sorry, your file was not uploaded.";
 		    // if everything is ok, try to upload file
 		    } else {
-		        if (move_uploaded_file($file["tmp_name"], dirname(__DIR__, $folder_level).$target_file[$i])) {
+		        if (move_uploaded_file($file["tmp_name"], $_SERVER['DOCUMENT_ROOT'].$target_file[$i])) {
 		            // $uploadErr =  "The file ". basename( $file["name"]). " has been uploaded.";
 		        } else {
 		            $uploadErr =  "Sorry, there was an error uploading your file.";
@@ -464,10 +485,11 @@ class Model
 
 	public static function uploads($id = null, $target_dir = null){
 		include('env.php');
+		self::$servername=$servername;self::$dbname=$dbname;self::$username=$username;self::$password=$password;
 		$id = $id??$_POST['id'];
 		$target_dir = $target_dir??$files_folder;
 		try {
-		    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+		    $conn = new PDO("mysql:host=".static::$servername.";dbname=".static::$dbname, static::$username, static::$password);
 		    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		    $target_file = self::upload_files($target_dir);
@@ -496,7 +518,7 @@ class Model
 
 	}
 
-	public static function validate($arr = [], $err = []){
+	public static function validate($arr = []){
 		$validation_pass = true;
 
 		foreach ($_POST as $field => $value) {
@@ -525,6 +547,27 @@ class Model
 		      }else{
 		        $old[$field] = self::test_input($_POST[$field]);
 		      }
+		    }elseif($r == 'string'){
+		      if (!preg_match('/^[A-Za-z0-9_-]+$/', $_POST[$field])) {
+		        $error[$field] = $error[$field]??"Invalid string format";
+		        $validation_pass = false;
+		      }else{
+		        $old[$field] = self::test_input($_POST[$field]);
+		      }
+		    }elseif($r == 'max'){
+		      if (strlen($_POST[$field])>$v) {
+		        $error[$field] = $error[$field]??"maximum $v charectors are allowed";
+		        $validation_pass = false;
+		      }else{
+		        $old[$field] = self::test_input($_POST[$field]);
+		      }
+		    }elseif($r == 'numeric'){
+		      if (!is_numeric($_POST[$field])) {
+		        $error[$field] = $error[$field]??"Invalid numeric format";
+		        $validation_pass = false;
+		      }else{
+		        $old[$field] = self::test_input($_POST[$field]);
+		      }
 		    }elseif($r == 'email'){
 		      if (!filter_var($_POST[$field], FILTER_VALIDATE_EMAIL)) {
 		        $error[$field] = $error[$field]??"Invalid email format";
@@ -539,7 +582,7 @@ class Model
 		      }
 		    }elseif($r == 'exists'){
 		    	try {
-				    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+				    $conn = new PDO("mysql:host=".static::$servername.";dbname=".static::$dbname, static::$username, static::$password);
 				    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		      $stmt = $conn->prepare('SELECT COUNT('.$field.') AS EmailCount FROM '.$v.' WHERE '.$field.' = :'.$field);
 		      $stmt->execute(array($field => $_POST[$field]));
@@ -557,7 +600,7 @@ class Model
 				$conn = null;
 		    }elseif($r == 'unique_exists'){
 		    	try {
-				    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+				    $conn = new PDO("mysql:host=".static::$servername.";dbname=".static::$dbname, static::$username, static::$password);
 				    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		      $stmt = $conn->prepare('SELECT '.$field.' FROM '.$v.' WHERE id='.$_POST['id']);
 		      $stmt->execute();
@@ -604,8 +647,8 @@ class Model
 
 	public static function test_input($data) {
 	  $data = trim($data);
-	  $data = stripslashes($data);
-	  $data = htmlspecialchars($data);
+	  // $data = stripslashes($data);
+	  // $data = htmlspecialchars($data);
 	  return $data;
 	}
 

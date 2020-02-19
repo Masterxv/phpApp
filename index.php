@@ -107,9 +107,9 @@ Route::add('/app/app_description/([0-9]*)',function($id)use($app_key){
 Route::add('/app/copy_app',function()use($app_key){
     include($app_key.'/controller/app/copy_app.php');
 },'post');
-Route::add('/app/delete_app',function()use($app_key){
+Route::add('/app/delete',function()use($app_key){
     include($app_key.'/controller/app/delete_app.php');
-},'delete');
+},'post');
 Route::add('/app/save_app_description',function()use($app_key){
     include($app_key.'/controller/app/save_app_description.php');
 },'post');
@@ -146,8 +146,8 @@ Route::add('/app/update',function()use($app_key){
 Route::add('/app/delete',function()use($app_key){
     include($app_key.'/controller/app/delete.php');
 },'delete');
-Route::add('/app/sql/{id?}',function()use($app_key){
-    include($app_key.'/controller/app/sql/{id?}.php');
+Route::add('/app/sql/([0-9]*)',function($id)use($app_key){
+    include($app_key.'/controller/app/sql_id.php');
 },'get');
 Route::add('/app/csv',function()use($app_key){
     include($app_key.'/controller/app/csv.php');
@@ -240,7 +240,7 @@ Route::add('/table/edit_record',function()use($app_key){
 },'post');
 Route::add('/table/delete_record',function()use($app_key){
     include($app_key.'/controller/table/delete_record.php');
-},'delete');
+},'post');
 Route::add('/table/rename',function()use($app_key){
     include($app_key.'/controller/table/rename.php');
 },'post');
@@ -272,10 +272,10 @@ Route::add('/query/query_details/([0-9]*)',function($id)use($app_key){
 },'get');
 Route::add('/query/update/([0-9]*)',function($id)use($app_key){
     include($app_key.'/controller/query/update_id.php');
-},'put');
+},'post');
 Route::add('/query/delete',function()use($app_key){
     include($app_key.'/controller/query/delete.php');
-},'delete');
+},'post');
 Route::add('/query/custom_valid_msg_view',function()use($app_key){
     include($app_key.'/controller/query/custom_valid_msg_view.php');
 },'get');
@@ -502,6 +502,31 @@ Route::add('/chat/message_status',function()use($app_key){
 
 
 
+//====================Api Routes=============
+Route::add('/api/license/activate',function()use($app_key){
+    include($app_key.'/controller/license/activate.php');
+},'post','api');
+Route::add('/api/license/deactivate',function()use($app_key){
+    include($app_key.'/controller/license/de_activate.php');
+},'post','api');
+Route::add('/api/license/get_license_key',function()use($app_key){
+    include($app_key.'/controller/license/get_license_key.php');
+},'post','api');
+Route::add('/api/([0-9]*)',function($query_id)use($app_key){
+    include($app_key.'/controller/api/junction.php');
+},'get','api');
+Route::add('/api/([0-9]*)/([0-9]*)',function($query_id, $id)use($app_key){
+    include($app_key.'/controller/api/junction.php');
+},'get','api');
+Route::add('/api/([0-9]*)',function($query_id)use($app_key){
+    include($app_key.'/controller/api/junction.php');
+},'post','api');
+Route::add('/api/([0-9]*)/([0-9]*)',function($query_id, $id)use($app_key){
+    include($app_key.'/controller/api/junction.php');
+},'post','api');
+//====================End of Api Routes=============
+
+
 
 //==============================End OF Routes===================================
 Route::pathNotFound(function($path)use($app_key){
@@ -512,7 +537,7 @@ Route::methodNotAllowed(function($path, $method)use($app_key){
     include($app_key.'/include/405.php');
 });
 
-Route::runMiddleware(function($route){
+Route::runMiddleware(function($route)use($app_key){
     include('env.php');
     include($app_key.'/middleware/middlewares.php');
 });

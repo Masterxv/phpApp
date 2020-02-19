@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <?php require($app_key.'/view/layouts/styles.php'); ?>
   <style>
   .error {color: #FF0000;}
   </style>
 </head>
 <body>
-<?php require($app_key.'/views/layouts/nav.php'); ?>
+<?php require($app_key.'/view/layouts/nav.php'); ?>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12 text-center">
@@ -23,48 +23,48 @@
 		        <input type="hidden" name="_token" value="<?php echo $rand; ?>" />
 		        <input type="hidden" name="table" value="<?php echo $table; ?>" />
 		        <?php foreach ($td as $k => $v): ?>
-		        <?php if(!$isTA[$v->Type]): ?>
-					<?php if(strpos($v->Type,'enum')!==false): ?>
+		        <?php if(!$isTA[$v['Type']]): ?>
+					<?php if(strpos($v['Type'],'enum')!==false): ?>
 					<div class="form-group row">
 						<div class="col-md-1"></div>
 						<div class="col-md-4">
-							<label for="<?php echo $v->Field; ?>"><?php echo $v->Field; ?>:</label>
+							<label for="<?php echo $v['Field']; ?>"><?php echo $v['Field']; ?>:</label>
 						</div>
 						<div class="col-md-6">
-							<select id="<?php echo $v->Field; ?>" class="form-control" name="<?php echo $v->Field; ?>">
-							<?php foreach (explode(',', str_replace(['enum(',')',"'",' '],['','','',''],$v->Type)) as $value): ?>
+							<select id="<?php echo $v['Field']; ?>" class="form-control" name="<?php echo $v['Field']; ?>">
+							<?php foreach (explode(',', str_replace(['enum(',')',"'",' '],['','','',''],$v['Type'])) as $value): ?>
 								<option><?php echo $value; ?></option>
 							<?php endforeach; ?>
 							</select>
-							<!-- <input id="<?php echo $v->Field; ?>" type="text" class="form-control" name="<?php echo $v->Field; ?>" value="<?php echo  $old[$v->Field] ; ?>" placeholder="<?php echo $v->Field; ?>" > -->
-							<?php if($error[$v->Field]): ?>
-									<p style="color:red"><?php echo $error[$v->Field]; ?></p> <?php endif; ?>
+							<!-- <input id="<?php echo $v['Field']; ?>" type="text" class="form-control" name="<?php echo $v['Field']; ?>" value="<?php echo  $old[$v['Field']] ; ?>" placeholder="<?php echo $v['Field']; ?>" > -->
+							<?php if($error[$v['Field']]): ?>
+									<p style="color:red"><?php echo $error[$v['Field']]; ?></p> <?php endif; ?>
 						</div>			
 					</div>
 					<script>
-		                $("#<?php echo $v->Field; ?>").val('<?php echo  $old[$v->Field] ; ?>');
+		                $("#<?php echo $v['Field']; ?>").val('<?php echo  $old[$v['Field']] ; ?>');
 		            </script>
 					<?php else: ?>
-						<?php if(!$step[$v->Type]): ?>
+						<?php if(!$step[$v['Type']]): ?>
 							<div class="form-group row">
 								<div class="col-md-1"></div>
 								<div class="col-md-4">
-									<label for="<?php echo $v->Field; ?>"><?php echo $v->Field; ?>:</label>
+									<label for="<?php echo $v['Field']; ?>"><?php echo $v['Field']; ?>:</label>
 								</div>
 								<div class="col-md-6">
-									<input id="<?php echo $v->Field; ?>" type="<?php echo $inpTyp[$v->Type]; ?>" class="form-control" name="<?php echo $v->Field; ?>" value="<?php echo  $old[$v->Field] ; ?>" placeholder="<?php echo $v->Field; ?>" >
-									<?php if($error[$v->Field]): ?>
-											<p style="color:red"><?php echo $error[$v->Field]; ?></p> <?php endif; ?>
+									<input id="<?php echo $v['Field']; ?>" type="<?php echo $inpTyp[$v['Type']]; ?>" class="form-control" name="<?php echo $v['Field']; ?>" value="<?php echo  $old[$v['Field']] ; ?>" placeholder="<?php echo $v['Field']; ?>" >
+									<?php if($error[$v['Field']]): ?>
+											<p style="color:red"><?php echo $error[$v['Field']]; ?></p> <?php endif; ?>
 								</div>			
 							</div>
-							<?php if($v->Field == 'password'): ?>
+							<?php if($v['Field'] == 'password'): ?>
 							<div class="form-group row">
 								<div class="col-md-1"></div>
 								<div class="col-md-4">
-									<label for="confirm_password">confirm_password:</label>
+									<label for="password_confirmation">password_confirmation:</label>
 								</div>
 								<div class="col-md-6">
-									<input id="confirm_password" type="<?php echo $inpTyp[$v->Type]; ?>" class="form-control" name="confirm_password" value="<?php echo  $old[$v->Field] ; ?>" placeholder="confirm_password" >
+									<input id="password_confirmation" type="<?php echo $inpTyp[$v['Type']]; ?>" class="form-control" name="password_confirmation" value="<?php echo  $old[$v['Field']] ; ?>" placeholder="password_confirmation" >
 								</div>			
 							</div>
 							<?php endif; ?>
@@ -72,12 +72,12 @@
 						<div class="form-group row">
 							<div class="col-md-1"></div>
 							<div class="col-md-4">
-								<label for="<?php echo $v->Field; ?>"><?php echo $v->Field; ?>:</label>
+								<label for="<?php echo $v['Field']; ?>"><?php echo $v['Field']; ?>:</label>
 							</div>
 							<div class="col-md-6">
-								<input id="<?php echo $v->Field; ?>" type="<?php echo $inpTyp[$v->Type]; ?>" class="form-control" name="<?php echo $v->Field; ?>" value="<?php echo  $old[$v->Field] ; ?>" placeholder="<?php echo $v->Field; ?>"   step="<?php echo $step[$v->Type]; ?>">
-								<?php if($error[$v->Field]): ?>
-										<p style="color:red"><?php echo $error[$v->Field]; ?></p> <?php endif; ?>
+								<input id="<?php echo $v['Field']; ?>" type="<?php echo $inpTyp[$v['Type']]; ?>" class="form-control" name="<?php echo $v['Field']; ?>" value="<?php echo  $old[$v['Field']] ; ?>" placeholder="<?php echo $v['Field']; ?>"   step="<?php echo $step[$v['Type']]; ?>">
+								<?php if($error[$v['Field']]): ?>
+										<p style="color:red"><?php echo $error[$v['Field']]; ?></p> <?php endif; ?>
 							</div>			
 						</div>
 						<?php endif; ?>
@@ -86,16 +86,16 @@
 					<div class="form-group row">
 						<div class="col-md-1"></div>
 						<div class="col-md-4">
-							<label for="<?php echo $v->Field; ?>"><?php echo $v->Field; ?>:</label>
+							<label for="<?php echo $v['Field']; ?>"><?php echo $v['Field']; ?>:</label>
 						</div>
 						<div class="col-md-6">
-							<textarea id="<?php echo $v->Field; ?>" type="text" rows="<?php echo $isTA[$v->Type]; ?>" class="form-control" name="<?php echo $v->Field; ?>" placeholder="<?php echo $v->Field; ?>"></textarea>
-							<?php if($error[$v->Field]): ?>
-									<p style="color:red"><?php echo $error[$v->Field]; ?></p> <?php endif; ?>
+							<textarea id="<?php echo $v['Field']; ?>" type="text" rows="<?php echo $isTA[$v['Type']]; ?>" class="form-control" name="<?php echo $v['Field']; ?>" placeholder="<?php echo $v['Field']; ?>"></textarea>
+							<?php if($error[$v['Field']]): ?>
+									<p style="color:red"><?php echo $error[$v['Field']]; ?></p> <?php endif; ?>
 						</div>			
 					</div>
 					<script>
-		                $("#<?php echo $v->Field; ?>").val('<?php echo  str_replace(array("\r", "\n", '\n\n'), '\n', $old[$v->Field]) ; ?>');
+		                $("#<?php echo $v['Field']; ?>").val('<?php echo  str_replace(array("\r", "\n", '\n\n'), '\n', $old[$v['Field']]) ; ?>');
 		            </script>
 				<?php endif; ?>
 				<?php endforeach; ?>
@@ -110,6 +110,6 @@
 		</div>
 	</div>
 </div>
-<?php require($app_key.'/views/layouts/scripts.html'); ?>
+<?php require($app_key.'/view/layouts/scripts.php'); ?>
 </body>
 </html>

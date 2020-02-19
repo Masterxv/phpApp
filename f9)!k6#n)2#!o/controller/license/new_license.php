@@ -5,7 +5,7 @@ $id = License::create(null,[
     'license_key' => hash('ripemd128', uniqid(rand(), true)),
     'total_licenses' => $_POST['total_licenses'],
     'activated_licenses' => 0,
-    'created_by' => $_SESSION[$app_key.'_user_active_app_id'],
+    'created_by' => $_SESSION[$app_key]['active_app_id'],
     'expiry_date' => $_POST['expiry_date'],
     'price_id' => 0,
 ]);

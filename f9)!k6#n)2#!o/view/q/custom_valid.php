@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <?php require($app_key.'/view/layouts/styles.php'); ?>
   <style>
   .error {color: #FF0000;}
   </style>
 </head>
 <body>
-<?php require($app_key.'/views/layouts/nav.php'); ?>
+<?php require($app_key.'/view/layouts/nav.php'); ?>
 <div class="container-fluid">
   	<div id="alrt"></div>
   	<?php if($error['field']): ?><div class="alert alert-warning"><strong>Warning!</strong><?php echo $error['field']; ?></div>
@@ -530,6 +530,6 @@
 ruleChange();
 $("#edit_cmd").hide();
 </script>
-<?php require($app_key.'/views/layouts/scripts.html'); ?>
+<?php require($app_key.'/view/layouts/scripts.php'); ?>
 </body>
 </html>

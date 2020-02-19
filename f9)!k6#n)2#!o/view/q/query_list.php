@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php require($app_key.'/views/layouts/styles.html'); ?>
+  <?php require($app_key.'/view/layouts/styles.php'); ?>
   <style>
   .error {color: #FF0000;}
   </style>
 </head>
 <body>
-<?php require($app_key.'/views/layouts/nav.php'); ?>
+<?php require($app_key.'/view/layouts/nav.php'); ?>
 <div class="container-fluid">
   <div id="alrt"></div>
   <div class="row">
     <div class="col-md-6">
-      Query List | for the app id: {{\Auth::user()->active_app_id}}
+      Query List | for the app id: <?php echo $_SESSION[$app_key]['active_app_id']; ?>
     </div>
     <div class="col-md-6">
       <div class="btn-group" style="float:right">
@@ -43,22 +43,22 @@
 					</tr>
 				</thead>
 				<tbody>
-          <?php foreach($queries as $query): ?>
-          <tr id="r{{$query->id}}">
-            <td>{{ ($loop->index + 1) + 10 * ($page-1)}}</td>
-            <td>{{$query->id}}</td>
-            <td>{{$query->name}}</td>
-            <td>{{$query->auth_providers}}</td>
-            <td>{{$query->tables}}</td>
-            <td>{{$query->commands}}</td>
-            <td>{{$query->fillables}}</td>
-            <td>{{$query->hiddens}}</td>
-            <td>{{$query->mandatory}}</td>
-            <td>{{$query->joins}}</td>
-            <td>{{$query->filters}}</td>
-            <td>{{$query->specials}}</td>
-            <td><a href="/query/query_details/<?php echo $query->id; ?>">Update</a></td>
-            <td><a style="cursor: pointer;" onclick="d('{{$query->id}}')">Delete</a>
+          <?php foreach($queries as $k => $query): ?>
+          <tr id="r<?php echo $query['id']; ?>">
+            <td><?php echo  ($k + 1) + 10 * ($pageno-1); ?></td>
+            <td><?php echo $query['id']; ?></td>
+            <td><?php echo $query['name']; ?></td>
+            <td><?php echo $query['auth_providers']; ?></td>
+            <td><?php echo $query['tables']; ?></td>
+            <td><?php echo $query['commands']; ?></td>
+            <td><?php echo $query['fillables']; ?></td>
+            <td><?php echo $query['hiddens']; ?></td>
+            <td><?php echo $query['mandatory']; ?></td>
+            <td><?php echo $query['joins']; ?></td>
+            <td><?php echo $query['filters']; ?></td>
+            <td><?php echo $query['specials']; ?></td>
+            <td><a href="/query/query_details/<?php echo $query['id']; ?>">Update</a></td>
+            <td><a style="cursor: pointer;" onclick="d('<?php echo $query['id']; ?>')">Delete</a>
 	        </td>
           </tr>
           <?php endforeach; ?>
@@ -72,7 +72,7 @@
 </div>
 <script>
   function d(id){
-    $.post("/query/delete", {"_token":"<?php echo $rand; ?>", "id":id, "_method":"DELETE"}, function(data) {
+    $.post("/query/delete", {"_token":"<?php echo $rand; ?>", "id":id}, function(data) {
       if(data['status'] == 'success'){
         $('#r'+id).remove();
         $('#alrt').html('<div class="alert alert-success"><strong>Success!</strong> Query was successfully removed.</div>');
@@ -82,6 +82,6 @@
     })
   }
 </script>
-<?php require($app_key.'/views/layouts/scripts.html'); ?>
+<?php require($app_key.'/view/layouts/scripts.php'); ?>
 </body>
 </html>

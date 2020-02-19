@@ -1,10 +1,4 @@
-<?php 
-if ($_SERVER["REQUEST_METHOD"] == "GET"){
-    session_start(); 
-    $rand=rand();
-    $_SESSION['rand']=$rand;
-}
-?>
+<?php include($app_key.'/include/csrf_token.php'); ?>
 <?php 
 if(isset($_SESSION['old'])){
     $old = $_SESSION['old'];
