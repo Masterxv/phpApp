@@ -19,10 +19,8 @@ if($conn->query('select 1 from queries LIMIT 1') === FALSE)
 	tables VARCHAR(255),
 	commands VARCHAR(255),
 	fillables TEXT,
-	hiddens TEXT,
-	mandatory TEXT,
-	joins TEXT,
-	filters TEXT,
+	auth_users TEXT,
+	filter TEXT,
 	specials VARCHAR(255),
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -37,7 +35,12 @@ if($conn->query('select 1 from queries LIMIT 1') === FALSE)
 }else{
     // sql to update table
 	$sql = "ALTER TABLE queries 
-	-- ADD COLUMN phone VARCHAR(32) AFTER email
+	-- ADD COLUMN auth_users TEXT AFTER fillables,
+	-- ADD COLUMN filter TEXT AFTER auth_users,
+	-- DROP COLUMN hiddens,
+	-- DROP COLUMN mandatory,
+	-- DROP COLUMN joins,
+	-- DROP COLUMN filters
 	";
     
 

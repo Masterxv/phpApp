@@ -5,13 +5,22 @@ $filter = [
 	['id','!=','0']
 ];
 
+if(!empty($query['filter'])){
+	$filter = json_decode($query['filter'],true)??[];
+}
+if(!empty($query['specials'])){
+	$special = $query['specials'];
+}else{
+	$special = null;
+}
+
 $pageno = $_GET['pageno']??1;
 $no_of_records_per_page = $_GET['no_of_records_per_page']??10;
 $offset = ($pageno-1) * $no_of_records_per_page;
 $total_records = $model::where(null,null,null,'count',$filter);
 $total_pages = ceil($total_records / $no_of_records_per_page);
 
-$result = $model::where($offset, $no_of_records_per_page,null,null,$filter);
+$result = $model::where($offset, $no_of_records_per_page,null,$special,$filter);
 
 // $query = $model::query();
 // $query = $this->dateFilter($_GET, $query);
@@ -33,6 +42,6 @@ $result = $model::where($offset, $no_of_records_per_page,null,null,$filter);
 // }else{
 //     $res = $query->get();
 // }
-deleteModelClass($table);
+deleteModelClass($table, $query['app_id']);
 echo json_encode(["pageno"=>$pageno,"no_of_records_per_page"=>$no_of_records_per_page,"total_records"=>$total_records,"total_pages"=>$total_pages,"data"=>$result]);
 ?>

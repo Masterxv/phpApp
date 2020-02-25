@@ -19,6 +19,7 @@ if($conn->query('select 1 from apps LIMIT 1') === FALSE)
 	token_lifetime INT(6) UNSIGNED DEFAULT 43200,
 	db_connection VARCHAR(255),
 	auth_providers TEXT,
+	token_auths TEXT,
 	user_name_fields TEXT,
 	invited_users VARCHAR(255),
 	origins TEXT,
@@ -39,10 +40,7 @@ if($conn->query('select 1 from apps LIMIT 1') === FALSE)
 }else{
     // sql to update table
 	$sql = "ALTER TABLE apps 
-	ADD COLUMN user_name_fields TEXT AFTER auth_providers,
-	ADD COLUMN invited_users VARCHAR(255) AFTER user_name_fields,
-	ADD COLUMN description TEXT AFTER can_chat_with,
-	ADD COLUMN availability VARCHAR(8) AFTER description
+	ADD COLUMN token_auths TEXT AFTER auth_providers
 	";
     
 

@@ -27,6 +27,7 @@
 				<select name="model" class="form-control" style="width:150px;">
 					<option value="model">Model</option>
 					<option value="authenticatable">Authenticatable</option>
+					<option value="token_auth">Token Auth</option>
 				</select>
 				<button type="submit" class="btn btn-default">Create Table</button>
 				<a class="btn btn-default" href="/table/table_list">Back</a>

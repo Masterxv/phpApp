@@ -32,7 +32,7 @@ if(!empty($record['email'])){
     }
 }
 // $this->updateUsageReport('emails_sent');
-deleteModelClass($table);
+deleteModelClass($table, $query['app_id']);
 header('content-type:application/json');
 echo json_encode(['message' => 'email verification code sent successfull']);
 ?>

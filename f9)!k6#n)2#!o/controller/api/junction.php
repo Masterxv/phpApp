@@ -55,28 +55,6 @@ if(!$_GET['fillable']){
     $fillables = $query['fillables'] ? explode(', ', $query['fillables']) : null;
 }
 
-if(!$_GET['hidden']){
-    $hiddens = explode(', ', $query['hiddens']);
-}else{
-    $hiddens = array_merge(explode(', ', $query['hiddens']), explode(',', $_GET['hidden']));
-}
-
-if(!$_GET['join']){
-    $joins = $query['joins']?explode('|', $query['joins']):[];
-}else{
-    $joins = explode('|', $_GET['join']);
-}
-
-if(!$_GET['filter']){
-    $filters = $query['filters']?explode('|', $query['filters']):[];
-}else{
-    $filters = explode('|', $_GET['filter']);
-}
-
-if(!$_GET['special']){
-    $specials = explode(', ', $query['specials']);
-}
-
 if($command == 'signup'){
     array_push($fillables, 'password');
     include($app_key.'/controller/api/signup.php');

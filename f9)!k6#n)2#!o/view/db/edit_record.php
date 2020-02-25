@@ -52,6 +52,18 @@
 									<p style="color:red"><?php echo $error[$v['Field']]; ?></p> <?php endif; ?>
 						</div>			
 					</div>
+					<?php elseif($v['Type']=='text'): ?>
+					<div class="form-group row">
+						<div class="col-md-1"></div>
+						<div class="col-md-4">
+							<label for="<?php echo $v['Field']; ?>"><?php echo $v['Field']; ?>:</label>
+						</div>
+						<div class="col-md-6">
+							<textarea rows="4" class="form-control" name="<?php echo $v['Field']; ?>"><?php echo $record[$v['Field']]; ?></textarea>
+							<?php if($error[$v['Field']]): ?>
+									<p style="color:red"><?php echo $error[$v['Field']]; ?></p> <?php endif; ?>
+						</div>			
+					</div>
 					<?php else: ?>
 					<div class="form-group row">
 						<div class="col-md-1"></div>

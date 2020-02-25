@@ -130,6 +130,31 @@ function getFields($table, $skips, $app_id = null)
     $conn = null;
 }
 
+function getIds($table, $app_id = null)
+{
+    include('env.php');
+    $app_id = $app_id??$_SESSION[$app_key]['active_app_id'];
+    $fields=[];
+    try {
+        $conn = new PDO("mysql:host=".$servername2.";dbname=".$dbname2, $username2, $password2);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        $stmt = $conn->prepare("SELECT id FROM ".'app'.$app_id.'_'.$table);
+        $stmt->execute();
+        $raw = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($raw as $value) {
+            $fields[]=$value['id'];
+        }
+
+        return $fields??[];
+
+    }catch(PDOException $e){
+        echo $sql . "<br>" . $e->getMessage();
+    }
+    $conn = null;
+}
+
 // public function getFieldsLike($table, $likes, $app_id = null)
 // {
 //     include('env.php')

@@ -11,5 +11,5 @@ if($record->email_verification == $request->code){
 }else{
 	echo json_encode(["message" => "email verification failed"]);
 }
-deleteModelClass($table);
+deleteModelClass($table, $query['app_id']);
 ?>

@@ -12,11 +12,11 @@
   <div id="alrt"></div>
   <div class="row">
     <div class="col-md-6">
-      Files | for the app id: {{\Auth::user()->active_app_id}}, Space Used {{$size}} MB
+      Files | for the app id: <?php echo $_SESSION[$app_key]['active_app_id']; ?>, Space Used <?php echo $size; ?> MB
     </div>
     <div class="col-md-6">
       <div class="btn-group" style="float:right">
-          <form id="uploadFiles" method="post" action="{{route('c.files.upload.files')}}" enctype="multipart/form-data" style="display: none;">
+          <form id="uploadFiles" method="post" action="/files/upload_files" enctype="multipart/form-data" style="display: none;">
               <input type="hidden" name="_token" value="<?php echo $rand; ?>">
               <input type="hidden" name="success" />
               <input type="file" name="files[]" id="filesUpload" multiple onchange="$('#uploadFiles').submit()">
@@ -39,38 +39,38 @@
 				</thead>
 				<tbody>
           <?php foreach($files as $key => $file): ?>
-          <tr id="r{{$file->id}}">
-            <td>{{ ($loop->index + 1) + 10 * ($page-1)}}</td>
-            <td>{{ $file->id }}</td>
-            <td>{{ $file->name }}</td>
-            <td>{{ $file->mime }}</td>
-            <td>{{ $file->size }}</td>
-            <td>{{ str_replace(env('APP_URL'), '', $file->path) }}</td>
-            <td><a href="{{$file->path}}">Preview</a></td>
-            <td><a href="{{route('c.files.download',['id'=>$file->id])}}">Download</a></td>
-            <td><a href="JavaScript:void(0);" onclick="deleteFile('{{$file->id}}','{{$file->name}}')">Delete</a></td>
-            @if(false)
-            <td><label for="file" class="link"><a href="JavaScript:void(0);" onclick="replaceFile('{{$file->id}}','{{$file->name}}')">Replace</a></label></td>
-            <td><form id="replaceFile{{($key + 1)}}" method="post" action="{{route('c.files.replace')}}" enctype="multipart/form-data" style="display: none;">
+          <tr id="r<?php echo $file['id']; ?>">
+            <td><?php echo  ($key + 1) + 10 * ($pageno-1); ?></td>
+            <td><?php echo  $file['id']; ?></td>
+            <td><?php echo  $file['name']; ?></td>
+            <td><?php echo  $file['mime']; ?></td>
+            <td><?php echo  $file['size']; ?></td>
+            <td><?php echo  str_replace($app_url, '', $file['path']) ; ?></td>
+            <td><a href="<?php echo $file['path']; ?>" target="_blank">Preview</a></td>
+            <td><a href="/files/<?php echo $file['id']; ?>" target="_blank">Download</a></td>
+            <td><a href="JavaScript:void(0);" onclick="deleteFile('<?php echo $file['id']; ?>','<?php echo $file['name']; ?>')">Delete</a></td>
+            <?php if(false): ?>
+            <td><label for="file" class="link"><a href="JavaScript:void(0);" onclick="replaceFile('<?php echo $file['id']; ?>','<?php echo $file['name']; ?>')">Replace</a></label></td>
+            <td><form id="replaceFile<?php echo ($key + 1); ?>" method="post" action="/files/replace_file" enctype="multipart/form-data" style="display: none;">
                           <input type="hidden" name="_token" value="<?php echo $rand; ?>">
-                          <input type="hidden" name="id" value="{{$file->id}}">
+                          <input type="hidden" name="id" value="<?php echo $file['id']; ?>">
                           <input type="hidden" name="success" />
-                          <input type="file" name="file" id="file{{($key + 1)}}" onchange="$('#replaceFile{{($key + 1)}}').submit()">
+                          <input type="file" name="file" id="file<?php echo ($key + 1); ?>" onchange="$('#replaceFile<?php echo ($key + 1); ?>').submit()">
                       </form>
-              <label for="file{{($key + 1)}}" class="link"><a href="JavaScript:void(0);">Replace</a></label></td>
-            <td><form id="delfile{{($key + 1)}}" method="post" action="{{route('c.files.delete')}}" style="display: none;">
+              <label for="file<?php echo ($key + 1); ?>" class="link"><a href="JavaScript:void(0);">Replace</a></label></td>
+            <td><form id="delfile<?php echo ($key + 1); ?>" method="post" action="/files/delete_file" style="display: none;">
                           <input type="hidden" name="_token" value="<?php echo $rand; ?>">
-                          <input type="hidden" name="id" value="{{$file->id}}">
+                          <input type="hidden" name="id" value="<?php echo $file['id']; ?>">
                           <input type="hidden" name="success" />
                       </form>
-              <label class="link"><a href="JavaScript:void(0);" onclick="$('#delfile{{($key + 1)}}').submit()">Delete</a></label></td>
+              <label class="link"><a href="JavaScript:void(0);" onclick="$('#delfile<?php echo ($key + 1); ?>').submit()">Delete</a></label></td>
             <?php endif; ?>
           </tr>
           <?php endforeach; ?>
 				</tbody>
 			</table>
-      @if(false)
-      <form id="replaceFile" method="post" action="{{route('c.files.replace')}}" enctype="multipart/form-data" style="display: none;">
+      <?php if(false): ?>
+      <form id="replaceFile" method="post" action="/files/replace_file" enctype="multipart/form-data" style="display: none;">
           <input type="hidden" name="_token" value="<?php echo $rand; ?>">
           <input type="hidden" name="id" id="id">
           <input type="hidden" name="success" />
@@ -84,7 +84,7 @@
 	</div>
 </div>
 <script>
-  @if(false)
+  <?php if(false): ?>
   function replaceFile(id, file_name){
     // var bool = confirm("Are you sure! you want to replace file " + file_name);
     // if(!bool){
@@ -98,7 +98,7 @@
     if(!bool){
       return;
     }
-    $.post("{{route('c.files.delete')}}", {'_token':'<?php echo $rand; ?>', 'id':id}, function(data){
+    $.post("<?php echo route('c.files.delete'); ?>", {'_token':'<?php echo $rand; ?>', 'id':id}, function(data){
       console.log(data);
       if(data['status'] == 'success'){
         $('#r'+id).remove();

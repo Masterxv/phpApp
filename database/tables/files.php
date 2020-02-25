@@ -13,6 +13,7 @@ if($conn->query('select 1 from files LIMIT 1') === FALSE)
 	// sql to create table
 	$sql = "CREATE TABLE files (
 	id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	app_id INT(6) UNSIGNED,
 	name VARCHAR(255),
 	mime VARCHAR(255),
 	size INT(6) UNSIGNED,
@@ -30,7 +31,7 @@ if($conn->query('select 1 from files LIMIT 1') === FALSE)
 }else{
     // sql to update table
 	$sql = "ALTER TABLE files 
-	-- ADD COLUMN phone VARCHAR(32) AFTER email
+	ADD COLUMN app_id INT(6) UNSIGNED AFTER id
 	";
     
 

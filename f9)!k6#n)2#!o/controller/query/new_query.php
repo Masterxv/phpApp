@@ -14,10 +14,8 @@ Query::create(null,[
     "tables" => $_POST['tables'],
     "commands" => $_POST['commands'],
     "fillables" => $_POST['fillables']??null,
-    "hiddens" => $_POST['hiddens']??null,
-    "mandatory" => $_POST['mandatory']??null,
-    "joins" => $_POST['joins']??null,
-    "filters" => $_POST['filters']??null,
+    "auth_users" => $_POST['auth_users']??null,
+    "filter" => $_POST['filter']??null,
     "specials" => $_POST['specials']??null,
 ]);
 header("Location:".$app_url."/query/query_list");

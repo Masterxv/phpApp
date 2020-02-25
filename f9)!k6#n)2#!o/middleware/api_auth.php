@@ -117,6 +117,12 @@ if(empty($query_id)){
 	    if($session['expiry'] < time()){
 	        echo json_encode(['message' => 'token expired']);exit;
 	    }
+	    if(!empty($query['auth_users'])){
+	    	$auth_users = json_decode($query['auth_users'],true)??[];
+		    if(!in_array($session['user_id'],$auth_users)){
+		    	echo json_encode(['message' => 'un-authorized']);exit;
+		    }
+	    }
 	    if($command == 'refresh'){
 	        $new_token = hash('ripemd128', rand());
 	        $expiry = $app['token_lifetime'] + time();

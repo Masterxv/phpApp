@@ -3,7 +3,7 @@
 include($app_key.'/include/SqlQueries.php');
 $res = [];
 foreach ($_POST['tables']??[] as $table) {
-    $arr = getFields($table, ['password', 'remember_token']);
+    $arr = getIds($table);
     $a = array_intersect($res, $arr);
     $b = array_diff($res, $arr);
     $c = array_diff($arr, $res);

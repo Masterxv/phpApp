@@ -50,6 +50,7 @@
 							<?php endforeach; ?>
 							</div>
 						</div>
+						<a class="btn btn-info btn-sm" onclick="getAuthUsers()">Get Auth Users</a>
 					</div>			
 				</div><hr>
 				<div class="form-group row">
@@ -105,32 +106,18 @@
 							<div class="col-md-12" id="vSelects">
 							</div>
 						</div>
-					</div>			
-				</div><hr>
-				<div class="form-group row">
-					<div class="col-md-1"></div>
-					<div class="col-md-4">
-						<label for="h">Hiddens:</label>
-					</div>
-					<div class="col-md-6">
-						<input id="hid" type="hidden" class="form-control" name="hiddens">
-						<div class="well well-sm" id="hfields">none</div>
-						<div class="row">
-							<div class="col-md-12" id="hSelects">
-							</div>
-						</div>
 					</div>
 				</div><hr>
 				<div class="form-group row">
 					<div class="col-md-1"></div>
 					<div class="col-md-4">
-						<label for="m">Mandatory:</label>
+						<label for="u">Auth Users:</label>
 					</div>
 					<div class="col-md-6">
-						<input id="mid" type="hidden" class="form-control" name="mandatory">
-						<div class="well well-sm" id="mfields">none</div>
+						<input id="uid" type="hidden" class="form-control" name="auth_users">
+						<div class="well well-sm" id="ufields">all</div>
 						<div class="row">
-							<div class="col-md-12" id="mSelects">
+							<div class="col-md-12" id="uSelects">
 							</div>
 						</div>
 					</div>
@@ -138,120 +125,19 @@
 				<div class="form-group row">
 					<div class="col-md-1"></div>
 					<div class="col-md-4">
-						<label for="jtable">Joins:</label>
+						<label>Filter:</label>
 					</div>
 					<div class="col-md-6">
-						<input id="jid" type="hidden" class="form-control" name="joins">
-						<div class="well well-sm" id="jfields">none</div>
-						<div class="row">
-							<div class="col-md-8">
-								<select id="jt" class="form-control" onchange="joinTableIndexFields()">
-									<?php foreach($tables as $table): ?>
-									<option><?php echo $table; ?></option>
-									<?php endforeach; ?>
-								</select>
-							</div>
-							<div class="col-md-4">
-								<a class="btn btn-info btn-sm" onclick="j()" style="width: 100%">Toggle</a>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-8">
-								<select id="tf" class="toptions form-control"></select>
-							</div>
-							<div class="col-md-4">
-								<select id="jo" class="form-control">
-									<option>=</option>
-									<option><></option>
-									<option><</option>
-									<option>></option>
-									<option><=</option>
-									<option>>=</option>
-									<option>LIKE</option>
-								</select>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<select id="jf" class="toptions form-control"></select>
-							</div>
-						</div>
-					</div>			
-				</div><hr>
-				<div class="form-group row">
-					<div class="col-md-1"></div>
-					<div class="col-md-4">
-						<label for="fid">Filters:</label>
-					</div>
-					<div class="col-md-6">
-						<input id="fid" type="hidden" class="form-control" name="filters">
-						<div class="well well-sm" id="ffields">none</div>
-						<div class="row">
-							<div class="col-md-8">
-								<select id="ft" class="form-control">
-									<option value="where">where</option>
-									<option value="orWhere">orWhere</option>
-									<option value="whereBetween">whereBetween</option>
-									<option value="whereNotBetween">whereNotBetween</option>
-									<option value="whereIn">whereIn</option>
-									<option value="whereNotIn">whereNotIn</option>
-									<option value="whereNull">whereNull</option>
-									<option value="whereNotNull">whereNotNull</option>
-									<option value="whereDate">whereDate</option>
-									<option value="whereMonth">whereMonth</option>
-									<option value="whereDay">whereDay</option>
-									<option value="whereYear">whereYear</option>
-									<option value="whereTime">whereTime</option>
-									<option value="whereColumn">whereColumn</option>
-									<option value="orderBy">orderBy</option>
-									<option value="distinct">distinct</option>
-									<option value="latest">latest</option>
-									<option value="oldest">oldest</option>
-									<option value="inRandomOrder">inRandomOrder</option>
-									<option value="groupBy">groupBy</option>
-									<option value="having">having</option>
-									<option value="offset">offset</option>
-									<option value="limit">limit</option>
-								</select>
-							</div>
-							<div class="col-md-4">
-								<a class="btn btn-info btn-sm" onclick="f()" style="width: 100%">Toggle</a>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-8">
-								<select id="ff" class="toptions form-control"></select>
-							</div>
-							<div class="col-md-4">
-								<select id="fo" class="form-control">
-									<option>=</option>
-									<option><></option>
-									<option><</option>
-									<option>></option>
-									<option><=</option>
-									<option>>=</option>
-									<option>LIKE</option>
-								</select>
-							</div>
-							<div class="col-md-12"><input id="fv" type="text" class="form-control" placeholder="value"></div>
-						</div><hr>
+						<textarea rows="4" class="form-control" name="filter"><?php echo $old['filter']; ?></textarea>
 					</div>
 				</div><hr>
 				<div class="form-group row">
 					<div class="col-md-1"></div>
 					<div class="col-md-4">
-						<label for="sid">Special Commands:</label>
+						<label>Special Commands:</label>
 					</div>
 					<div class="col-md-6">
-						<div class="well well-sm" id="sqfields">none</div>
-						<input id="sid" type="hidden" class="form-control" name="specials">
-						<div class="row">
-							<div class="col-md-12">
-								<?php foreach($specials as $sp): ?>
-								<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="s('<?php echo $sp; ?>')" <?php if(in_array($sp, explode(', ', $old['specials']))): ?> checked <?php endif; ?>><?php echo $sp; ?></label></div>
-								<?php endforeach; ?>
-							</div>
-						</div>
+						<input type="text" class="form-control" name="specials" value="<?php echo $old['specials']; ?>" />
 					</div>
 				</div><hr>
 				<div class="form-group row">
@@ -270,35 +156,23 @@
 	$("#tables_selected").html('<?php echo $old['tables']??'none'; ?>');
 	$("#commands_selected").html('<?php echo $old['commands']??'none'; ?>');
 	$("#vfields").html('<?php echo $old['fillables']??'all'; ?>');
-	$("#hfields").html('<?php echo $old['hiddens']??'none'; ?>');
-	$("#mfields").html('<?php echo $old['mandatory']??'none'; ?>');
-	$("#jfields").html('<?php echo $old['joins']??'none'; ?>');
-	$("#ffields").html('<?php echo $old['filters']??'none'; ?>');
-	$("#sqfields").html('<?php echo $old['specials']??'none'; ?>');
+	$("#ufields").html('<?php echo $old['auth_users']??'all'; ?>');
 	$("#auth_providers").val('<?php echo $old['auth_providers']??'none'; ?>');
 	$("#tables").val('<?php echo $old['tables']??'none'; ?>');	
 	$("#commands").val('<?php echo $old['commands']??'none'; ?>');
 	$("#vid").val('<?php echo $old['fillables']??null; ?>');
-	$("#hid").val('<?php echo $old['hiddens']??null; ?>');
-	$("#mid").val('<?php echo $old['mandatory']??null; ?>');
-	$("#jid").val('<?php echo $old['joins']??null; ?>');
-	$("#fid").val('<?php echo $old['filters']??null; ?>');
-	$("#sid").val('<?php echo $old['specials']??null; ?>');
+	$("#uid").val('<?php echo $old['auth_users']??null; ?>');
 </script>
 <script>
 	var auth_providers = JSON.parse('<?php echo json_encode($auth_providers); ?>');
 	var tables = JSON.parse('<?php echo json_encode($tables); ?>');
-	var fields = []; var commands = JSON.parse('<?php echo json_encode(array_values($commands)); ?>');
+	var fields = [];var ids = []; var commands = JSON.parse('<?php echo json_encode(array_values($commands)); ?>');
 	var specials = JSON.parse('<?php echo json_encode(array_values($specials)); ?>');
 	var aps=JSON.parse('<?php echo json_encode($old['auth_providers']?explode(', ', $old['auth_providers']):[]); ?>');
 	var ts=JSON.parse('<?php echo json_encode($old['tables']?explode(', ', $old['tables']):[]); ?>');
 	var cs=JSON.parse('<?php echo json_encode($old['commands']?explode(', ', $old['commands']):[]); ?>');
 	var vf=JSON.parse('<?php echo json_encode($old['fillables']?explode(', ', $old['fillables']):[]); ?>');
-	var hf=JSON.parse('<?php echo json_encode($old['hiddens']?explode(', ', $old['hiddens']):[]); ?>');
-	var mf=JSON.parse('<?php echo json_encode($old['mandatory']?explode(', ', $old['mandatory']):[]); ?>');
-	var jf=JSON.parse('<?php echo json_encode($old['joins']?explode('|', $old['joins']):[]); ?>');
-	var ff=JSON.parse('<?php echo json_encode($old['filters']?explode('|', $old['filters']):[]); ?>');
-	var sp=JSON.parse('<?php echo json_encode($old['specials']?explode(', ', $old['specials']):[]); ?>');
+	var uf=JSON.parse('<?php echo json_encode($old['auth_users']?explode(', ', $old['auth_users']):[]); ?>');
 	Array.prototype.diff = function(a) {
 	    return this.filter(function(i) {return a.indexOf(i) < 0;});
 	};
@@ -346,66 +220,19 @@
 		$("#vfields").html(diff.join(", "));
 		$("#vid").val(diff.join(", "));
 	}
-	function h(v){
-		if(hf.indexOf(v) != -1){
-			hf.splice(hf.indexOf(v),1);
+	function u(v){
+		if(uf.indexOf(v) != -1){
+			uf.splice(uf.indexOf(v),1);
 		}else{
-			hf.push(v);
+			uf.push(v);
 		}
-		let diff = fields.diff(hf);
-		diff = fields.diff(diff);
-		$("#hfields").html(diff.join(", "));
-		$("#hid").val(diff.join(", "));
-	}
-	function m(v){
-		if(mf.indexOf(v) != -1){
-			mf.splice(mf.indexOf(v),1);
-		}else{
-			mf.push(v);
-		}
-		let diff = fields.diff(mf);
-		diff = fields.diff(diff);
-		$("#mfields").html(diff.join(", "));
-		$("#mid").val(diff.join(", "));
-	}
-	function j(){
-		const v = $("#jt").val() + ", " + $("#tf").val() + ", " + $("#jo").val() + ", " + $("#jf").val();
-		if(jf.indexOf(v) != -1){
-			jf.splice(jf.indexOf(v),1);
-		}else{
-			jf.push(v);
-		}
-		// let diff = joins.diff(jf);
-		// diff = joins.diff(diff);
-		$("#jfields").html(jf.join("|"));
-		$("#jid").val(jf.join("|"));
-	}
-	function f(){
-		const v = $("#ft").val() + ", " + $("#ff").val() + ", " + $("#fo").val() + ", " + $("#fv").val();
-		if(ff.indexOf(v) != -1){
-			ff.splice(ff.indexOf(v),1);
-		}else{
-			ff.push(v);
-		}
-		// let diff = filters.diff(ff);
-		// diff = filters.diff(diff);
-		$("#ffields").html(ff.join("|"));
-		$("#fid").val(ff.join("|"));
-		console.log($("#fid").val());
-	}
-	function s(v){
-		if(sp.indexOf(v) != -1){
-			sp.splice(sp.indexOf(v),1);
-		}else{
-			sp.push(v);
-		}
-		let diff = specials.diff(sp);
-		diff = specials.diff(diff);
-		$("#sqfields").html(diff.join(", "));
-		$("#sid").val(diff.join(", "));
+		let diff = ids.diff(uf);
+		diff = ids.diff(diff);
+		$("#ufields").html(diff.join(", "));
+		$("#uid").val(diff.join(", "));
 	}
 	function getFiels(){
-		$.get("/query/get_all_columns", {"tables":ts}, function(data){
+		$.post("/query/get_all_columns", {"_token":"<?php echo $rand; ?>","tables":ts}, function(data){
 			fields = data;
 			var t = '<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="v('+"'%field%'"+')" %chkd%>'+'%field%'+'</label></div>';
 			var tp = '<option>%field%</option>';
@@ -416,27 +243,28 @@
 					tmp = tmp.replace('%chkd%', 'checked');
 				}
 				ta = ta + tmp.replace('%field%', data[i]).replace('%field%', data[i]);
-				tmp = t;
-				if(hf.indexOf(data[i])!=-1){
-					tmp = tmp.replace('%chkd%', 'checked');
-				}
-				tb = tb + tmp.replace('%field%', data[i]).replace('%field%', data[i]);
-				tmp = t;
-				if(mf.indexOf(data[i])!=-1){
-					tmp = tmp.replace('%chkd%', 'checked');
-				}
-				tc = tc + tmp.replace('%field%', data[i]).replace('%field%', data[i]);
 				tpa = tpa + tp.replace('%field%',data[i]);
 			};
 			$("#vSelects").html(ta);
-			$("#hSelects").html(tb.split('onchange="v').join('onchange="h'));
-			$("#mSelects").html(tc.split('onchange="v').join('onchange="m'));
-			$(".toptions").html('<option>id</option>' + tpa);
 		});
 	}
-	getFiels()
-	function joinTableIndexFields(){
-	    $.get("/table/get_columns", {"table":$("#jt").val()}, function(data){$("#jf").html(data);});
+	getFiels();
+	function getAuthUsers(){
+		$.post("/query/get_all_auth_users", {"tables":aps}, function(data){
+			ids = data;
+			var t = '<div class="checkbox" style="display: inline-flex; margin-right: 10px"><label><input type="checkbox" onchange="u('+"'%field%'"+')" %chkd%>'+'%field%'+'</label></div>';
+			var tp = '<option>%field%</option>';
+			var ta = ""; var tb = ""; var tc = ""; var tpa = ""; var tmp ="";
+			for (var i = 0; i < data.length; i++) {
+				tmp = t;
+				if(uf.indexOf(data[i])!=-1){
+					tmp = tmp.replace('%chkd%', 'checked');
+				}
+				ta = ta + tmp.replace('%field%', data[i]).replace('%field%', data[i]);
+				tpa = tpa + tp.replace('%field%',data[i]);
+			};
+			$("#uSelects").html(ta);
+		});
 	}
 </script>
 <?php require($app_key.'/view/layouts/scripts.php'); ?>

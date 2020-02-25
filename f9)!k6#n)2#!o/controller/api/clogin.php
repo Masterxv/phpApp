@@ -28,5 +28,5 @@ if(!empty($record)){
     echo json_encode(['message' => "email address not verified"]);
 }
 echo json_encode(['message' => "email address does not exists"]);
-deleteModelClass($table);
+deleteModelClass($table, $query['app_id']);
 ?>

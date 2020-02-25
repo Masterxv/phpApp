@@ -106,7 +106,7 @@ foreach ($_POST['field_type'] as $key => $value) {
 $sql = rtrim($sql,', ') . ')';
 
 try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname2", $username2, $password2);
+    $conn = new PDO("mysql:host=$servername2;dbname=$dbname2", $username2, $password2);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     $stmt = $conn->prepare($sql);
@@ -114,10 +114,18 @@ try {
 
     if($_POST['model'] == "authenticatable"){
 	    $ap = App::find($_SESSION[$app_key]['active_app_id'],null,'auth_providers');
-	    $ap = json_decode($ap,true);
+	    $ap = json_decode($ap,true)??[];
 	    array_push($ap,$table_name);
 	    App::update($_SESSION[$app_key]['active_app_id'],null,[
 	    	'auth_providers' => json_encode($ap),
+	    ]);
+	}
+	if($_POST['model'] == "token_auth"){
+	    $ap = App::find($_SESSION[$app_key]['active_app_id'],null,'token_auths');
+	    $ap = json_decode($ap,true)??[];
+	    array_push($ap,$table_name);
+	    App::update($_SESSION[$app_key]['active_app_id'],null,[
+	    	'token_auths' => json_encode($ap),
 	    ]);
 	}
 

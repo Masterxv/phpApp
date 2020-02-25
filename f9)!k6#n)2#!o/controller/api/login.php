@@ -34,7 +34,7 @@ if(!empty($user_name_fields[$table])){
         }
     }
 }
-deleteModelClass($table);
+deleteModelClass($table, $query['app_id']);
 echo json_encode(['message' => "wrong credentials"]);
 exit;
 ?>

@@ -263,7 +263,10 @@ Route::add('/query/new_query_view',function()use($app_key){
 },'get');
 Route::add('/query/get_all_columns',function()use($app_key){
     include($app_key.'/controller/query/get_all_columns.php');
-},'get');
+},'post');
+Route::add('/query/get_all_auth_users',function()use($app_key){
+    include($app_key.'/controller/query/get_all_auth_users.php');
+},'post');
 Route::add('/query/new_query',function()use($app_key){
     include($app_key.'/controller/query/new_query.php');
 },'post');
